@@ -9,12 +9,14 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-	if (message.channel.name !== "shoutbox") return;
 	if (message.content.substr(0, 1) !== "!") return;
 	var separate = message.content.split(" ");
 	var command = separate[0].substr(1).toLowerCase();
 	var argument = 1 in separate ? separate[1].toLowerCase() :  null;
-	if (getListOfCommands().indexOf(command) > -1 || getListOfHiddenCommands().indexOf(command) > -1) {
+	if (getListOfCommands().indexOf(command) > -1) {
+		executeCommand(command, message, argument);
+	} else if (getListOfHiddenCommands().indexOf(command) > -1) {
+		if (message.channel.name !== "shoutbox") return;
 		executeCommand(command, message, argument);
 	} else if (command in getListOfAliases()) {
 		executeCommand(getListOfAliases()[command], message, argument);
