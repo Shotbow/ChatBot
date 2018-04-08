@@ -12,7 +12,7 @@ client.on('message', message => {
 	if (message.content.substr(0, 1) == "!") {
 		var separate = message.content.split(" ");
 		var command = separate[0].substr(1).toLowerCase();
-		var argument = 1 in separate ? separate[1].toLowerCase() :  null;
+		var argument = 1 in separate ? separate[1].toLowerCase() : null;
 		
 		if (command in conf.commands) {
 			conf.commands[command].execute(message, argument);
