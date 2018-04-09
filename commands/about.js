@@ -1,3 +1,10 @@
-module.exports.execute = function(message, argument) {
-	message.channel.send("Hi there! My name is **Chat Bot** and I'm an open-sourced Discord bot made specifically for the Shotbow Shoutbox. You can view my code and contribute to me here: <https://github.com/Shotbow/DiscordChatBot>");
-}
+var Command = require("../command");
+
+module.exports.about = new Command(
+	function() {
+		return {};
+	},
+	function(message, argument) {
+		message.channel.send("Hi there! My name is **Chat Bot** and I'm an open-sourced Discord bot made specifically for the Shotbow Shoutbox. You can view my code and contribute to me here: <https://github.com/Shotbow/DiscordChatBot>");
+	}
+);

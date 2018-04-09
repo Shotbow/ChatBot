@@ -1,22 +1,22 @@
 module.exports = {
 	commands:
 	{
-		'commands': require('./commands/commands'),
-		'rules': require('./commands/rules'),
-		'banned': require('./commands/banned'),
-		'report': require('./commands/report'),
-		'staff': require('./commands/staff'),
-		'social': require('./commands/social'),
-		'stuck': require('./commands/stuck'),
-		'about': require('./commands/about'),
-		'bug': require('./commands/bug'),
-		'ts': require('./commands/ts'),
-		'ip': require('./commands/ip'),
-		'vote': require('./commands/vote'),
-		'mcstatus': require('./commands/mcstatus'),
-		'radio': require('./commands/radio'),
-		'why': require('./commands/why'),
-		'contact': require('./commands/contact')
+		'commands': require('./commands/commands').commands,
+		'rules': require('./commands/rules').rules,
+		'banned': require('./commands/banned').banned,
+		'report': require('./commands/report').report,
+		'staff': require('./commands/staff').staff,
+		'social': require('./commands/social').social,
+		'stuck': require('./commands/stuck').stuck,
+		'about': require('./commands/about').about,
+		'bug': require('./commands/bug').bug,
+		'ts': require('./commands/ts').ts,
+		'ip': require('./commands/ip').ip,
+		'vote': require('./commands/vote').vote,
+		'mcstatus': require('./commands/mcstatus').mcstatus,
+		'radio': require('./commands/radio').radio,
+		'why': require('./commands/why').why,
+		'contact': require('./commands/contact').contact
 	},
 	aliases:
 	{
@@ -41,7 +41,7 @@ module.exports = {
 	},
 	hiddenCommands:
 	{
-		'fry': require('./commands/fry'),
-		'xp': require('./commands/xp')
+		'fry': require('./commands/fry').fry,
+		'xp': require('./commands/xp').xp
 	}
 }
