@@ -2,7 +2,6 @@
   "name": "chatbot",
   "version": "1.0.0",
   "description": "ChatBot for Shotbow Discord",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
