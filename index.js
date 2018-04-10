@@ -1,5 +1,3 @@
-process.setMaxListeners(100);
-
 const Discord = require('discord.js');
 const tokens = require("./token");
 const instantiateCommands = require("./instantiateCommands");
