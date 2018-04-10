@@ -13,7 +13,7 @@ for (let key in instantiateCommands) {
 	if (!instantiateCommands.hasOwnProperty(key)) continue;
 	let commandPath = './src/Command/' + instantiateCommands[key];
 	let commandDefinition = require(commandPath);
-	let command = commandDefinition();
+	let command = new commandDefinition;
 	command.initialize(dependencyGraph);
 
 	commandList.add(key, command);

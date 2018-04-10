@@ -5,7 +5,7 @@ module.exports = Dependant.extend({
     dependencies: {
         'discordClient': 'discordClient',
     },
-    init: function (dependencyGraph) {
+    initialize: function (dependencyGraph) {
         this._super(dependencyGraph);
     }
 });
