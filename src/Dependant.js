@@ -4,7 +4,7 @@ module.exports = Class.extend({
     dependencyGraph: {},
     dependencies: {},
     initialize: function(dependencyGraph) {
-        this.dependencies = dependencyGraph;
+        this.dependencyGraph = dependencyGraph;
 
         for (let dependency in this.dependencies) {
             if (!this.dependencies.hasOwnProperty(dependency)) continue;

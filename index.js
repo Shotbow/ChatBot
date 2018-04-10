@@ -3,7 +3,7 @@ const tokens = require("./token");
 const instantiateCommands = require("./conf");
 const client = new Discord.Client();
 
-const commandList = require('./src/CommandContainer');
+const commandList = new (require('./src/CommandContainer'));
 const dependencyGraph = {
 	'discordClient': client,
 	'commandPrefix': '!',
@@ -12,15 +12,14 @@ const dependencyGraph = {
 for (let key in instantiateCommands) {
 	if (!instantiateCommands.hasOwnProperty(key)) continue;
 	let commandPath = './src/Command/' + instantiateCommands[key];
-	let commandDefinition = require(commandPath);
-	let command = new commandDefinition;
+	let command = new (require(commandPath));
 	command.initialize(dependencyGraph);
 
 	commandList.add(key, command);
 }
 
 client.on('ready', () => {
-	client.user.setGame("on Shotbow");
+	client.user.setActivity("on Shotbow");
 	console.log("Successfully logged in!");
 });
 
