@@ -1,4 +1,4 @@
-const BotModule = require('BotModule');
+const BotModule = require('./BotModule');
 
 module.exports = BotModule.extend({
     commandPrefix: '!',

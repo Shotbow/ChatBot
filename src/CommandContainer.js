@@ -1,4 +1,4 @@
-const Class = require('Class');
+const Class = require('./Class');
 
 module.exports = Class.extend({
     commandList: {},
