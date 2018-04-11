@@ -3,6 +3,7 @@ module.exports = {
 	'about': 'About',
 	'banned': 'Banned',
 	'bug': 'Bug',
+	'clans': 'Clans',
 	'commands': 'Commands',
 	'contact': 'Contact',
 	'fry': 'Fry',

@@ -2,6 +2,7 @@ const Command = require('../Command');
 
 module.exports = Command.extend({
     commandName: 'commands',
+    commandAliases: ['command', 'commandlist', 'help'],
     commandList: null,
     dependencies: {
     	'discordClient': 'discordClient',

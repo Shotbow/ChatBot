@@ -2,6 +2,7 @@ const Command = require('../Command');
 
 module.exports = Command.extend({
     commandName: 'social',
+    commandAliases: ['twitter', 'facebook', 'youtube', 'googleplus', 'gplus', 'google+', 'youku', 'playerme', 'instagram', 'tumblr'],
     processMessage: function (message, tokens) {
         var profiles = {
             'Facebook': 'https://facebook.com/TheShotbowNetwork',
