@@ -1,5 +1,5 @@
 module.exports = class Command {
-	constructor(dependencyGraph) {
+    constructor(dependencyGraph) {
         this.dependencies = dependencyGraph;
     }
 };
