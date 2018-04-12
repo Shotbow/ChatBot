@@ -5,13 +5,19 @@ const client = new Discord.Client();
 client.setMaxListeners(0);
 
 const commandList = new (require('./src/CommandContainer'));
+const cache = new (require('./src/Cache'));
 const dependencyGraph = {
     'discordClient': client,
     'commandPrefix': '!',
     'commandList': commandList,
     'https': require('https'),
-    'fs': fs
+    'Date': Date,
+    'JSON': JSON,
+    'Cache': cache,
+    'fs': fs,
 };
+cache.initialize(dependencyGraph);
+
 const commandFiles = fs.readdirSync('./src/Command');
 for (const key in commandFiles) {
     if (!commandFiles.hasOwnProperty(key)) continue;
