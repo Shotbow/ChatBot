@@ -5,8 +5,6 @@ module.exports = Command.extend({
     commandAliases: ['command', 'commandlist', 'help'],
     commandList: null,
     dependencies: {
-        'discordClient': 'discordClient',
-        'commandPrefix': 'commandPrefix',
         'commandList': 'commandList'
     },
     processMessage: function (message, tokens) {

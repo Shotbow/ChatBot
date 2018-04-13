@@ -19,6 +19,10 @@ Class.extend = function(prop) {
 
     // Copy the properties over onto the new prototype
     for (let name in prop) {
+        if (name === 'dependencies' && typeof _super[name] === 'object') {
+            prototype[name] = Object.assign({}, _super[name], prop[name]);
+            continue;
+        }
         // Check if we're overwriting an existing function
         prototype[name] = typeof prop[name] == "function" &&
         typeof _super[name] == "function" && fnTest.test(prop[name]) ?
