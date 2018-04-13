@@ -10,7 +10,8 @@ const dependencyGraph = {
     'discordClient': client,
     'commandPrefix': '!',
     'commandList': commandList,
-    'https': require('https')
+    'https': require('https'),
+    'child_process': require('child_process'),
 };
 for (let key in instantiateCommands) {
     if (!instantiateCommands.hasOwnProperty(key)) continue;
