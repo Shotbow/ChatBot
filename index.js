@@ -28,9 +28,37 @@ for (let key in instantiateUtilities) {
     utility.initialize(dependencyGraph);
 }
 
+process.stdin.resume();
+const cleanupHandler = function() {
+    client.user.setPresence({
+        game: {
+            name: 'on Shotbow',
+            url: 'https://shotbow.net/',
+        },
+        afk: true,
+        status: 'invisible',
+    }).catch(reason => console.log(reason));
+};
+
+const exitHandler = function () {
+    process.exit();
+};
+
+process.on('exit', cleanupHandler);
+process.on('SIGINT', exitHandler);
+process.on('SIGUSR1', exitHandler);
+process.on('SIGUSR2', exitHandler);
+
 client.on('ready', () => {
-    client.user.setActivity("on Shotbow");
     console.log("Successfully logged in!");
+    client.user.setPresence({
+        game: {
+            name: 'on Shotbow',
+            url: 'https://shotbow.net/',
+        },
+        afk: true,
+        status: 'online'
+    }).catch(reason => console.log(reason));
 });
 
 client.login(tokens.getToken());
