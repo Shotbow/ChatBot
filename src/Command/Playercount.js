@@ -55,7 +55,7 @@ module.exports = Command.extend({
                 return;
             }
             tokens.shift();
-            let key = this.getGameKey(tokens.join(' '));
+            let key = this.getGameKey(tokens.join(' ').trim());
 
             if (key === 'help') {
                 let list = Object.values(gameNames)
@@ -92,24 +92,29 @@ module.exports = Command.extend({
             callback(cachedData);
             return;
         }
-        this.https.get('https://shotbow.net/serverList.json', res => {
-            let responseData = '';
-            res.setEncoding('utf8');
-            res.on('data', data => {
-                responseData += data;
-            });
-            res.on('end', () => {
-                let serverList;
-                try {
-                    serverList = JSON.parse(responseData);
-                    if (serverList !== false) {
-                        this.cache.set(this.cacheKey, serverList, cacheTTL);
+        try {
+            this.https.get('https://shotbow.net/serverList.json', res => {
+                let responseData = '';
+                res.setEncoding('utf8');
+                res.on('data', data => {
+                    responseData += data;
+                });
+                res.on('end', () => {
+                    let serverList;
+                    try {
+                        serverList = JSON.parse(responseData);
+                        if (serverList !== false) {
+                            this.cache.set(this.cacheKey, serverList, cacheTTL);
+                        }
+                        callback(serverList);
+                    } catch (e) {
+                        callback(false);
                     }
-                    callback(serverList);
-                } catch (e) {
-                    callback(false);
-                }
+                });
             });
-        });
+        } catch (e) {
+            console.error(e);
+            callback(false);
+        }
     },
 });
