@@ -14,7 +14,8 @@ const dependencyGraph = {
     'Date': Date,
     'JSON': JSON,
     'Cache': cache,
-    'fs': fs,
+    'child_process': require('child_process'),
+    'fs': fs
 };
 cache.initialize(dependencyGraph);
 
