@@ -4,8 +4,6 @@ module.exports = Command.extend({
     commandName: 'mcstatus',
     https: null,
     dependencies: {
-        'discordClient': 'discordClient',
-        'commandPrefix': 'commandPrefix',
         'https': 'https'
     },
     processMessage: function (message, tokens) {

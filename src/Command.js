@@ -6,7 +6,6 @@ module.exports = BotModule.extend({
     commandAliases: [],
     advertisable: true,
     dependencies: {
-        'discordClient': 'discordClient',
         'commandPrefix': 'commandPrefix'
     },
     initialize: function (dependencyGraph) {
