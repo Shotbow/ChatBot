@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const tokens = require("./token");
-const instantiateCommands = require("./instantiateCommands");
-const instantiateUtilities = require("./instantiateUtilities");
+const fs = require('fs');
 const client = new Discord.Client();
 client.setMaxListeners(0);
 
@@ -12,20 +11,24 @@ const dependencyGraph = {
     'commandList': commandList,
     'https': require('https'),
     'child_process': require('child_process'),
+    'fs': fs
 };
-for (let key in instantiateCommands) {
-    if (!instantiateCommands.hasOwnProperty(key)) continue;
-    let commandPath = './src/Command/' + instantiateCommands[key];
-    let command = new (require(commandPath));
-    command.initialize(dependencyGraph);
+const commandFiles = fs.readdirSync('./src/Command');
+for (const key in commandFiles) {
+    if (!commandFiles.hasOwnProperty(key)) continue;
+    const file = commandFiles[key];
 
+    const command = new (require(`./src/Command/${file}`));
+    command.initialize(dependencyGraph);
     commandList.add(key, command);
 }
 
-for (let key in instantiateUtilities) {
-    if (!instantiateUtilities.hasOwnProperty(key)) continue;
-    let utilityPath = './src/Utility/' + instantiateUtilities[key];
-    let utility = new (require(utilityPath));
+const utilityFiles = fs.readdirSync('./src/Utility');
+for (const key in utilityFiles) {
+    if (!utilityFiles.hasOwnProperty(key)) continue;
+    const file = utilityFiles[key];
+
+    let utility = new (require(`./src/Utility/${file}`));
     utility.initialize(dependencyGraph);
 }
 
