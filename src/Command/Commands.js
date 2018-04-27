@@ -13,6 +13,8 @@ module.exports = Command.extend({
         for (let key in commands) {
             if (commands[key].advertisable) advertisableList.push("`!" + commands[key].commandName + "`");
         }
-        message.channel.send(`All available commands: ${advertisableList.join(", ")}`);
+
+        let commandString = advertisableList.join(", ");
+        message.channel.send(this.i18n.__mf('All available commands: {commands}', {commands: commandString}));
     }
 });

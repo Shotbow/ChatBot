@@ -1,7 +1,7 @@
 const Command = require('../Command');
 
 const messages = {
-    success: 'I am currently operating off commit `%1`.\nGitHub: https://github.com/Shotbow/ChatBot/commit/%1',
+    success: 'I am currently operating off commit `{key}`.\nGitHub: https://github.com/Shotbow/ChatBot/commit/{key}',
     error: 'I do not know what version I am currently running.',
 };
 
@@ -27,9 +27,9 @@ module.exports = Command.extend({
 
     processMessage: function (message, tokens) {
         if (this.version) {
-            message.channel.send(messages.success.replace(/%1/g, this.version));
+            message.channel.send(this.i18n.__mf(messages.success, {key: this.version}));
         } else {
-            message.channel.send(messages.error);
+            message.channel.send(this.i18n.__mf(messages.error));
         }
     }
 });
