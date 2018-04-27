@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const tokens = require("./token");
 const fs = require('fs');
+const i18n = require('i18n');
 const client = new Discord.Client();
 client.setMaxListeners(0);
 
@@ -15,9 +16,18 @@ const dependencyGraph = {
     'JSON': JSON,
     'Cache': cache,
     'child_process': require('child_process'),
-    'fs': fs
+    'fs': fs,
+    i18n: i18n,
 };
 cache.initialize(dependencyGraph);
+
+i18n.configure({
+    locales: ['en', 'ja'],
+    directory: __dirname + '/locales',
+    defaultLocale: 'en',
+    autoReload: true,
+    updateFiles: true,
+});
 
 const commandFiles = fs.readdirSync('./src/Command');
 for (const key in commandFiles) {
