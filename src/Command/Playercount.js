@@ -35,6 +35,17 @@ const gameNames = {
     'lobby': 'Lobby',
 };
 
+const roomToGame = {
+    '228706232133746688': 'annihilation',
+    '228706390883958784': 'dbv',
+    '228706280951382016': 'gg',
+    '368735807345000449': 'ghostcraft',
+    '228706314233184256': 'mta',
+    '228706218351394816': 'minez',
+    '228706292913537027': 'slaughter',
+    '228706345807904768': 'smash',
+};
+
 const cacheTTL = 10 * 1000; // 10 seconds in milliseconds
 
 module.exports = Command.extend({
@@ -55,11 +66,13 @@ module.exports = Command.extend({
                 return;
             }
             tokens.shift();
-            let key = this.getGameKey(tokens.join(' ').trim());
+            let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
 
             if (key === 'help') {
                 let list = Object.values(gameNames)
-                    .map(item => { return '`' + item + '`'})
+                    .map(item => {
+                        return '`' + item + '`'
+                    })
                     .join(', ');
                 message.channel.send(messages.help.replace('%1', list));
                 return;
@@ -76,9 +89,9 @@ module.exports = Command.extend({
             message.channel.send(messages.result.replace('%1', count).replace('%2', gameName));
         });
     },
-    getGameKey: function (requestedGame) {
+    getGameKey: function (requestedGame, room) {
         if (!requestedGame) {
-            return 'all';
+            return typeof roomToGame[room] !== 'undefined' ? roomToGame[room] : 'all';
         }
         requestedGame = requestedGame.toLowerCase();
         if (keyAlias[requestedGame]) {
