@@ -3,11 +3,13 @@ const tokens = require("./token");
 const fs = require('fs');
 const i18n = require('i18n');
 const client = new Discord.Client();
+const moment = require('moment-timezone');
 client.setMaxListeners(0);
 
 const commandList = new (require('./src/CommandContainer'));
 const cache = new (require('./src/Cache'));
 const dependencyGraph = {
+    'Discord': Discord,
     'discordClient': client,
     'commandPrefix': '!',
     'commandList': commandList,
@@ -17,7 +19,8 @@ const dependencyGraph = {
     'Cache': cache,
     'child_process': require('child_process'),
     'fs': fs,
-    i18n: i18n,
+    'i18n': i18n,
+    'moment': moment,
 };
 cache.initialize(dependencyGraph);
 
