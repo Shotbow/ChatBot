@@ -7,45 +7,6 @@ const messages = {
     'help': 'You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}'
 };
 
-const keyAlias = {
-    'hcf': 'hcfactions',
-    'anni': 'annihilation',
-    'civ-war': 'civwar',
-    'civcraft': 'civwar',
-    'minetheftauto': 'mta',
-    'gc': 'ghostcraft',
-    'ghost': 'ghostcraft',
-    'mine theft auto': 'mta',
-    'death by void': 'dbv',
-};
-
-// Map of key to name - also acts as a whitelist
-const gameNames = {
-    'all': 'Shotbow',
-    'annihilation': 'Annihilation',
-    'minez': 'MineZ',
-    'hcfactions': 'HCFactions',
-    'dbv': 'Death by Void',
-    'smash': 'SMASH',
-    'slaughter': 'Slaughter',
-    'civwar': 'Civ-War',
-    'gg': 'GG',
-    'mta': 'Mine Theft Auto',
-    'ghostcraft': 'GhostCraft',
-    'lobby': 'Lobby',
-};
-
-const roomToGame = {
-    '228706232133746688': 'annihilation',
-    '228706390883958784': 'dbv',
-    '228706280951382016': 'gg',
-    '368735807345000449': 'ghostcraft',
-    '228706314233184256': 'mta',
-    '228706218351394816': 'minez',
-    '228706292913537027': 'slaughter',
-    '228706345807904768': 'smash',
-};
-
 const cacheTTL = 10 * 1000; // 10 seconds in milliseconds
 
 module.exports = Command.extend({
@@ -53,11 +14,13 @@ module.exports = Command.extend({
     https: null,
     cache: null,
     cacheKey: 'serverlist',
+    config: null,
     dependencies: {
         'discordClient': 'discordClient',
         'commandPrefix': 'commandPrefix',
         'https': 'https',
-        'Cache': 'cache'
+        'Cache': 'cache',
+        'config': 'config'
     },
     processMessage: function (message, tokens) {
         this.fetchServerlist(serverList => {
@@ -69,7 +32,8 @@ module.exports = Command.extend({
             let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
 
             if (key === 'help') {
-                let list = Object.values(gameNames)
+                let list = Object.keys(this.config.games.names)
+                    .map(key => this.config.games.names[key])
                     .map(item => {
                         return '`' + item + '`'
                     })
@@ -78,12 +42,12 @@ module.exports = Command.extend({
                 return;
             }
 
-            if (typeof gameNames[key] === 'undefined' || typeof serverList[key] === 'undefined') {
+            if (typeof this.config.games.names[key] === 'undefined' || typeof serverList[key] === 'undefined') {
                 message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key}));
                 return;
             }
 
-            let gameName = gameNames[key];
+            let gameName = this.config.games.names[key];
             let count = serverList[key];
 
             message.channel.send(this.i18n.__mf(messages.result, {count: count, game: gameName}));
@@ -91,11 +55,11 @@ module.exports = Command.extend({
     },
     getGameKey: function (requestedGame, room) {
         if (!requestedGame) {
-            return typeof roomToGame[room] !== 'undefined' ? roomToGame[room] : 'all';
+            return typeof this.config.games.rooms[room] !== 'undefined' ? this.config.games.rooms[room] : 'all';
         }
         requestedGame = requestedGame.toLowerCase();
-        if (keyAlias[requestedGame]) {
-            requestedGame = keyAlias[requestedGame];
+        if (this.config.games.aliases[requestedGame]) {
+            requestedGame = this.config.games.aliases[requestedGame];
         }
         return requestedGame;
     },
@@ -116,11 +80,13 @@ module.exports = Command.extend({
                     let serverList;
                     try {
                         serverList = JSON.parse(responseData);
+                        console.log(serverList);
                         if (serverList !== false) {
                             this.cache.set(this.cacheKey, serverList, cacheTTL);
                         }
                         callback(serverList);
                     } catch (e) {
+                        console.log(e);
                         callback(false);
                     }
                 });

@@ -10,12 +10,16 @@ const messages = {
 module.exports = Command.extend({
     commandName: 'fry',
     advertisable: false,
+    config: null,
+    dependencies: {
+        'config': 'config',
+    },
     processMessage: function (message, tokens) {
         tokens.shift();
         let victim = tokens.join(" ");
         let hasRoles = message.member !== null && typeof message.member.roles !== 'undefined';
-        // If the person sending the message is an admin OR is Mistri
-        if (hasRoles && (message.member.roles.has(message.guild.roles.find("name", "Administrator").id) || message.author.id == "173556767383355392")) {
+        // If the person sending the message is an admin OR is whitelisted on the configs
+        if (hasRoles && (message.member.roles.has(message.guild.roles.find("name", "Administrator").id) || this.config.zaplist.indexOf(message.author.id) > -1)) {
             if (victim === '') message.channel.send(this.i18n.__mf(messages.who));
             else message.channel.send(this.i18n.__mf(messages.obey, {victim: victim}));
         // If the person sending the message is a mini admin or moderator
