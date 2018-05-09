@@ -1,7 +1,7 @@
 {
     "All available commands: {commands}": "私に使用できるコマンドは次のとおりです: {commands}",
     "I am currently operating off commit `{key}`.\nGitHub: https://github.com/Shotbow/ChatBot/commit/{key}": "私は現在、識別番号 `{key}` 版で動作しています。 GitHubへのリンクはこちら: https://github.com/Shotbow/ChatBot/commit/{key}",
-    "There { count, plural, one {is currently # player} other {are currently # players} } connected to {game}.": "現在、 { count, plural, zero { {game}で遊んでいるプレイヤーはいません。} other {#人のプレイヤーが{game}で遊んでいます。 } }",
+    "There { count, plural, one {is currently # player} other {are currently # players} } connected to {game}.": "現在、 { count, plural, =0 { {game}で遊んでいるプレイヤーはいません。} other {#人のプレイヤーが{game}で遊んでいます。 } }",
     "That's a good question. Why *does* Shotbow have chat? Chat is not for live admin assistance, it's to help foster the wonderful Shotbow community. Ask questions, and if staff is around they will answer. You can also type `!commands` to see what other tricks I have and the information I can give you!": "なぜ Shotbow にチャットボットがあるのかですって？そうですね、私はスタッフとしてではなく、この素晴らしい Shotbow コミュニティの発展をお手伝いするためにここにいます！ なにか疑問をお持ちであればどうぞ質問してみてください、スタッフが見ていれば彼らがお答えするでしょう。\nまた、 `!commands` とチャットすることで、私がお手伝いできることの一覧を見ることができます。",
     "Hi there! My name is **Chat Bot** and I'm an open-sourced Discord bot made specifically for Shotbow! You can view my code and contribute to me here: <{url}>": "こんにちは！ 私の名前は **Chat Bot** です。 私は Shotbow のために特別に作られた、Discord上のオープンソースなbotです！ こちらのURLから、私のコードを参照したり、私をより発展させることができます: <{url}>",
     "We do not discuss bans in the chatroom. If you are banned, please post a ban appeal — it is the fastest way to get your ban handled! ": "私たちは、チャットルームでBANの個別対応はしておりません。 もしもBANされてしまったのでしたら、こちらからBANアピールを提出してください― それが最も早い解決法です！ <https://shotbow.net/forum/forums/banappeals/>",
