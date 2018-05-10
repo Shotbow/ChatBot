@@ -80,13 +80,11 @@ module.exports = Command.extend({
                     let serverList;
                     try {
                         serverList = JSON.parse(responseData);
-                        console.log(serverList);
                         if (serverList !== false) {
                             this.cache.set(this.cacheKey, serverList, cacheTTL);
                         }
                         callback(serverList);
                     } catch (e) {
-                        console.log(e);
                         callback(false);
                     }
                 });
