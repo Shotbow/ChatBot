@@ -30,8 +30,7 @@ module.exports = Command.extend({
             let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
 
             if (key === 'help') {
-                let list = Object.keys(this.config.games.names)
-                    .map(key => this.config.games.names[key])
+                let list = Object.values(this.config.games.names)
                     .map(item => {
                         return '`' + item + '`'
                     })
