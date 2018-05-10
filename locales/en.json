@@ -22,5 +22,13 @@
 	"Stuck in a block or area on MineZ? Request to be moved here: <https://shotbow.net/forum/threads/stuck-in-a-block-or-area.266338/>": "Stuck in a block or area on MineZ? Request to be moved here: <https://shotbow.net/forum/threads/stuck-in-a-block-or-area.266338/>",
 	"You can connect to our TeamSpeak at `{url}` (but, by personal preference, Discord is better).": "You can connect to our TeamSpeak at `{url}` (but, by personal preference, Discord is better).",
 	"Support Shotbow for free by voting for us on the following sites:\n": "Support Shotbow for free by voting for us on the following sites:\n",
-	"We have a **special** XP code for people who ask for one! Try `{code}`!": "We have a **special** XP code for people who ask for one! Try `{code}`!"
+	"We have a **special** XP code for people who ask for one! Try `{code}`!": "We have a **special** XP code for people who ask for one! Try `{code}`!",
+	"Uh oh, there seems to be an error with the Mojang API. Try again later!": "Uh oh, there seems to be an error with the Mojang API. Try again later!",
+	"- {service} is having some issues": "- {service} is having some issues",
+	"- {service} is completely down": "- {service} is completely down",
+	"I just checked Mojang's servers, and there appear to be some issues:\n": "I just checked Mojang's servers, and there appear to be some issues:\n",
+	"I'm sorry, but you're not yet strong enough... only masters can fry. However, I like you, so I won't punish you...": "I'm sorry, but you're not yet strong enough... only masters can fry. However, I like you, so I won't punish you...",
+	"Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?": "Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?",
+	"You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}": "You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}",
+	"I do not know what version I am currently running.": "I do not know what version I am currently running."
 }
