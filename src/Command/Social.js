@@ -3,10 +3,6 @@ const Command = require('../Command');
 module.exports = Command.extend({
     commandName: 'social',
     commandAliases: ['twitter', 'facebook', 'youtube', 'googleplus', 'gplus', 'google+', 'youku', 'playerme', 'instagram', 'tumblr'],
-    config: null,
-    dependencies: {
-        'config': 'config'
-    },
     processMessage: function (message, tokens) {
         let profiles = this.config.profiles;
         let formattedProfiles = [];

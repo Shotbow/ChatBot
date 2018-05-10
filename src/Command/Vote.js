@@ -2,10 +2,6 @@ const Command = require('../Command');
 
 module.exports = Command.extend({
     commandName: 'vote',
-    config: null,
-    dependencies: {
-        'config': 'config'
-    },
     processMessage: function (message, tokens) {
         let votes = this.config.votes;
         let formattedVotes = [];

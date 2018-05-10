@@ -14,13 +14,11 @@ module.exports = Command.extend({
     https: null,
     cache: null,
     cacheKey: 'serverlist',
-    config: null,
     dependencies: {
         'discordClient': 'discordClient',
         'commandPrefix': 'commandPrefix',
         'https': 'https',
-        'Cache': 'cache',
-        'config': 'config'
+        'Cache': 'cache'
     },
     processMessage: function (message, tokens) {
         this.fetchServerlist(serverList => {
