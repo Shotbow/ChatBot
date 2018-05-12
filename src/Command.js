@@ -1,18 +1,16 @@
 const BotModule = require('./BotModule');
 
-const languageMap = {
-    '368751492963893248': 'ja',
-};
-
 module.exports = BotModule.extend({
     commandPrefix: '!',
     commandName: null,
     commandAliases: [],
     advertisable: true,
     i18n: null,
+    config: null,
     dependencies: {
         'commandPrefix': 'commandPrefix',
         'i18n': 'i18n',
+        'config': 'config',
     },
     initialize: function (dependencyGraph) {
         this._super(dependencyGraph);
@@ -24,10 +22,10 @@ module.exports = BotModule.extend({
             let tokens = message.content.split(' ');
             let command = tokens[0].substr(1).toLowerCase();
 
-            if (typeof languageMap[message.channel.id] !== 'undefined') {
-                this.i18n.setLocale(languageMap[message.channel.id]);
+            if (typeof this.config.languages.channels[message.channel.id] !== 'undefined') {
+                this.i18n.setLocale(this.config.languages.channels[message.channel.id]);
             } else {
-                this.i18n.setLocale('en');
+                this.i18n.setLocale(this.config.languages.default);
             }
 
             if (command === self.commandName || self.commandAliases.includes(command)) {

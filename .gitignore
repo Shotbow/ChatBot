@@ -1,3 +1,5 @@
 token.js
 node_modules/
 .DS_Store
+config/local.js
+config/production.js

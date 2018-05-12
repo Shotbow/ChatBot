@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
-const tokens = require("./token");
 const fs = require('fs');
 const i18n = require('i18n');
 const client = new Discord.Client();
 const moment = require('moment-timezone');
+const config = require('config');
 client.setMaxListeners(0);
 
 const commandList = new (require('./src/CommandContainer'));
@@ -21,13 +21,14 @@ const dependencyGraph = {
     'fs': fs,
     'i18n': i18n,
     'moment': moment,
+    'config': config
 };
 cache.initialize(dependencyGraph);
 
 i18n.configure({
-    locales: ['en', 'ja'],
+    locales: config.languages.locales,
     directory: __dirname + '/locales',
-    defaultLocale: 'en',
+    defaultLocale: config.languages.default,
     autoReload: true,
     updateFiles: true,
 });
@@ -56,4 +57,4 @@ client.on('ready', () => {
     console.log("Successfully logged in!");
 });
 
-client.login(tokens.getToken());
+client.login(config.token);
