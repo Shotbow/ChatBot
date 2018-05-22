@@ -15,6 +15,7 @@ module.exports = Command.extend({
         'https': 'https'
     },
     processMessage: function (message, tokens) {
+        var i18n = this.i18n;
         try {
             this.https.get("https://status.mojang.com/check", res => {
                 let status = "";
@@ -27,7 +28,7 @@ module.exports = Command.extend({
                         status = JSON.parse(status);
                     }
                     catch (error) {
-                        message.channel.send(this.i18n.__mf(messages.error));
+                        message.channel.send(i18n.__mf(messages.error));
                         return;
                     }
                     let formattedStatus = {};
@@ -38,16 +39,16 @@ module.exports = Command.extend({
                     }
                     let errors = [];
                     for (let key in formattedStatus) {
-                        if (formattedStatus[key] == "yellow") errors.push(this.i18n.__mf(messages.serviceIssue, {service: key}));
-                        else if (formattedStatus[key] == "red") errors.push(this.i18n.__mf(messages.serviceDown, {service: key}));
+                        if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
+                        else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
                     }
-                    if (errors.length == 0) message.channel.send(this.i18n.__mf(messages.ok));
-                    else message.channel.send(this.i18n.mf(messages.issues, {errors: errors.join("\n")}));
+                    if (errors.length == 0) message.channel.send(i18n.__mf(messages.ok));
+                    else message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")}));
                 });
             });
         }
         catch (error) {
-            message.channel.send(this.i18n.__mf(messages.error));
+            message.channel.send(i18n.__mf(messages.error));
         }
     }
 });
