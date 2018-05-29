@@ -15,7 +15,6 @@ module.exports = Command.extend({
     cache: null,
     cacheKey: 'serverlist',
     dependencies: {
-        'discordClient': 'discordClient',
         'commandPrefix': 'commandPrefix',
         'https': 'https',
         'Cache': 'cache'
