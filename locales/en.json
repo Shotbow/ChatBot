@@ -30,5 +30,10 @@
 	"I'm sorry, but you're not yet strong enough... only masters can fry. However, I like you, so I won't punish you...": "I'm sorry, but you're not yet strong enough... only masters can fry. However, I like you, so I won't punish you...",
 	"Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?": "Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?",
 	"You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}": "You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}",
-	"I do not know what version I am currently running.": "I do not know what version I am currently running."
+	"I do not know what version I am currently running.": "I do not know what version I am currently running.",
+	"It seems like you haven't provided a valid username or UUID. Please verify your input.": "It seems like you haven't provided a valid username or UUID. Please verify your input.",
+	"Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!": "Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!",
+	"I have retrieved the following information about `{input}`:\n{names}": "I have retrieved the following information about `{input}`:\n{names}",
+	"(original)": "(original)",
+	"(changed to at {date})": "(changed to at {date})"
 }
