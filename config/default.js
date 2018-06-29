@@ -45,7 +45,7 @@ module.exports = {
             '228706345807904768': 'smash'
         },
         forums: {
-            'all': 'https://shotbow.net/forums/forums/annihilation',
+            'all': 'https://shotbow.net/forums/',
             'annihilation': 'https://shotbow.net/forum/forums/annihilation/',
             'minez': 'https://shotbow.net/forum/forums/minez/',
             'hcfactions': 'https://www.reddit.com/r/hcfactions/',

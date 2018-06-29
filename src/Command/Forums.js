@@ -2,7 +2,7 @@ const Command = require('../Command');
 
 const messages = {
     'errorBadKey': 'Hmm.. I couldn\'t find the game you were talking about.  Try again?',
-    'result': 'You can talk all about {game} here: {link}',
+    'result': 'You can talk all about {game} here: <{link}>',
     'help': 'You can use `!forums` to get a link to the forum in general or for a specific game.\nYou can use any of the following names: {names}'
 };
 
