@@ -22,7 +22,7 @@ module.exports = Command.extend({
             return;
         }
 
-        if (typeof this.config.games.names[key] === 'undefined' || typeof serverList[key] === 'undefined') {
+        if (typeof this.config.games.names[key] === 'undefined') {
             message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key}));
             return;
         }
