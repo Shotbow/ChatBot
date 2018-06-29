@@ -43,6 +43,19 @@ module.exports = {
             '228706218351394816': 'minez',
             '228706292913537027': 'slaughter',
             '228706345807904768': 'smash'
+        },
+        forums: {
+            'all': 'https://shotbow.net/forums/forums/annihilation',
+            'annihilation': 'https://shotbow.net/forum/forums/annihilation/',
+            'minez': 'https://shotbow.net/forum/forums/minez/',
+            'hcfactions': 'https://www.reddit.com/r/hcfactions/',
+            'dbv': 'https://shotbow.net/forum/forums/dbv/',
+            'smash': 'https://shotbow.net/forum/forums/smash/',
+            'slaughter': 'https://shotbow.net/forum/forums/slaughter/',
+            'civwar': 'https://www.civ-war.com/forum',
+            'gg': 'https://shotbow.net/forum/forums/gg/',
+            'mta': 'https://shotbow.net/forum/forums/minetheftauto/',
+            'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/'
         }
     },
     profiles: {
