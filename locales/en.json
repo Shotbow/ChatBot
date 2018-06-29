@@ -30,5 +30,6 @@
 	"I'm sorry, but you're not yet strong enough... only masters can fry. However, I like you, so I won't punish you...": "I'm sorry, but you're not yet strong enough... only masters can fry. However, I like you, so I won't punish you...",
 	"Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?": "Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?",
 	"You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}": "You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}",
-	"I do not know what version I am currently running.": "I do not know what version I am currently running."
+	"I do not know what version I am currently running.": "I do not know what version I am currently running.",
+	"You can talk all about {game} here: {link}": "You can use `!forums` to get a link to the forum in general or for a specific game.\nYou can use any of the following names: {names}"
 }
