@@ -30,7 +30,7 @@
     "I'm sorry, but you're not yet strong enough... only masters can fry. However, I like you, so I won't punish you...": "すみませんが、あなたの強さではまだマスターとは認められません… ですが、まんざらでもありません。",
     "Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?": "うーん… プレイヤー数をうまく計れませんでした。 Shotbow.netがオフラインかもしれません。",
     "You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}": "`!playercount` と打つことで、Shotbow全体、もしくは特定のゲームで遊んでいるプレイヤーの数がわかりますよ！\n使用可能なゲーム名は以下の通りです: {names}",
-    "I do not know what version I am currently running.": "すみません、私が今どのバージョンで動いているのか私自身でもわかりません…"
+    "I do not know what version I am currently running.": "すみません、私が今どのバージョンで動いているのか私自身でもわかりません…",
     "You can talk all about {game} here: <{link}>": "{game} についての話題は、ここで話すことができます！ <{link}>",
     "You can use `!forums` to get a link to the forum in general or for a specific game.\nYou can use any of the following names: {names}": "`!forums` と打つことで、私たちのフォーラムおよび各ゲームごとのサブフォーラムへのリンクを取得できます。\n使用できる名称は以下の通りです: {names}"
 }
