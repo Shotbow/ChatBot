@@ -14,10 +14,10 @@ module.exports = Command.extend({
 
         if (key === 'help') {
             let list = Object.values(this.config.games.names)
-            .map(item => {
-                return '`' + item + '`'
-            })
-            .join(', ');
+                .map(item => {
+                    return '`' + item + '`'
+                })
+                .join(', ');
             message.channel.send(this.i18n.__mf(messages.help, {names: list}));
             return;
         }
