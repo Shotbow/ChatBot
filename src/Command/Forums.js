@@ -8,6 +8,7 @@ const messages = {
 
 module.exports = Command.extend({
     commandName: 'forums',
+    commandAliases: ['forum'],
     processMessage: function (message, tokens) {
         tokens.shift();
         let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
