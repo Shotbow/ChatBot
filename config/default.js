@@ -8,7 +8,7 @@ module.exports = {
         }
     },
     zaplist: ['173556767383355392'],
-    administrator_roles: {
+    administratorRoles: {
         'Moderator': '258257313448722434',
         'Administrator': '223821346763833344',
         'Server Administrator': '223820787784744960',
