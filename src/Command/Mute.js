@@ -75,11 +75,11 @@ module.exports = Command.extend({
                             }
                         }
                     })
-                    .then(() => {
-                        victim.addRole(message.guild.roles.find('name', 'Muted'))
-                        .catch(error => message.member.user.send('In addition, I was unable to grant them the `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```' + error + '```'));
-                    })
-                    .catch(error => message.member.user.send('In addition, I was unable to DM the banned user about their ban. It is likely that they have DMs disabled.'));
+                        .then(() => {
+                            victim.addRole(message.guild.roles.find('name', 'Muted'))
+                                .catch(error => message.member.user.send('In addition, I was unable to grant them the `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```' + error + '```'));
+                        })
+                        .catch(error => message.member.user.send('In addition, I was unable to DM the banned user about their ban. It is likely that they have DMs disabled.'));
                 }
             }
         }
