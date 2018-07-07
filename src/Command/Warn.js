@@ -14,12 +14,19 @@ module.exports = Command.extend({
             if (tokens.length < 3 || !victim) {
                 message.member.user.send('Please use the correct format: `!warn <@User#9999> <Reason>`.');
             }
+            else if (message.member.toString() == victim.toString()) {
+                message.member.user.send('You may not warn yourself!');
+            }
+            else if (this.memberIsAdministrator(victim)) {
+                message.member.user.send('You may not warn another Discord administrator!');
+            }
             else {
                 let reason = tokens.slice(2).join(' ');
 
                 if (!reason || reason == '' || reason == null) {
                     message.member.user.send('Please use the correct format: `!warn <@User#9999> <Reason>`.');
-                } else {
+                }
+                else {
                     message.member.user.send({
                         embed: {
                             color: 0xff0000,
@@ -29,10 +36,10 @@ module.exports = Command.extend({
                             },
                             title: "Successfully warned " + victim.user.username,
                             fields: [
-                            {
-                                name: "Warn Reason",
-                                value: reason
-                            }
+                                {
+                                    name: "Warn Reason",
+                                    value: reason
+                                }
                             ],
                             timestamp: new Date(),
                             footer: {
@@ -51,10 +58,10 @@ module.exports = Command.extend({
                             },
                             title: "You have been warned on the Shotbow Discord",
                             fields: [
-                            {
-                                name: "Warn Reason",
-                                value: reason
-                            }
+                                {
+                                    name: "Warn Reason",
+                                    value: reason
+                                }
                             ],
                             timestamp: new Date(),
                             footer: {
@@ -69,8 +76,8 @@ module.exports = Command.extend({
         }
     },
     memberIsAdministrator: function (member) {
-        for (let role in this.config.administrator_roles) {
-            if (member.roles.has(this.config.administrator_roles[role])) {
+        for (let role in this.config.administratorRoles) {
+            if (member.roles.has(this.config.administratorRoles[role])) {
                 return true;
             }
         }
