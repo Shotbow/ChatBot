@@ -35,5 +35,7 @@
 	"Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!": "Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!",
 	"I have retrieved the following information about `{input}`:\n{names}": "I have retrieved the following information about `{input}`:\n{names}",
 	"- {name} (original)": "- {name} (original)",
-	"- {name} (changed to at {date})": "- {name} (changed to at {date})"
+	"- {name} (changed to at {date})": "- {name} (changed to at {date})",
+	"I could not find any players with that username.": "I could not find any players with that username.",
+	"I could not find any players with that UUID.": "I could not find any players with that UUID."
 }

@@ -7,7 +7,9 @@ const messages = {
     invalid: "It seems like you haven't provided a valid username or UUID. Please verify your input.",
     names: "I have retrieved the following information about `{input}`:\n{names}",
     originalName: "- {name} (original)",
-    changedName: "- {name} (changed to at {date})"
+    changedName: "- {name} (changed to at {date})",
+    usernameNotFound: "I could not find any players with that username.",
+    uuidNotFound: "I could not find any players with that UUID."
 };
 
 module.exports = Command.extend({
@@ -24,6 +26,11 @@ module.exports = Command.extend({
 
         if (mcidRegEx.test(identifier)) {
             this.fetchData(`https://api.mojang.com/users/profiles/minecraft/${identifier}`, (res) => {
+                if (res === null) {
+                    message.channel.send(i18n.__mf(messages.usernameNotFound));
+                    return;
+                }
+
                 if (res === false) {
                     message.channel.send(i18n.__mf(messages.error));
                     return;
@@ -44,6 +51,11 @@ module.exports = Command.extend({
             identifier = identifier.replace('-', ''); // Remove any dashes from the UUID
 
             this.fetchData(`https://api.mojang.com/user/profiles/${identifier}/names`, (res) => {
+                if (res === null) {
+                    message.channel.send(i18n.__mf(messages.uuidNotFound));
+                    return;
+                }
+
                 if (res === false) {
                     message.channel.send(i18n.__mf(messages.error));
                     return;
@@ -73,7 +85,7 @@ module.exports = Command.extend({
                 // We need to check if the status is 200, due to Mojang enforcing proper HTTP status codes
                 // In the case of success without content, 204 NO CONTENT is sent, which https accepts as success
                 if (res.statusCode != 200) {
-                    callback(false);
+                    callback(null);
                     return;
                 }
 
