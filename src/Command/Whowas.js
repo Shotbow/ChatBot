@@ -9,7 +9,8 @@ const messages = {
     originalName: "- {name} (original)",
     changedName: "- {name} (changed to at {date})",
     usernameNotFound: "I could not find any players with that username.",
-    uuidNotFound: "I could not find any players with that UUID."
+    uuidNotFound: "I could not find any players with that UUID.",
+    incorrectUsage: "It looks like you did not provide a UUID or username. Please use `!whowas <UUID>` or `!whowas <username>`."
 };
 
 module.exports = Command.extend({
@@ -22,8 +23,13 @@ module.exports = Command.extend({
     },
     processMessage: function (message, tokens) {
         let i18n = this.i18n;
-        let identifier = tokens[1];
 
+        if (tokens.length < 2) {
+            message.channel.send(i18n.__mf(messages.incorrectUsage));
+            return;
+        }
+
+        let identifier = tokens[1];
         if (mcidRegEx.test(identifier)) {
             this.fetchData(`https://api.mojang.com/users/profiles/minecraft/${identifier}`, (res) => {
                 if (res === null) {

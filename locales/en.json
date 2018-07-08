@@ -37,5 +37,6 @@
 	"- {name} (original)": "- {name} (original)",
 	"- {name} (changed to at {date})": "- {name} (changed to at {date})",
 	"I could not find any players with that username.": "I could not find any players with that username.",
-	"I could not find any players with that UUID.": "I could not find any players with that UUID."
+	"I could not find any players with that UUID.": "I could not find any players with that UUID.",
+	"It looks like you did not provide a UUID or username. Please use `!whowas <UUID>` or `!whowas <username>`.": "It looks like you did not provide a UUID or username. Please use `!whowas <UUID>` or `!whowas <username>`."
 }
