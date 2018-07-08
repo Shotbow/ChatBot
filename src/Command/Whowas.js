@@ -1,13 +1,13 @@
 const Command = require('../Command');
 
 const uuidRegEx = RegExp('^[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$', 'i');
-const mcidRegEx = RegExp('^[abcdefghijklmnopqrstuvwxyz0123456789_]{3,16}$', 'i');
+const mcidRegEx = RegExp('^[a-z\\d_]{3,16}$', 'i');
 const messages = {
     error: "Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!",
     invalid: "It seems like you haven't provided a valid username or UUID. Please verify your input.",
     names: "I have retrieved the following information about `{input}`:\n{names}",
-    originalName: "(original)",
-    changedName: "(changed to at {date})"
+    originalName: "- {name} (original)",
+    changedName: "- {name} (changed to at {date})"
 };
 
 module.exports = Command.extend({
@@ -59,13 +59,13 @@ module.exports = Command.extend({
         let nameHistory = [];
         names.map(entry => {
             if (entry.changedToAt) {
-                nameHistory.push(`- ${entry.name} ${this.i18n.__mf(messages.changedName, { date: this.moment(entry.changedToAt).format('ll') })}\n`);
+                nameHistory.push(this.i18n.__mf(messages.changedName, { name: entry.name, date: this.moment(entry.changedToAt).format('ll') }));
             } else {
-                nameHistory.push(`- ${entry.name} ${this.i18n.__mf(messages.originalName)}\n`);
+                nameHistory.push(this.i18n.__mf(messages.originalName, { name: entry.name }));
             }
         });
 
-        return nameHistory.join('');
+        return nameHistory.join('\n');
     },
     fetchData: function(url, callback) {
         try {

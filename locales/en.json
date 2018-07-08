@@ -34,6 +34,6 @@
 	"It seems like you haven't provided a valid username or UUID. Please verify your input.": "It seems like you haven't provided a valid username or UUID. Please verify your input.",
 	"Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!": "Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!",
 	"I have retrieved the following information about `{input}`:\n{names}": "I have retrieved the following information about `{input}`:\n{names}",
-	"(original)": "(original)",
-	"(changed to at {date})": "(changed to at {date})"
+	"- {name} (original)": "- {name} (original)",
+	"- {name} (changed to at {date})": "- {name} (changed to at {date})"
 }
