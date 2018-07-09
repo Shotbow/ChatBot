@@ -1,8 +1,8 @@
 const Command = require('../Command');
 
 module.exports = Command.extend({
-    commandName: 'mute',
-    commandAliases: ['ban'],
+    commandName: 'unmute',
+    commandAliases: ['unban'],
     advertisable: false,
     processMessage: function (message, tokens) {
         let hasRoles = message.member !== null && typeof message.member.roles !== 'undefined';
@@ -15,12 +15,6 @@ module.exports = Command.extend({
             if (tokens.length < 3 || !victim) {
                 message.member.user.send('Please use the correct format: `' + tokens[0] + ' <@User#9999> <Reason>`.');
             }
-            else if (message.member.toString() == victim.toString()) {
-                message.member.user.send('You may not mute yourself!');
-            }
-            else if (this.memberIsAdministrator(victim)) {
-                message.member.user.send('You may not mute another Discord administrator!');
-            }
             else {
                 let reason = tokens.slice(2).join(' ');
 
@@ -30,15 +24,15 @@ module.exports = Command.extend({
                 else {
                     message.member.user.send({
                         embed: {
-                            color: 0xff0000,
+                            color: 0x66ff00,
                             author: {
                                 name: this.discordClient.user.username,
                                 icon_url: this.discordClient.user.avatarURL
                             },
-                            title: "Successfully muted @" + victim.user.username + "#" + victim.user.discriminator,
+                            title: "Successfully unmuted @" + victim.user.username + "#" + victim.user.discriminator,
                             fields: [
                                 {
-                                    name: "Mute Reason",
+                                    name: "Unmute Reason",
                                     value: reason
                                 }
                             ],
@@ -52,20 +46,16 @@ module.exports = Command.extend({
 
                     victim.user.send({
                         embed: {
-                            color: 0xff0000,
+                            color: 0x66ff00,
                             author: {
                                 name: this.discordClient.user.username,
                                 icon_url: this.discordClient.user.avatarURL
                             },
-                            title: "You have been muted on the Shotbow Discord",
+                            title: "You have been unmuted on the Shotbow Discord",
                             fields: [
                                 {
-                                    name: "Mute Reason",
-                                    value: reason
-                                },
-                                {
-                                    name: "Appeal",
-                                    value: "You can appeal by going to [this link](https://shotbow.net/forum/forums/ban-appeals.22/) on our Shotbow forums."
+                                    name: "Friendly Reminder",
+                                    value: "This is your last chance. If you are muted again, your appeal will not be considered."
                                 }
                             ],
                             timestamp: new Date(),
@@ -76,22 +66,22 @@ module.exports = Command.extend({
                         }
                     })
                         .then(() => {
-                            victim.addRole(message.guild.roles.find('name', 'Muted'))
-                                .catch(error => message.member.user.send('In addition, I was unable to grant them the `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```' + error + '```'));
+                            victim.removeRole(message.guild.roles.find('name', 'Muted'))
+                                .catch(error => message.member.user.send('In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```' + error + '```'));
                         })
                         .catch(error => message.member.user.send('In addition, I was unable to DM the banned user about their ban. It is likely that they have DMs disabled.'));
 
                     message.guild.channels.find('id', this.config.moderationLogsRoom).send({
                         embed: {
-                            color: 0xff0000,
+                            color: 0x66ff00,
                             author: {
                                 name: message.member.user.username,
                                 icon_url: message.member.user.avatarURL
                             },
-                            title: "Muted @" + victim.user.username + "#" + victim.user.discriminator,
+                            title: "Unmuted @" + victim.user.username + "#" + victim.user.discriminator,
                             fields: [
                                 {
-                                    name: "Mute Reason",
+                                    name: "Unmute Reason",
                                     value: reason
                                 }
                             ],

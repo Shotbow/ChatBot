@@ -34,7 +34,7 @@ module.exports = Command.extend({
                                 name: this.discordClient.user.username,
                                 icon_url: this.discordClient.user.avatarURL
                             },
-                            title: "Successfully warned " + victim.user.username,
+                            title: "Successfully warned @" + victim.user.username + "#" + victim.user.discriminator,
                             fields: [
                                 {
                                     name: "Warn Reason",
@@ -71,6 +71,28 @@ module.exports = Command.extend({
                         }
                     })
                         .catch(error => message.member.user.send('In addition, I was unable to DM the banned user about their ban. It is likely that they have DMs disabled.'));
+
+                    message.guild.channels.find('id', this.config.moderationLogsRoom).send({
+                        embed: {
+                            color: 0xff0000,
+                            author: {
+                                name: message.member.user.username,
+                                icon_url: message.member.user.avatarURL
+                            },
+                            title: "Warned @" + victim.user.username + "#" + victim.user.discriminator,
+                            fields: [
+                                {
+                                    name: "Warn Reason",
+                                    value: reason
+                                }
+                            ],
+                            timestamp: new Date(),
+                            footer: {
+                                icon_url: this.discordClient.user.avatarURL,
+                                text: "Shotbow Network Chat Bot"
+                            }
+                        }
+                    });
                 }
             }
         }
