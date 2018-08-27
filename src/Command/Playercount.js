@@ -19,36 +19,34 @@ module.exports = Command.extend({
         'https': 'https',
         'Cache': 'cache'
     },
-    processMessage: function (message, tokens) {
-        return new Promise(function(resolve, reject) {
-            this.fetchServerlist(serverList => {
-                if (serverList === false) {
-                    resolve(message.channel.send(this.i18n.__mf(messages.errorChecking)));
-                    return;
-                }
-                tokens.shift();
-                let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
+    processMessage: function (message, tokens, timeOut) {
+        this.fetchServerlist(serverList => {
+            if (serverList === false) {
+                this.deleteMessage(message.channel.send(this.i18n.__mf(messages.errorChecking)), timeOut);
+                return;
+            }
+            tokens.shift();
+            let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
 
-                if (key === 'help') {
-                    let list = Object.values(this.config.games.names)
-                        .map(item => {
-                            return '`' + item + '`'
-                        })
-                        .join(', ');
-                    resolve(message.channel.send(this.i18n.__mf(messages.help, {names: list})));
-                    return;
-                }
+            if (key === 'help') {
+                let list = Object.values(this.config.games.names)
+                    .map(item => {
+                        return '`' + item + '`'
+                    })
+                    .join(', ');
+                this.deleteMessage(message.channel.send(this.i18n.__mf(messages.help, {names: list})), timeOut);
+                return;
+            }
 
-                if (typeof this.config.games.names[key] === 'undefined' || typeof serverList[key] === 'undefined') {
-                    resolve(message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key})));
-                    return;
-                }
+            if (typeof this.config.games.names[key] === 'undefined' || typeof serverList[key] === 'undefined') {
+                this.deleteMessage(message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key})), timeOut);
+                return;
+            }
 
-                let gameName = this.config.games.names[key];
-                let count = serverList[key];
+            let gameName = this.config.games.names[key];
+            let count = serverList[key];
 
-                resolve(message.channel.send(this.i18n.__mf(messages.result, {count: count, game: gameName})));
-            }); 
+            this.deleteMessage(message.channel.send(this.i18n.__mf(messages.result, {count: count, game: gameName})), timeOut);
         });
     },
     getGameKey: function (requestedGame, room) {
@@ -91,5 +89,5 @@ module.exports = Command.extend({
             console.error(e);
             callback(false);
         }
-    },
+    }
 });

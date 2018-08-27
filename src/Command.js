@@ -30,25 +30,45 @@ module.exports = BotModule.extend({
 
             if (command === self.commandName || self.commandAliases.includes(command)) {
                 let timeOut = this.config.messageRemoveDelay;
-                self.processMessage(message, tokens, timeOut).then(messages => {
-                    if (messages.isArray) {
-                        for(let message in messages) {
-                            message.delete(timeOut);
-                        }
-                    } else {
-                        messages.delete(timeOut);
-                    }
-                }).catch(error => {
-                    console.log(error.message);
-                });
+                let promise = self.processMessage(message, tokens, timeOut);
+                if (promise != null) {
+                    promise.then(messages => {
+                        self.deleteMessage(messages, timeOut);
+                    }).catch(error => {
+                        console.log(error.message);
+                    });
+                }
                 message.delete(timeOut);
             }
         });
     },
-    processMessage: function (message, tokens) {
+    processMessage: function (message, tokens, timeOut) {
 
     },
-    removeMessage: function (promise, timeOut) {
-        
+    deleteMessage(element, timeOut, deleteFunction) {
+        if (element instanceof Promise) {
+            element.then(messages => {
+                if (deleteFunction == null) {
+                    this.checkAndDeleteElement(messages, timeOut);
+                } else {
+                    deleteFunction(messages, timeOut);
+                }
+            });
+        } else {
+            if (deleteFunction == null) {
+                this.checkAndDeleteElement(element, timeOut);
+            } else {
+                deleteFunction(messages, timeOut);
+            }
+        }
+    },
+    checkAndDeleteElement(element, timeOut) {
+        if (element.isArray) {
+            for(let message in element) {
+                element.delete(timeOut);
+            }
+        } else {
+            element.delete(timeOut);
+        }                        
     }
 });
