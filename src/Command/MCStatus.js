@@ -14,9 +14,11 @@ module.exports = Command.extend({
     dependencies: {
         'https': 'https'
     },
-    processMessage: function (message, tokens) {
+    processMessage: function (message, tokens, timeOut) {
         var i18n = this.i18n;
-        return new Promise(function(resolve, reject) {
+        var removeFunction = this.deleteMessage;
+        var deleteFunction = this.checkAndDeleteElement;
+        
             try {
                 this.https.get("https://status.mojang.com/check", res => {
                     let status = "";
@@ -29,7 +31,7 @@ module.exports = Command.extend({
                             status = JSON.parse(status);
                         }
                         catch (error) {
-                            resolve(message.channel.send(i18n.__mf(messages.error)));
+                            removeFunction(message.channel.send(i18n.__mf(messages.error)), timeOut, deleteFunction);
                             return;
                         }
                         let formattedStatus = {};
@@ -43,13 +45,12 @@ module.exports = Command.extend({
                             if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
                             else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
                         }
-                        if (errors.length == 0) resolve(message.channel.send(i18n.__mf(messages.ok)));
-                        else resolve(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})));
+                        if (errors.length == 0) removeFunction(message.channel.send(i18n.__mf(messages.ok)), timeOut, deleteFunction);
+                        else removeFunction(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})), timeOut, deleteFunction);
                     });
                 });
             } catch (error) {
-                resolve(message.channel.send(i18n.__mf(messages.error)));
+                removeFunction(message.channel.send(i18n.__mf(messages.error)), timeOut);
             } 
-        });
     }
 });
