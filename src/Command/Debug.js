@@ -27,9 +27,9 @@ module.exports = Command.extend({
 
     processMessage: function (message, tokens) {
         if (this.version) {
-            message.channel.send(this.i18n.__mf(messages.success, {key: this.version}));
+            return message.channel.send(this.i18n.__mf(messages.success, {key: this.version}));
         } else {
-            message.channel.send(this.i18n.__mf(messages.error));
+            return message.channel.send(this.i18n.__mf(messages.error));
         }
     }
 });

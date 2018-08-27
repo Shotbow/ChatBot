@@ -20,33 +20,35 @@ module.exports = Command.extend({
         'Cache': 'cache'
     },
     processMessage: function (message, tokens) {
-        this.fetchServerlist(serverList => {
-            if (serverList === false) {
-                message.channel.send(this.i18n.__mf(messages.errorChecking));
-                return;
-            }
-            tokens.shift();
-            let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
+        return new Promise(function(resolve, reject) {
+            this.fetchServerlist(serverList => {
+                if (serverList === false) {
+                    resolve(message.channel.send(this.i18n.__mf(messages.errorChecking)));
+                    return;
+                }
+                tokens.shift();
+                let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
 
-            if (key === 'help') {
-                let list = Object.values(this.config.games.names)
-                    .map(item => {
-                        return '`' + item + '`'
-                    })
-                    .join(', ');
-                message.channel.send(this.i18n.__mf(messages.help, {names: list}));
-                return;
-            }
+                if (key === 'help') {
+                    let list = Object.values(this.config.games.names)
+                        .map(item => {
+                            return '`' + item + '`'
+                        })
+                        .join(', ');
+                    resolve(message.channel.send(this.i18n.__mf(messages.help, {names: list})));
+                    return;
+                }
 
-            if (typeof this.config.games.names[key] === 'undefined' || typeof serverList[key] === 'undefined') {
-                message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key}));
-                return;
-            }
+                if (typeof this.config.games.names[key] === 'undefined' || typeof serverList[key] === 'undefined') {
+                    resolve(message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key})));
+                    return;
+                }
 
-            let gameName = this.config.games.names[key];
-            let count = serverList[key];
+                let gameName = this.config.games.names[key];
+                let count = serverList[key];
 
-            message.channel.send(this.i18n.__mf(messages.result, {count: count, game: gameName}));
+                resolve(message.channel.send(this.i18n.__mf(messages.result, {count: count, game: gameName})));
+            }); 
         });
     },
     getGameKey: function (requestedGame, room) {

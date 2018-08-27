@@ -21,6 +21,6 @@ module.exports = Command.extend({
         embed.addField('東京', jst.format('lll'));
         embed.setTimestamp(now);
 
-        message.channel.send(embed);
+        return message.channel.send(embed);
     }
 });

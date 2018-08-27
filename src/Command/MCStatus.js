@@ -16,39 +16,40 @@ module.exports = Command.extend({
     },
     processMessage: function (message, tokens) {
         var i18n = this.i18n;
-        try {
-            this.https.get("https://status.mojang.com/check", res => {
-                let status = "";
-                res.setEncoding("utf8");
-                res.on("data", data => {
-                    status += data;
-                });
-                res.on("end", () => {
-                    try {
-                        status = JSON.parse(status);
-                    }
-                    catch (error) {
-                        message.channel.send(i18n.__mf(messages.error));
-                        return;
-                    }
-                    let formattedStatus = {};
-                    for (let i = 0; i < status.length; i++) {
-                        for (let key in status[i]) {
-                            formattedStatus[key] = status[i][key];
+        return new Promise(function(resolve, reject) {
+            try {
+                this.https.get("https://status.mojang.com/check", res => {
+                    let status = "";
+                    res.setEncoding("utf8");
+                    res.on("data", data => {
+                        status += data;
+                    });
+                    res.on("end", () => {
+                        try {
+                            status = JSON.parse(status);
                         }
-                    }
-                    let errors = [];
-                    for (let key in formattedStatus) {
-                        if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
-                        else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
-                    }
-                    if (errors.length == 0) message.channel.send(i18n.__mf(messages.ok));
-                    else message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")}));
+                        catch (error) {
+                            resolve(message.channel.send(i18n.__mf(messages.error)));
+                            return;
+                        }
+                        let formattedStatus = {};
+                        for (let i = 0; i < status.length; i++) {
+                            for (let key in status[i]) {
+                                formattedStatus[key] = status[i][key];
+                            }
+                        }
+                        let errors = [];
+                        for (let key in formattedStatus) {
+                            if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
+                            else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
+                        }
+                        if (errors.length == 0) resolve(message.channel.send(i18n.__mf(messages.ok)));
+                        else resolve(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})));
+                    });
                 });
-            });
-        }
-        catch (error) {
-            message.channel.send(i18n.__mf(messages.error));
-        }
+            } catch (error) {
+                resolve(message.channel.send(i18n.__mf(messages.error)));
+            } 
+        });
     }
 });

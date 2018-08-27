@@ -4,6 +4,6 @@ module.exports = Command.extend({
     commandName: 'ip',
     commandAliases: ['address', 'server'],
     processMessage: function (message, tokens) {
-        message.channel.send(this.i18n.__mf("Come join me on Shotbow using the IP `play.shotbow.net`!"));
+        return message.channel.send(this.i18n.__mf("Come join me on Shotbow using the IP `play.shotbow.net`!"));
     }
 });

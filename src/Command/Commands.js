@@ -15,6 +15,6 @@ module.exports = Command.extend({
         }
 
         let commandString = advertisableList.join(", ");
-        message.channel.send(this.i18n.__mf('All available commands: {commands}', {commands: commandString}));
+        return message.channel.send(this.i18n.__mf('All available commands: {commands}', {commands: commandString}));
     }
 });

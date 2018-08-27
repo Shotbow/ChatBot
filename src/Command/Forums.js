@@ -19,19 +19,17 @@ module.exports = Command.extend({
                     return '`' + item + '`'
                 })
                 .join(', ');
-            message.channel.send(this.i18n.__mf(messages.help, {names: list}));
-            return;
+            return message.channel.send(this.i18n.__mf(messages.help, {names: list}));
         }
 
         if (typeof this.config.games.names[key] === 'undefined') {
-            message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key}));
-            return;
+            return message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key}));
         }
 
         let gameName = this.config.games.names[key];
         let URL = this.config.games.forums[key];
 
-        message.channel.send(this.i18n.__mf(messages.result, {link: URL, game: gameName}));
+        return message.channel.send(this.i18n.__mf(messages.result, {link: URL, game: gameName}));
     },
     getGameKey: function (requestedGame, room) {
         if (!requestedGame) {
