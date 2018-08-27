@@ -7,6 +7,6 @@ module.exports = Command.extend({
         let profiles = this.config.profiles;
         let formattedProfiles = [];
         for (let key in profiles) formattedProfiles.push(`${key}: <${profiles[key]}>`);
-        message.channel.send(this.i18n.__mf('You can follow us online at the following links:\n') + formattedProfiles.join("\n"));
+        return message.channel.send(this.i18n.__mf('You can follow us online at the following links:\n') + formattedProfiles.join("\n"));
     }
 });

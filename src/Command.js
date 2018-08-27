@@ -29,11 +29,26 @@ module.exports = BotModule.extend({
             }
 
             if (command === self.commandName || self.commandAliases.includes(command)) {
-                self.processMessage(message, tokens);
+                let timeOut = this.config.messageRemoveDelay;
+                self.processMessage(message, tokens, timeOut).then(messages => {
+                    if (messages.isArray) {
+                        for(let message in messages) {
+                            message.delete(timeOut);
+                        }
+                    } else {
+                        messages.delete(timeOut);
+                    }
+                }).catch(error => {
+                    console.log(error.message);
+                });
+                message.delete(timeOut);
             }
         });
     },
     processMessage: function (message, tokens) {
 
+    },
+    removeMessage: function (promise, timeOut) {
+        
     }
 });
