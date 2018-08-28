@@ -31,7 +31,7 @@ module.exports = BotModule.extend({
 
             if (command === self.commandName || self.commandAliases.includes(command)) {
                 let timeOut = this.config.messageRemoveDelay;
-                let promise = self.processMessage(message, tokens, timeOut);
+                let promise = self.processMessage(message, tokens);
                 
                 if (!self.shouldDeleteMessage) {
                     return;
@@ -39,51 +39,24 @@ module.exports = BotModule.extend({
                 
                 message.delete(timeOut);
                 
-                if (promise == null) {
-                    return;   
-                }
-                
                 promise.then(messages => {
-                    self.deleteMessage(messages, timeOut);
+                    this.deleteMessage(messages, timeOut);
                 }).catch(error => {
                     console.log(error.message);
                 });
             }
         });
     },
-    processMessage: function (message, tokens, timeOut) {
+    processMessage: function (message, tokens) {
 
     },
-    deleteMessage(element, timeOut, self) {
-        if (self == null && !this.shouldDeleteMessage) {
-            return;
-        } else if (self != null && !self.shouldDeleteMessage) {
-            return;
-        }
-        
-        if (element instanceof Promise) {
-            element.then(messages => {
-                if (self == null) {
-                    this.checkAndDeleteElement(messages, timeOut);
-                } else {
-                    self.checkAndDeleteElement(messages, timeOut);
-                }
-            });
-        } else {
-            if (self == null) {
-                this.checkAndDeleteElement(element, timeOut);
-            } else {
-                self.checkAndDeleteElement(messages, timeOut);
-            }
-        }
-    },
-    checkAndDeleteElement(element, timeOut) {
+    deleteMessage(element, timeOut) {
         if (element.isArray) {
             for(let message in element) {
                 element.delete(timeOut);
             }
         } else {
             element.delete(timeOut);
-        }                        
+        }  
     }
 });
