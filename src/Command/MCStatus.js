@@ -16,8 +16,7 @@ module.exports = Command.extend({
     },
     processMessage: function (message, tokens, timeOut) {
         var i18n = this.i18n;
-        var removeFunction = this.deleteMessage;
-        var deleteFunction = this.checkAndDeleteElement;
+        var self = this;
         
             try {
                 this.https.get("https://status.mojang.com/check", res => {
@@ -31,7 +30,7 @@ module.exports = Command.extend({
                             status = JSON.parse(status);
                         }
                         catch (error) {
-                            removeFunction(message.channel.send(i18n.__mf(messages.error)), timeOut, deleteFunction);
+                            self.deleteMessage(message.channel.send(i18n.__mf(messages.error)), timeOut, self);
                             return;
                         }
                         let formattedStatus = {};
@@ -45,12 +44,12 @@ module.exports = Command.extend({
                             if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
                             else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
                         }
-                        if (errors.length == 0) removeFunction(message.channel.send(i18n.__mf(messages.ok)), timeOut, deleteFunction);
-                        else removeFunction(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})), timeOut, deleteFunction);
+                        if (errors.length == 0) self.deleteMessage(message.channel.send(i18n.__mf(messages.ok)), timeOut, self);
+                        else self.deleteMessage(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})), timeOut, self);
                     });
                 });
             } catch (error) {
-                removeFunction(message.channel.send(i18n.__mf(messages.error)), timeOut);
+                self.deleteMessage(message.channel.send(i18n.__mf(messages.error)), timeOut);
             } 
     }
 });

@@ -5,6 +5,7 @@ module.exports = BotModule.extend({
     commandName: null,
     commandAliases: [],
     advertisable: true,
+    shouldDeleteMessage: false,
     i18n: null,
     config: null,
     dependencies: {
@@ -31,34 +32,48 @@ module.exports = BotModule.extend({
             if (command === self.commandName || self.commandAliases.includes(command)) {
                 let timeOut = this.config.messageRemoveDelay;
                 let promise = self.processMessage(message, tokens, timeOut);
-                if (promise != null) {
-                    promise.then(messages => {
-                        self.deleteMessage(messages, timeOut);
-                    }).catch(error => {
-                        console.log(error.message);
-                    });
+                
+                if (!self.shouldDeleteMessage) {
+                    return;
                 }
+                
                 message.delete(timeOut);
+                
+                if (promise == null) {
+                    return;   
+                }
+                
+                promise.then(messages => {
+                    self.deleteMessage(messages, timeOut);
+                }).catch(error => {
+                    console.log(error.message);
+                });
             }
         });
     },
     processMessage: function (message, tokens, timeOut) {
 
     },
-    deleteMessage(element, timeOut, deleteFunction) {
+    deleteMessage(element, timeOut, self) {
+        if (self == null && !this.shouldDeleteMessage) {
+            return;
+        } else if (self != null && !self.shouldDeleteMessage) {
+            return;
+        }
+        
         if (element instanceof Promise) {
             element.then(messages => {
-                if (deleteFunction == null) {
+                if (self == null) {
                     this.checkAndDeleteElement(messages, timeOut);
                 } else {
-                    deleteFunction(messages, timeOut);
+                    self.checkAndDeleteElement(messages, timeOut);
                 }
             });
         } else {
-            if (deleteFunction == null) {
+            if (self == null) {
                 this.checkAndDeleteElement(element, timeOut);
             } else {
-                deleteFunction(messages, timeOut);
+                self.checkAndDeleteElement(messages, timeOut);
             }
         }
     },
