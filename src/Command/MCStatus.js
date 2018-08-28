@@ -14,42 +14,47 @@ module.exports = Command.extend({
     dependencies: {
         'https': 'https'
     },
-    processMessage: function (message, tokens, timeOut) {
+    processMessage: async function (message, tokens) {
+        return await this.fetchMojangStatus(message).then(resolve => {
+            return resolve;
+        }).catch(error => {
+            return message.channel.send(this.i18n.__mf(messages.error));
+        });
+    },
+    fetchMojangStatus: function(message) {
         var i18n = this.i18n;
+        var timeOut = this.config.messageRemoveDelay;
         var self = this;
-        
-            try {
-                this.https.get("https://status.mojang.com/check", res => {
-                    let status = "";
-                    res.setEncoding("utf8");
-                    res.on("data", data => {
-                        status += data;
-                    });
-                    res.on("end", () => {
-                        try {
-                            status = JSON.parse(status);
-                        }
-                        catch (error) {
-                            self.deleteMessage(message.channel.send(i18n.__mf(messages.error)), timeOut, self);
-                            return;
-                        }
-                        let formattedStatus = {};
-                        for (let i = 0; i < status.length; i++) {
-                            for (let key in status[i]) {
-                                formattedStatus[key] = status[i][key];
-                            }
-                        }
-                        let errors = [];
-                        for (let key in formattedStatus) {
-                            if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
-                            else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
-                        }
-                        if (errors.length == 0) self.deleteMessage(message.channel.send(i18n.__mf(messages.ok)), timeOut, self);
-                        else self.deleteMessage(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})), timeOut, self);
-                    });
+    
+        return new Promise(function(resolve, reject) {
+            self.https.get("https://status.mojang.com/check", res => {
+                let status = "";
+                res.setEncoding("utf8");
+                res.on("data", data => {
+                    status += data;
                 });
-            } catch (error) {
-                self.deleteMessage(message.channel.send(i18n.__mf(messages.error)), timeOut);
-            } 
+                res.on("end", () => {
+                    try {
+                        status = JSON.parse(status);
+                    } catch (error) {
+                        resolve(message.channel.send(i18n.__mf(messages.error)));
+                        return;
+                    }
+                    let formattedStatus = {};
+                    for (let i = 0; i < status.length; i++) {
+                        for (let key in status[i]) {
+                            formattedStatus[key] = status[i][key];
+                        }
+                    }
+                    let errors = [];
+                    for (let key in formattedStatus) {
+                        if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
+                        else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
+                    }
+                    if (errors.length == 0) resolve(message.channel.send(i18n.__mf(messages.ok)));
+                    else resolve(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})));
+                });
+            });
+        });
     }
 });
