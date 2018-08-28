@@ -10,6 +10,7 @@ const messages = {
 const cacheTTL = 10 * 1000; // 10 seconds in milliseconds
 
 module.exports = Command.extend({
+    shouldDeleteMessage: true,
     commandName: 'playercount',
     https: null,
     cache: null,
@@ -59,15 +60,14 @@ module.exports = Command.extend({
         return requestedGame;
     },
     fetchServerlist: function() {
-        var self = this;
-        return new Promise(function(resolve, reject) {
-            let cachedData = self.cache.get(self.cacheKey);
+        return new Promise((resolve, reject) => {
+            let cachedData = this.cache.get(this.cacheKey);
             if (cachedData) {
                 resolve(cachedData);
                 return;
             }
             
-            self.https.get('https://shotbow.net/serverList.json', res => {
+            this.https.get('https://shotbow.net/serverList.json', res => {
                 let responseData = '';
                 res.setEncoding('utf8');
                 res.on('data', data => {
@@ -78,7 +78,7 @@ module.exports = Command.extend({
                     try {
                         serverList = JSON.parse(responseData);
                         if (serverList !== false) {
-                            self.cache.set(self.cacheKey, serverList, cacheTTL);
+                            this.cache.set(this.cacheKey, serverList, cacheTTL);
                         }
                         resolve(serverList);
                     } catch (e) {

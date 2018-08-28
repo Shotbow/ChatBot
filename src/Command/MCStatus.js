@@ -22,12 +22,8 @@ module.exports = Command.extend({
         });
     },
     fetchMojangStatus: function(message) {
-        var i18n = this.i18n;
-        var timeOut = this.config.messageRemoveDelay;
-        var self = this;
-    
-        return new Promise(function(resolve, reject) {
-            self.https.get("https://status.mojang.com/check", res => {
+        return new Promise((resolve, reject) => {
+            this.https.get("https://status.mojang.com/check", res => {
                 let status = "";
                 res.setEncoding("utf8");
                 res.on("data", data => {
@@ -37,7 +33,7 @@ module.exports = Command.extend({
                     try {
                         status = JSON.parse(status);
                     } catch (error) {
-                        resolve(message.channel.send(i18n.__mf(messages.error)));
+                        resolve(message.channel.send(this.i18n.__mf(messages.error)));
                         return;
                     }
                     let formattedStatus = {};
@@ -48,11 +44,11 @@ module.exports = Command.extend({
                     }
                     let errors = [];
                     for (let key in formattedStatus) {
-                        if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
-                        else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
+                        if (formattedStatus[key] == "yellow") errors.push(this.i18n.__mf(messages.serviceIssue, {service: key}));
+                        else if (formattedStatus[key] == "red") errors.push(this.i18n.__mf(messages.serviceDown, {service: key}));
                     }
-                    if (errors.length == 0) resolve(message.channel.send(i18n.__mf(messages.ok)));
-                    else resolve(message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")})));
+                    if (errors.length == 0) resolve(message.channel.send(this.i18n.__mf(messages.ok)));
+                    else resolve(message.channel.send(this.i18n.mf(messages.issues, {errors: errors.join("\n")})));
                 });
             });
         });
