@@ -12,8 +12,6 @@ module.exports = {
         aliases: {
             'hcf': 'hcfactions',
             'anni': 'annihilation',
-            'civ-war': 'civwar',
-            'civcraft': 'civwar',
             'minetheftauto': 'mta',
             'gc': 'ghostcraft',
             'ghost': 'ghostcraft',
@@ -28,7 +26,6 @@ module.exports = {
             'dbv': 'Death by Void',
             'smash': 'SMASH',
             'slaughter': 'Slaughter',
-            'civwar': 'Civ-War',
             'gg': 'GG',
             'mta': 'Mine Theft Auto',
             'ghostcraft': 'GhostCraft',
@@ -52,7 +49,6 @@ module.exports = {
             'dbv': 'https://shotbow.net/forum/forums/dbv/',
             'smash': 'https://shotbow.net/forum/forums/smash/',
             'slaughter': 'https://shotbow.net/forum/forums/slaughter/',
-            'civwar': 'https://www.civ-war.com/forum',
             'gg': 'https://shotbow.net/forum/forums/gg/',
             'mta': 'https://shotbow.net/forum/forums/minetheftauto/',
             'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/'
