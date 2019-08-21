@@ -10,6 +10,7 @@ const messages = {
 module.exports = Command.extend({
     commandName: 'fry',
     advertisable: false,
+    shouldDeleteMessage: true,
     processMessage: function (message, tokens) {
         tokens.shift();
         let victim = tokens.join(" ");
