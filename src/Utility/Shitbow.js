@@ -10,6 +10,7 @@ module.exports = BotModule.extend({
                 case message.content.toLowerCase().match(/(?<!mi)[s\$5ｓ]+(ｈ|h|\|\-\|n)+[ｉi1|]+[ｔt7]+(?!(tah|tim|ake))/) !== null:
                 case message.content.toLowerCase().match(/[fｆ]+[uｕ]+[cｃ]+[ｋk]+/) !== null:
                     message.delete();
+            }
         });
     }
 });
