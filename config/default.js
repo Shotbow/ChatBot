@@ -16,6 +16,7 @@ module.exports = {
         'Network Owner': '441611057878794240'
     },
     moderationLogsRoom: '468053291717361664',
+    deletedLogsRoom: '615737464643911680',
     games: {
         aliases: {
             'hcf': 'hcfactions',
