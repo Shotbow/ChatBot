@@ -7,7 +7,7 @@ const messages = {
 
 module.exports = Command.extend({
     commandName: 'debug',
-    commandAliases: ['version', 'hash'],
+    commandAliases: ['commit', 'hash'],
     advertisable: false,
     proc: null,
     version: null,
