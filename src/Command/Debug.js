@@ -1,7 +1,7 @@
 const Command = require('../Command');
 
 const messages = {
-    success: 'I am currently operating off commit `{key}`.\nGitHub: https://github.com/Shotbow/ChatBot/commit/{key}',
+    success: 'I am currently operating off commit `{key}`.\nGitHub: <https://github.com/Shotbow/ChatBot/commit/{key}>',
     error: 'I do not know what version I am currently running.',
 };
 
