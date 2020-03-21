@@ -2,8 +2,8 @@ const BotModule = require('../BotModule');
 
 module.exports = BotModule.extend({
 	config: null,
-    dependencies: {
-        'config': 'config'
+	dependencies: {
+		'config': 'config'
 	},
 	initialize: function (dependencyGraph) {
 		this._super(dependencyGraph);
