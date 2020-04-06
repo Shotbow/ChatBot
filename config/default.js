@@ -8,9 +8,18 @@ module.exports = {
         }
     },
     swearRegexes: [
-        "([s5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+|[ｋk]+[uｕ]+[ｓs5]+[ｏo0]+|クソ|ｸｿ|シット|しっと)+(([ｂb8]|\\|3)+[ｏo0]+[wｗ]+|弓|ボウ|ぼう)+",
-        "(?<!mi)[s\\$5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+(?!(tah|tim|ake))",
-        "[fｆ]+[uｕ]+[cｃ]+[ｋk]+"
+        {
+            regex: "([s5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+|[ｋk]+[uｕ]+[ｓs5]+[ｏo0]+|クソ|ｸｿ|シット|しっと)+(([ｂb8]|\\|3)+[ｏo0]+[wｗ]+|弓|ボウ|ぼう)+",
+            stripWhitespace: true
+        },
+        {
+            regex: "(?<!mi)[s\\$5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+(?!(tah|tim|ake))",
+            stripWhitespace: false
+        },
+        {
+            regex: "[fｆ]+[uｕ]+[cｃ]+[ｋk]+",
+            stripWhitespace: false
+        }
     ],
     zaplist: ['173556767383355392'],
     administratorRoles: {
