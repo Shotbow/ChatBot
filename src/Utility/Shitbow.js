@@ -9,7 +9,7 @@ module.exports = BotModule.extend({
         this._super(dependencyGraph);
         this.discordClient.on('message', message => {
             for (const i in this.config.swearRegexes) {
-				const content = (this.config.swearRegexes[i].stripWhitespace) ? message.content.replace(/\s/g,'').toLowerCase() : message.content.toLowerCase();
+                const content = (this.config.swearRegexes[i].stripWhitespace) ? message.content.replace(/\s/g,'').toLowerCase() : message.content.toLowerCase();
                 const regex = new RegExp(this.config.swearRegexes[i].regex);
                 if (content.match(regex)) {
                     message.delete();
