@@ -14,9 +14,15 @@ module.exports = Command.extend({
     dependencies: {
         'https': 'https'
     },
-    processMessage: function (message, tokens) {
-        var i18n = this.i18n;
-        try {
+    processMessage: async function (message, tokens) {
+        return await this.fetchMojangStatus(message).then(resolve => {
+            return resolve;
+        }).catch(error => {
+            return message.channel.send(this.i18n.__mf(messages.error));
+        });
+    },
+    fetchMojangStatus: function(message) {
+        return new Promise((resolve, reject) => {
             this.https.get("https://status.mojang.com/check", res => {
                 let status = "";
                 res.setEncoding("utf8");
@@ -26,9 +32,8 @@ module.exports = Command.extend({
                 res.on("end", () => {
                     try {
                         status = JSON.parse(status);
-                    }
-                    catch (error) {
-                        message.channel.send(i18n.__mf(messages.error));
+                    } catch (error) {
+                        resolve(message.channel.send(this.i18n.__mf(messages.error)));
                         return;
                     }
                     let formattedStatus = {};
@@ -39,16 +44,13 @@ module.exports = Command.extend({
                     }
                     let errors = [];
                     for (let key in formattedStatus) {
-                        if (formattedStatus[key] == "yellow") errors.push(i18n.__mf(messages.serviceIssue, {service: key}));
-                        else if (formattedStatus[key] == "red") errors.push(i18n.__mf(messages.serviceDown, {service: key}));
+                        if (formattedStatus[key] == "yellow") errors.push(this.i18n.__mf(messages.serviceIssue, {service: key}));
+                        else if (formattedStatus[key] == "red") errors.push(this.i18n.__mf(messages.serviceDown, {service: key}));
                     }
-                    if (errors.length == 0) message.channel.send(i18n.__mf(messages.ok));
-                    else message.channel.send(i18n.mf(messages.issues, {errors: errors.join("\n")}));
+                    if (errors.length == 0) resolve(message.channel.send(this.i18n.__mf(messages.ok)));
+                    else resolve(message.channel.send(this.i18n.mf(messages.issues, {errors: errors.join("\n")})));
                 });
             });
-        }
-        catch (error) {
-            message.channel.send(i18n.__mf(messages.error));
-        }
+        });
     }
 });

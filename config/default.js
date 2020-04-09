@@ -7,13 +7,34 @@ module.exports = {
             '368751492963893248': 'ja'
         }
     },
+    swearRegexes: [
+        {
+            regex: "([s5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+|[ｋk]+[uｕ]+[ｓs5]+[ｏo0]+|クソ|ｸｿ|シット|しっと)+(([ｂb8]|\\|3)+[ｏo0]+[wｗ]+|弓|ボウ|ぼう)+",
+            stripWhitespace: true
+        },
+        {
+            regex: "(?<!mi)[s\\$5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+(?!(tah|tim|ake))",
+            stripWhitespace: false
+        },
+        {
+            regex: "[fｆ]+[uｕ]+[cｃ]+[ｋk]+",
+            stripWhitespace: false
+        }
+    ],
     zaplist: ['173556767383355392'],
+    administratorRoles: {
+        'Moderator': '258257313448722434',
+        'Administrator': '223821346763833344',
+        'Server Administrator': '223820787784744960',
+        'Network Leadership': '440505209580683274',
+        'Network Owner': '441611057878794240'
+    },
+    moderationLogsRoom: '468053291717361664',
+    deletedLogsRoom: '615737464643911680',
     games: {
         aliases: {
             'hcf': 'hcfactions',
             'anni': 'annihilation',
-            'civ-war': 'civwar',
-            'civcraft': 'civwar',
             'minetheftauto': 'mta',
             'gc': 'ghostcraft',
             'ghost': 'ghostcraft',
@@ -28,7 +49,6 @@ module.exports = {
             'dbv': 'Death by Void',
             'smash': 'SMASH',
             'slaughter': 'Slaughter',
-            'civwar': 'Civ-War',
             'gg': 'GG',
             'mta': 'Mine Theft Auto',
             'ghostcraft': 'GhostCraft',
@@ -52,7 +72,6 @@ module.exports = {
             'dbv': 'https://shotbow.net/forum/forums/dbv/',
             'smash': 'https://shotbow.net/forum/forums/smash/',
             'slaughter': 'https://shotbow.net/forum/forums/slaughter/',
-            'civwar': 'https://www.civ-war.com/forum',
             'gg': 'https://shotbow.net/forum/forums/gg/',
             'mta': 'https://shotbow.net/forum/forums/minetheftauto/',
             'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/'
@@ -72,5 +91,6 @@ module.exports = {
         'Planet Minecraft': 'http://www.planetminecraft.com/server/minez-1398788/',
         'Minecraft Forum': 'http://minecraftforum.net/servers/160-shotbow',
         'MinecraftServers.org': 'http://minecraftservers.org/server/267066'
-    }
+    },
+    messageRemoveDelay: 60000
 }

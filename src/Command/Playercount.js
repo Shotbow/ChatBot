@@ -10,6 +10,7 @@ const messages = {
 const cacheTTL = 10 * 1000; // 10 seconds in milliseconds
 
 module.exports = Command.extend({
+    shouldDeleteMessage: true,
     commandName: 'playercount',
     https: null,
     cache: null,
@@ -19,11 +20,10 @@ module.exports = Command.extend({
         'https': 'https',
         'Cache': 'cache'
     },
-    processMessage: function (message, tokens) {
-        this.fetchServerlist(serverList => {
+    processMessage: async function (message, tokens) {
+        return await this.fetchServerlist().then(serverList => {
             if (serverList === false) {
-                message.channel.send(this.i18n.__mf(messages.errorChecking));
-                return;
+                return message.channel.send(this.i18n.__mf(messages.errorChecking));
             }
             tokens.shift();
             let key = this.getGameKey(tokens.join(' ').trim(), message.channel.id);
@@ -34,19 +34,19 @@ module.exports = Command.extend({
                         return '`' + item + '`'
                     })
                     .join(', ');
-                message.channel.send(this.i18n.__mf(messages.help, {names: list}));
-                return;
+                return message.channel.send(this.i18n.__mf(messages.help, {names: list}));
             }
 
             if (typeof this.config.games.names[key] === 'undefined' || typeof serverList[key] === 'undefined') {
-                message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key}));
-                return;
+                return message.channel.send(this.i18n.__mf(messages.errorBadKey, {key: key}));
             }
 
             let gameName = this.config.games.names[key];
             let count = serverList[key];
 
-            message.channel.send(this.i18n.__mf(messages.result, {count: count, game: gameName}));
+            return message.channel.send(this.i18n.__mf(messages.result, {count: count, game: gameName}));
+        }).catch(e => {
+            console.error(e);
         });
     },
     getGameKey: function (requestedGame, room) {
@@ -59,13 +59,14 @@ module.exports = Command.extend({
         }
         return requestedGame;
     },
-    fetchServerlist: function (callback) {
-        let cachedData = this.cache.get(this.cacheKey);
-        if (cachedData) {
-            callback(cachedData);
-            return;
-        }
-        try {
+    fetchServerlist: function() {
+        return new Promise((resolve, reject) => {
+            let cachedData = this.cache.get(this.cacheKey);
+            if (cachedData) {
+                resolve(cachedData);
+                return;
+            }
+            
             this.https.get('https://shotbow.net/serverList.json', res => {
                 let responseData = '';
                 res.setEncoding('utf8');
@@ -79,15 +80,12 @@ module.exports = Command.extend({
                         if (serverList !== false) {
                             this.cache.set(this.cacheKey, serverList, cacheTTL);
                         }
-                        callback(serverList);
+                        resolve(serverList);
                     } catch (e) {
-                        callback(false);
+                        resolve(false);
                     }
                 });
             });
-        } catch (e) {
-            console.error(e);
-            callback(false);
-        }
-    },
+        });
+    }
 });
