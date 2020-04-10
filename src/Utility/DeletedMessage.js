@@ -10,6 +10,7 @@ module.exports = BotModule.extend({
     initialize: function (dependencyGraph) {
         this._super(dependencyGraph);
         this.discordClient.on('messageDelete', message => {
+            if (message.guild == null) return;
             message.guild.channels.find('id', this.config.deletedLogsRoom).send({
                 embed: {
                     color: 0xff0000,
