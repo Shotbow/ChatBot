@@ -6,8 +6,8 @@ const messages = {
     error: "Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!",
     invalid: "It seems like you haven't provided a valid username or UUID. Please verify your input.",
     names: "I have retrieved the following information about `{input}`:\n{names}",
-    originalName: "- {name} (original)",
-    changedName: "- {name} (changed to at {date})",
+    originalName: "- `{name}` (original)",
+    changedName: "- `{name}` (changed to at {date})",
     usernameNotFound: "I could not find any players with that username.",
     uuidNotFound: "I could not find any players with that UUID.",
     incorrectUsage: "It looks like you did not provide a UUID or username. Please use `!whowas <UUID>` or `!whowas <username>`."
