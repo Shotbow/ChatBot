@@ -2,6 +2,7 @@ const Command = require('../Command');
 
 const uuidRegEx = RegExp('^[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$', 'i');
 const mcidRegEx = RegExp('^[a-z\\d_]{3,16}$', 'i');
+const maxDisplayed = 10;
 const messages = {
     error: "Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!",
     invalid: "It seems like you haven't provided a valid username or UUID. Please verify your input.",
@@ -75,12 +76,15 @@ module.exports = Command.extend({
     },
     processNames: function(names) {
         let nameHistory = [];
-        names.map(entry => {
-            if (entry.changedToAt) {
-                nameHistory.push(this.i18n.__mf(messages.changedName, { name: entry.name, date: this.moment(entry.changedToAt).format('ll') }));
-            } else {
-                nameHistory.push(this.i18n.__mf(messages.originalName, { name: entry.name }));
-            }
+
+        names
+            .splice(names.length - maxDisplayed)
+            .map(entry => {
+                if (entry.changedToAt) {
+                    nameHistory.push(this.i18n.__mf(messages.changedName, { name: entry.name, date: this.moment(entry.changedToAt).format('ll') }));
+                } else {
+                    nameHistory.push(this.i18n.__mf(messages.originalName, { name: entry.name }));
+                }
         });
 
         return nameHistory.join('\n');
@@ -90,7 +94,7 @@ module.exports = Command.extend({
             this.https.get(url, res => {
                 // We need to check if the status is 200, due to Mojang enforcing proper HTTP status codes
                 // In the case of success without content, 204 NO CONTENT is sent, which https accepts as success
-                if (res.statusCode != 200) {
+                if (res.statusCode !== 200) {
                     callback(null);
                     return;
                 }
