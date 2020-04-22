@@ -34,42 +34,49 @@ module.exports = Command.extend({
 
         let identifier = tokens[1];
         if (mcidRegEx.test(identifier)) {
-            let res = await this.fetchData(`https://api.mojang.com/users/profiles/minecraft/${identifier}`);
-            if (res === undefined) {
-                return message.channel.send(i18n.__mf(messages.usernameNotFound));
-            }
-            if (res === false) {
-                return message.channel.send(i18n.__mf(messages.error));
-            }
+            return await this.fetchData(`https://api.mojang.com/users/profiles/minecraft/${identifier}`)
+                .then(res => {
+                    identifier = res.id.replace('-', ''); // Remove any dashes from the UUID
 
-            identifier = res.id.replace('-', ''); // Remove any dashes from the UUID
-
-            res = await this.fetchData(`https://api.mojang.com/user/profiles/${identifier}/names`);
-            if (res === false) {
-                return message.channel.send(i18n.__mf(messages.error));
-            }
-
-            return message.channel.send(i18n.__mf(messages.names, {
-                input: tokens[1],
-                names: this.processNames(res),
-                url: moreInfoUrl + identifier
-            }));
+                    return this.fetchData(`https://api.mojang.com/user/profiles/${identifier}/names`);
+                })
+                .catch(reason => {
+                    if (reason === null) {
+                        return message.channel.send(i18n.__mf(messages.usernameNotFound));
+                    } else if (reason === false) {
+                        return message.channel.send(i18n.__mf(messages.error));
+                    }
+                })
+                .then(res => {
+                    return message.channel.send(i18n.__mf(messages.names, {
+                        input: tokens[1],
+                        names: this.processNames(res),
+                        url: moreInfoUrl + identifier
+                    }));
+                })
+                .catch(reason => {
+                    if (reason === false) {
+                        return message.channel.send(i18n.__mf(messages.error));
+                    }
+                });
         } else if (uuidRegEx.test(identifier)) {
             identifier = identifier.replace('-', ''); // Remove any dashes from the UUID
-
-            let res = await this.fetchData(`https://api.mojang.com/user/profiles/${identifier}/names`);
-            if (res === undefined) {
-                return message.channel.send(i18n.__mf(messages.uuidNotFound));
-            }
-            if (res === false) {
-                return message.channel.send(i18n.__mf(messages.error));
-            }
-
-            return message.channel.send(i18n.__mf(messages.names, {
-                input: tokens[1],
-                names: this.processNames(res),
-                url: moreInfoUrl + identifier
-            }));
+            return await this.fetchData(`https://api.mojang.com/user/profiles/${identifier}/names`)
+                .then(res => {
+                    return message.channel.send(i18n.__mf(messages.names, {
+                        input: tokens[1],
+                        names: this.processNames(res),
+                        url: moreInfoUrl + identifier
+                    }));
+                })
+                .catch(reason => {
+                    if (reason === null) {
+                        return message.channel.send(i18n.__mf(messages.uuidNotFound));
+                    }
+                    if (reason === false) {
+                        return message.channel.send(i18n.__mf(messages.error));
+                    }
+                });
         } else {
             return message.channel.send(i18n.__mf(messages.invalid));
         }
