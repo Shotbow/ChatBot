@@ -3,12 +3,14 @@ const Command = require('../Command');
 const uuidRegEx = RegExp('^[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$', 'i');
 const mcidRegEx = RegExp('^[a-z\\d_]{3,16}$', 'i');
 const maxDisplayed = 10;
+const moreInfoUrl = "https://namemc.com/search?q=";
 const messages = {
     error: "Uh oh, there seems to be an error retrieving data from the Mojang API with that input. Verify your input or try again later!",
     invalid: "It seems like you haven't provided a valid username or UUID. Please verify your input.",
-    names: "I have retrieved the following information about `{input}`:\n{names}",
+    names: "I have retrieved the following information about `{input}`:\n{names}\nSee full name history at {url}",
     originalName: "- `{name}` (original)",
     changedName: "- `{name}` (changed to at {date})",
+    moreNames: "- ... {amount} entries hidden ...",
     usernameNotFound: "I could not find any players with that username.",
     uuidNotFound: "I could not find any players with that UUID.",
     incorrectUsage: "It looks like you did not provide a UUID or username. Please use `!whowas <UUID>` or `!whowas <username>`."
@@ -51,7 +53,7 @@ module.exports = Command.extend({
                         return;
                     }
 
-                    message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res) }));
+                    message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res, identifier), url: moreInfoUrl + identifier }));
                 });
             });
         } else if (uuidRegEx.test(identifier)) {
@@ -68,7 +70,7 @@ module.exports = Command.extend({
                     return;
                 }
 
-                message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res) }));
+                message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res, identifier), url: moreInfoUrl + identifier }));
             });
         } else {
             message.channel.send(i18n.__mf(messages.invalid));
@@ -76,7 +78,9 @@ module.exports = Command.extend({
     },
     processNames: function(names) {
         let nameHistory = [];
-
+        if (names.length > maxDisplayed) {
+            nameHistory.push(this.i18n.__mf(messages.moreNames, { amount: names.length - maxDisplayed }));
+        }
         names
             .splice(names.length - maxDisplayed)
             .map(entry => {
