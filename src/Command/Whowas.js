@@ -53,7 +53,7 @@ module.exports = Command.extend({
                         return;
                     }
 
-                    message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res, identifier), url: moreInfoUrl + identifier }));
+                    message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res), url: moreInfoUrl + identifier }));
                 });
             });
         } else if (uuidRegEx.test(identifier)) {
@@ -70,7 +70,7 @@ module.exports = Command.extend({
                     return;
                 }
 
-                message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res, identifier), url: moreInfoUrl + identifier }));
+                message.channel.send(i18n.__mf(messages.names, { input: tokens[1], names: this.processNames(res), url: moreInfoUrl + identifier }));
             });
         } else {
             message.channel.send(i18n.__mf(messages.invalid));
