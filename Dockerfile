@@ -14,4 +14,5 @@ RUN npm install --production
 # Bundle app source
 COPY . .
 
+ENV NODE_ENV=production
 CMD [ "npm", "start" ]
