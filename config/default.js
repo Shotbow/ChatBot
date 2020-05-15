@@ -92,5 +92,10 @@ module.exports = {
         'Minecraft Forum': 'http://minecraftforum.net/servers/160-shotbow',
         'MinecraftServers.org': 'http://minecraftservers.org/server/267066'
     },
-    messageRemoveDelay: 60000
+    messageRemoveDelay: 60000,
+    pingspam: {
+        threshold: 5,
+        timespan: 30000,
+        cooldown: 5000
+    }
 }
