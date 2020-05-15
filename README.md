@@ -20,8 +20,8 @@ a variety of options.
 
 2. Add a `config/production.js` configuration file. The `docker build`-command sets
 the `NODE_ENV` to `production`. The [config](https://www.npmjs.com/package/config) package
-will automatically overwrite any values defined in `config/production.js` with those
-defined in `config/default.js`.
+will automatically overwrite any values defined in `config/default.js` with those
+defined in `config/production.js`.
 
 3. If you only want to set the token, you can simply pass it on in the `docker run`
 command: `docker run -e TOKEN=<YOUR_TOKEN> -d --name chatbot --restart=always chatbot`.
