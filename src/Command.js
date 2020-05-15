@@ -31,18 +31,17 @@ module.exports = BotModule.extend({
             if (command === this.commandName || this.commandAliases.includes(command)) {
                 let timeOut = this.config.messageRemoveDelay;
                 let promise = this.processMessage(message, tokens);
-                
+
                 if (!this.shouldDeleteMessage) {
                     return;
                 }
-                
+
                 message.delete(timeOut).catch(err => {/*do nothing*/});
-                
+
                 promise.then(messages => {
                     this.deleteMessage(messages, timeOut);
                 }).catch(error => {
                     console.error(error.message);
-                    done();
                 });
             }
         });
@@ -57,6 +56,6 @@ module.exports = BotModule.extend({
             }
         } else {
             element.delete(timeOut).catch(err => {/*do nothing*/});
-        }  
+        }
     }
 });
