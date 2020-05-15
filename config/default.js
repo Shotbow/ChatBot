@@ -96,6 +96,6 @@ module.exports = {
     pingspam: {
         threshold: 5,
         timespan: 30000,
-        cooldown: 5000
+        cooldown: 60000
     }
 }
