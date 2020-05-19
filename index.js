@@ -57,4 +57,4 @@ client.on('ready', () => {
     console.log("Successfully logged in!");
 });
 
-client.login(config.token);
+client.login(process.env.TOKEN ? process.env.TOKEN : config.token);
