@@ -11,7 +11,8 @@ module.exports = BotModule.extend({
     initialize: function (dependencyGraph) {
         this._super(dependencyGraph);
         this.discordClient.on('message', (message) => {
-            if (message.guild == null) return; // People can DM the bot, in which case guild == null
+            if (!message.guild) return; // People can DM the bot, in which case guild == null
+            if (!message.member) return; // Some messages don't appear to have a member connected to it
 
             /* If the member is already on cooldown, delete their message */
             const id = message.member.user.id;
