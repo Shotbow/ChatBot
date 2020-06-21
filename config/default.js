@@ -39,7 +39,8 @@ module.exports = {
             'gc': 'ghostcraft',
             'ghost': 'ghostcraft',
             'mine theft auto': 'mta',
-            'death by void': 'dbv'
+            'death by void': 'dbv',
+            'when in rogue': 'wir'
         },
         names: {
             'all': 'Shotbow',
@@ -52,7 +53,8 @@ module.exports = {
             'gg': 'GG',
             'mta': 'Mine Theft Auto',
             'ghostcraft': 'GhostCraft',
-            'lobby': 'Lobby'
+            'lobby': 'Lobby',
+            'wir': 'When in Rogue'
         },
         rooms: {
             '228706232133746688': 'annihilation',
@@ -62,7 +64,8 @@ module.exports = {
             '228706314233184256': 'mta',
             '228706218351394816': 'minez',
             '228706292913537027': 'slaughter',
-            '228706345807904768': 'smash'
+            '228706345807904768': 'smash',
+            '703452304493510757': 'wir'
         },
         forums: {
             'all': 'https://shotbow.net/forums/',
@@ -74,7 +77,8 @@ module.exports = {
             'slaughter': 'https://shotbow.net/forum/forums/slaughter/',
             'gg': 'https://shotbow.net/forum/forums/gg/',
             'mta': 'https://shotbow.net/forum/forums/minetheftauto/',
-            'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/'
+            'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/',
+            'wir': 'https://shotbow.net/forum/forums/wheninrogue/'
         }
     },
     profiles: {
