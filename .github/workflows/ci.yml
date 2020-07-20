@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  IMAGE_NAME: chatbot
+  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Retrieve version from package.json
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Docker build
+        run: docker build -t $IMAGE_NAME .
+
+      - name: Docker login
+        run: echo "$REGISTRY_PASSWORD" | docker login "$REGISTRY_HOST" -u "$REGISTRY_USERNAME" --password-stdin
+
+      - name: Push to Dockerhub
+        run: |
+          FULL_IMAGE_NAME=$(${{ secrets.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version }})
+
+          docker tag $IMAGE_NAME $FULL_IMAGE_NAME
+          docker push $FULL_IMAGE_NAME
