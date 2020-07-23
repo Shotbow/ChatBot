@@ -2,8 +2,8 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 env:
   IMAGE_NAME: chatbot
@@ -15,9 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Retrieve version from package.json
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
+      - name: Extract version from ref
+        id: extract-version
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\/v/}
 
       - name: Docker build
         run: docker build -t $IMAGE_NAME .
@@ -27,7 +27,7 @@ jobs:
 
       - name: Push to Dockerhub
         run: |
-          FULL_IMAGE_NAME=$(${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version }})
+          FULL_IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.extract-version.outputs.version }}"
 
           docker tag $IMAGE_NAME $FULL_IMAGE_NAME
           docker push $FULL_IMAGE_NAME
