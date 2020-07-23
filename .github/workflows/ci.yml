@@ -7,8 +7,6 @@ on:
 
 env:
   IMAGE_NAME: chatbot
-  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
 jobs:
   ci:
@@ -25,11 +23,11 @@ jobs:
         run: docker build -t $IMAGE_NAME .
 
       - name: Docker login
-        run: echo "$REGISTRY_PASSWORD" | docker login "$REGISTRY_HOST" -u "$REGISTRY_USERNAME" --password-stdin
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Push to Dockerhub
         run: |
-          FULL_IMAGE_NAME=$(${{ secrets.REGISTRY_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version }})
+          FULL_IMAGE_NAME=$(${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.package-version.outputs.current-version }})
 
           docker tag $IMAGE_NAME $FULL_IMAGE_NAME
           docker push $FULL_IMAGE_NAME
