@@ -10,7 +10,7 @@ module.exports = BotModule.extend({
         this.discordClient.on('message', message => {
             let member = message.member;
             let hasRoles = member !== null && typeof member.roles !== 'undefined';
-            if (hasRoles && member.roles.has(message.guild.roles.find("name", "Muted").id)) {
+            if (hasRoles && member.roles.cache.has(this.config.mutedRole)) {
                 message.delete();
             }
         });

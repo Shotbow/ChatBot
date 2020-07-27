@@ -11,10 +11,13 @@ module.exports = BotModule.extend({
         this._super(dependencyGraph);
         this.discordClient.on('messageDelete', message => {
             if (message.guild == null) return;
-            message.guild.channels.find('id', this.config.deletedLogsRoom).send({
+            message.guild.channels.cache.get(this.config.deletedLogsRoom).send({
                 embed: {
                     color: 0xff0000,
-                    title: this.i18n.__mf("Deleted message authored by @{username}#{discriminator}", {username: message.author.username, discriminator: message.author.discriminator}),
+                    title: this.i18n.__mf("Deleted message authored by @{username}#{discriminator}", {
+                        username: message.author.username,
+                        discriminator: message.author.discriminator
+                    }),
                     description: message.content,
                     timestamp: new Date(),
                     footer: {
@@ -23,7 +26,7 @@ module.exports = BotModule.extend({
                     }
                 }
             })
-                .catch(error => console.log("Not enough permissions to send a message to the moderation room."));
+                .catch(() => console.log("Not enough permissions to send a message to the moderation room."));
         });
     }
 });

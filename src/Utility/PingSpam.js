@@ -1,4 +1,5 @@
 const BotModule = require('../BotModule');
+const Discord = require("discord.js");
 
 module.exports = BotModule.extend({
     config: null,
@@ -57,7 +58,7 @@ module.exports = BotModule.extend({
                 color: 0xff0000,
                 author: {
                     name: discordClient.user.username,
-                    icon_url: discordClient.user.avatarURL
+                    icon_url: discordClient.user.displayAvatarURL()
                 },
                 title: i18n.__mf("You are on a temporary cooldown on the Shotbow Discord"),
                 fields: [
@@ -72,7 +73,7 @@ module.exports = BotModule.extend({
                 ],
                 timestamp: new Date(),
                 footer: {
-                    icon_url: discordClient.user.avatarURL,
+                    icon_url: discordClient.user.displayAvatarURL(),
                     text: "Shotbow Chat Bot"
                 }
             }
@@ -90,7 +91,7 @@ module.exports = BotModule.extend({
                 color: 0x66ff00,
                 author: {
                     name: discordClient.user.username,
-                    icon_url: discordClient.user.avatarURL
+                    icon_url: discordClient.user.displayAvatarURL()
                 },
                 title: i18n.__mf("You can talk again on the Shotbow Discord"),
                 fields: [
@@ -101,20 +102,20 @@ module.exports = BotModule.extend({
                 ],
                 timestamp: new Date(),
                 footer: {
-                    icon_url: discordClient.user.avatarURL,
+                    icon_url: discordClient.user.displayAvatarURL(),
                     text: "Shotbow Chat Bot"
                 }
             }
         })
             .catch(() => {
-                message.guild.channels.find('id', this.config.moderationLogsRoom).send(i18n.__mf('In addition, I was unable to DM the user about their unmute. It is likely that they have DMs disabled.'))
+                message.guild.channels.cache.get(this.config.moderationLogsRoom).send(i18n.__mf('In addition, I was unable to DM the user about their unmute. It is likely that they have DMs disabled.'))
                     .catch(() => {
                         console.log("Not enough permissions to send a message to the moderation room.");
                     });
             });
     },
     notifyModerationChannel: function (message, config, i18n, discordClient) {
-        message.guild.channels.find('id', config.moderationLogsRoom).send({
+        message.guild.channels.cache.get(config.moderationLogsRoom).send({
             embed: {
                 color: 0xff0000,
                 title: i18n.__mf("@{username}#{discriminator} was put on cooldown after excessive pinging", {
@@ -124,7 +125,7 @@ module.exports = BotModule.extend({
                 timestamp: new Date(),
                 description: 'Channel: ' + message.channel,
                 footer: {
-                    icon_url: discordClient.user.avatarURL,
+                    icon_url: discordClient.user.displayAvatarURL(),
                     text: "Shotbow Chat Bot"
                 }
             }
