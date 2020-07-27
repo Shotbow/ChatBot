@@ -29,6 +29,7 @@ module.exports = {
         'Network Leadership': '440505209580683274',
         'Network Owner': '441611057878794240'
     },
+    mutedRole: '468154703138521088',
     moderationLogsRoom: '468053291717361664',
     deletedLogsRoom: '615737464643911680',
     games: {
