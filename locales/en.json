@@ -71,5 +71,6 @@
 	"@{username}#{discriminator} was put on cooldown after excessive pinging": "@{username}#{discriminator} was put on cooldown after excessive pinging",
 	"You can talk again on the Shotbow Discord": "You can talk again on the Shotbow Discord",
 	"Do not use pings excessively. If you are caught again, you can risk a permanent mute.": "Do not use pings excessively. If you are caught again, you can risk a permanent mute.",
-	"Come join me on Shotbow using the address `play.shotbow.net` and version 1.12.2!": "Come join me on Shotbow using the address `play.shotbow.net` and version 1.12.2!"
+	"Come join me on Shotbow using the address `play.shotbow.net` and version 1.12.2!": "Come join me on Shotbow using the address `play.shotbow.net` and version 1.12.2!",
+	"You may not mute yourself!": "You may not mute yourself!"
 }
