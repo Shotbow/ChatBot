@@ -5,7 +5,7 @@ const messages = {
     serviceIssue: "- {service} is having some issues",
     serviceDown: "- {service} is completely down",
     ok: "I just checked Mojang's servers, and everything seems to be working fine!",
-    issues: "I just checked Mojang's servers, and there appear to be some issues:\n",
+    issues: "I just checked Mojang's servers, and there appear to be some issues:\n{errors}",
 };
 
 module.exports = Command.extend({
@@ -17,11 +17,11 @@ module.exports = Command.extend({
     processMessage: async function (message, tokens) {
         return await this.fetchMojangStatus(message).then(resolve => {
             return resolve;
-        }).catch(error => {
+        }).catch(() => {
             return message.channel.send(this.i18n.__mf(messages.error));
         });
     },
-    fetchMojangStatus: function(message) {
+    fetchMojangStatus: function (message) {
         return new Promise((resolve, reject) => {
             this.https.get("https://status.mojang.com/check", res => {
                 let status = "";
@@ -44,11 +44,11 @@ module.exports = Command.extend({
                     }
                     let errors = [];
                     for (let key in formattedStatus) {
-                        if (formattedStatus[key] == "yellow") errors.push(this.i18n.__mf(messages.serviceIssue, {service: key}));
-                        else if (formattedStatus[key] == "red") errors.push(this.i18n.__mf(messages.serviceDown, {service: key}));
+                        if (formattedStatus[key] === "yellow") errors.push(this.i18n.__mf(messages.serviceIssue, {service: key}));
+                        else if (formattedStatus[key] === "red") errors.push(this.i18n.__mf(messages.serviceDown, {service: key}));
                     }
-                    if (errors.length == 0) resolve(message.channel.send(this.i18n.__mf(messages.ok)));
-                    else resolve(message.channel.send(this.i18n.mf(messages.issues, {errors: errors.join("\n")})));
+                    if (errors.length === 0) resolve(message.channel.send(this.i18n.__mf(messages.ok)));
+                    else resolve(message.channel.send(this.i18n.__mf(messages.issues, {errors: errors.join("\n")})));
                 });
             });
         });
