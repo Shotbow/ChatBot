@@ -15,7 +15,7 @@ module.exports = Command.extend({
         const jst = now.clone().tz('Asia/Tokyo');
         const gmt = now.clone().tz('Europe/London');
 
-        const embed = new this.Discord.RichEmbed();
+        const embed = new this.Discord.MessageEmbed();
         embed.addField('Dallas (Shotbow Time)', cdt.format('lll'));
         embed.addField('London', gmt.format('lll'));
         embed.addField('東京', jst.format('lll'));
