@@ -9,7 +9,7 @@ module.exports = Command.extend({
             return;
         }
 
-        message.delete();
+        message.delete().catch(() => {});
 
         let victim = message.mentions.members.first();
 

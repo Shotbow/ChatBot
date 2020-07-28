@@ -72,5 +72,7 @@
 	"You can talk again on the Shotbow Discord": "You can talk again on the Shotbow Discord",
 	"Do not use pings excessively. If you are caught again, you can risk a permanent mute.": "Do not use pings excessively. If you are caught again, you can risk a permanent mute.",
 	"Come join me on Shotbow using the address `play.shotbow.net` and version 1.12.2!": "Come join me on Shotbow using the address `play.shotbow.net` and version 1.12.2!",
-	"You may not mute yourself!": "You may not mute yourself!"
+	"You may not mute yourself!": "You may not mute yourself!",
+	"You may not warn yourself!": "You may not warn yourself!",
+	"You may not warn another Discord administrator!": "You may not warn another Discord administrator!"
 }
