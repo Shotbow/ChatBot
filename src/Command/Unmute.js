@@ -20,17 +20,17 @@ module.exports = Command.extend({
 
         let reason = tokens.slice(2).join(' ');
 
-        if (!reason || reason == '' || reason == null) {
+        if (!reason || reason === '' || reason == null) {
             message.member.user.send(this.i18n.__mf('Please use the correct format: `{command} <@User#9999> <Reason>`.', {command: tokens[0]}));
             return;
         }
 
-        message.guild.channels.find('id', this.config.moderationLogsRoom).send({
+        message.guild.channels.cache.get(this.config.moderationLogsRoom).send({
             embed: {
                 color: 0x66ff00,
                 author: {
                     name: message.member.user.username,
-                    icon_url: message.member.user.avatarURL
+                    icon_url: message.member.user.displayAvatarURL()
                 },
                 title: this.i18n.__mf("Unmuted @{username}#{discriminator}", {username: victim.user.username, discriminator: victim.user.discriminator}),
                 fields: [
@@ -41,19 +41,19 @@ module.exports = Command.extend({
                 ],
                 timestamp: new Date(),
                 footer: {
-                    icon_url: this.discordClient.user.avatarURL,
+                    icon_url: this.discordClient.user.displayAvatarURL(),
                     text: "Shotbow Chat Bot"
                 }
             }
         })
-            .catch(error => console.log("Not enough permissions to send a message to the moderation room."));
-        
+            .catch(() => console.log("Not enough permissions to send a message to the moderation room."));
+
         message.member.user.send({
             embed: {
                 color: 0x66ff00,
                 author: {
                     name: this.discordClient.user.username,
-                    icon_url: this.discordClient.user.avatarURL
+                    icon_url: this.discordClient.user.displayAvatarURL()
                 },
                 title: this.i18n.__mf("Successfully unmuted @{username}#{discriminator}", {username: victim.user.username, discriminator: victim.user.discriminator}),
                 fields: [
@@ -64,17 +64,17 @@ module.exports = Command.extend({
                 ],
                 timestamp: new Date(),
                 footer: {
-                    icon_url: this.discordClient.user.avatarURL,
+                    icon_url: this.discordClient.user.displayAvatarURL(),
                     text: "Shotbow Chat Bot"
                 }
             }
         })
-            .catch(error => {});
+            .catch(() => {});
 
-        victim.removeRole(message.guild.roles.find('name', 'Muted'))
+        victim.roles.remove(this.config.mutedRole)
             .catch(error => {
-                message.guild.channels.find('id', this.config.moderationLogsRoom).send(this.i18n.__mf('In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```', {error: error}))
-                    .catch(error => {
+                message.guild.channels.cache.get(this.config.moderationLogsRoom).send(this.i18n.__mf('In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```', {error: error}))
+                    .catch(() => {
                         console.log("Not enough permissions to send a message to the moderation room.");
                     });
             });
@@ -84,7 +84,7 @@ module.exports = Command.extend({
                 color: 0x66ff00,
                 author: {
                     name: this.discordClient.user.username,
-                    icon_url: this.discordClient.user.avatarURL
+                    icon_url: this.discordClient.user.displayAvatarURL()
                 },
                 title: this.i18n.__mf("You have been unmuted on the Shotbow Discord"),
                 fields: [
@@ -95,14 +95,14 @@ module.exports = Command.extend({
                 ],
                 timestamp: new Date(),
                 footer: {
-                    icon_url: this.discordClient.user.avatarURL,
+                    icon_url: this.discordClient.user.displayAvatarURL(),
                     text: "Shotbow Chat Bot"
                 }
             }
         })
-            .catch(error => {
-                message.guild.channels.find('id', this.config.moderationLogsRoom).send(this.i18n.__mf('In addition, I was unable to DM the user about their unmute. It is likely that they have DMs disabled.'))
-                    .catch(error => {
+            .catch(() => {
+                message.guild.channels.cache.get(this.config.moderationLogsRoom).send(this.i18n.__mf('In addition, I was unable to DM the user about their unmute. It is likely that they have DMs disabled.'))
+                    .catch(() => {
                         console.log("Not enough permissions to send a message to the moderation room.");
                     });
             });
@@ -112,7 +112,7 @@ module.exports = Command.extend({
             return false;
         }
         for (let role in this.config.administratorRoles) {
-            if (member.roles.has(this.config.administratorRoles[role])) {
+            if (member.roles.cache.has(this.config.administratorRoles[role])) {
                 return true;
             }
         }
