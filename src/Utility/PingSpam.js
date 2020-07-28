@@ -1,5 +1,4 @@
 const BotModule = require('../BotModule');
-const Discord = require("discord.js");
 
 module.exports = BotModule.extend({
     config: null,
