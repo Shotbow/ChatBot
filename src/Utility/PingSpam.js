@@ -78,7 +78,7 @@ module.exports = BotModule.extend({
             }
         })
             .catch(() => {
-                message.guild.channels.find('id', config.moderationLogsRoom).send(i18n.__mf('In addition, I was unable to DM the user about their mute. It is likely that they have DMs disabled.'))
+                message.guild.channels.cache.get(config.moderationLogsRoom).send(i18n.__mf('In addition, I was unable to DM the user about their mute. It is likely that they have DMs disabled.'))
                     .catch(() => {
                         console.log("Not enough permissions to send a message to the moderation room.");
                     });
