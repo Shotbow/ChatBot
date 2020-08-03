@@ -1,11 +1,12 @@
 const Command = require('../Command');
+const RoleHelper = require('../Helper/RoleHelper');
 
 module.exports = Command.extend({
     commandName: 'unmute',
     commandAliases: ['unban'],
     advertisable: false,
     processMessage: function (message, tokens) {
-        if (!this.memberIsAdministrator(message.member)) {
+        if (!RoleHelper.isAdministrator(message.member)) {
             return;
         }
 
@@ -106,16 +107,5 @@ module.exports = Command.extend({
                         console.log("Not enough permissions to send a message to the moderation room.");
                     });
             });
-    },
-    memberIsAdministrator: function (member) {
-        if (member == null || typeof member.roles == 'undefined') {
-            return false;
-        }
-        for (let role in this.config.administratorRoles) {
-            if (member.roles.cache.has(this.config.administratorRoles[role])) {
-                return true;
-            }
-        }
-        return false;
     }
 });

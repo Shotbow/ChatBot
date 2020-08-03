@@ -1,10 +1,11 @@
 const Command = require('../Command');
+const RoleHelper = require('../Helper/RoleHelper');
 
 module.exports = Command.extend({
     commandName: 'warn',
     advertisable: false,
     processMessage: function (message, tokens) {
-        if (!this.memberIsAdministrator(message.member)) {
+        if (!RoleHelper.isAdministrator(message.member)) {
             return;
         }
 
@@ -20,7 +21,7 @@ module.exports = Command.extend({
             message.member.user.send(this.i18n.__mf('You may not warn yourself!'));
             return;
         }
-        if (this.memberIsAdministrator(victim)) {
+        if (RoleHelper.isAdministrator(victim)) {
             message.member.user.send(this.i18n.__mf('You may not warn another Discord administrator!'));
             return;
         }
@@ -104,16 +105,5 @@ module.exports = Command.extend({
                         console.log("Not enough permissions to send a message to the moderation room.");
                     });
             });
-    },
-    memberIsAdministrator: function (member) {
-        if (member == null || typeof member.roles == 'undefined') {
-            return false;
-        }
-        for (let role in this.config.administratorRoles) {
-            if (member.roles.cache.has(this.config.administratorRoles[role])) {
-                return true;
-            }
-        }
-        return false;
     }
 });
