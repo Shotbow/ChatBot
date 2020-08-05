@@ -1,5 +1,7 @@
-const Command = require('../Command');
 const crypto = require('crypto');
+
+const Command = require('../Command');
+const RoleHelper = require('../Helper/RoleHelper');
 
 const messages = {
     'help': 'You can use `!support <type>` to create a room where you can contact the staff team for support in private, where `<type>` is one of the following:{types}',
@@ -35,7 +37,7 @@ module.exports = Command.extend({
         }
 
         /* Handle the unique cases of "close" and "convert" */
-        if (tokens.length > 0) {
+        if (tokens.length > 0 && RoleHelper.isAdministrator(message.member)) {
             if (tokens[0].toLowerCase() === 'close') {
                 return message.channel.send("Closing channel...");
             }
