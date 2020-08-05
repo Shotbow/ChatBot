@@ -80,6 +80,10 @@ module.exports = {
             'mta': 'https://shotbow.net/forum/forums/minetheftauto/',
             'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/',
             'wir': 'https://shotbow.net/forum/forums/wheninrogue/'
+        },
+        supportRoles: {
+            'all': '223821346763833344',
+            'minez': '618856455206076417'
         }
     },
     profiles: {
@@ -97,6 +101,7 @@ module.exports = {
         'Minecraft Forum': 'http://minecraftforum.net/servers/160-shotbow',
         'MinecraftServers.org': 'http://minecraftservers.org/server/267066'
     },
+    supportCategory: 'Support',
     messageRemoveDelay: 60000,
     pingspam: {
         threshold: 5,
