@@ -80,10 +80,6 @@ module.exports = {
             'mta': 'https://shotbow.net/forum/forums/minetheftauto/',
             'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/',
             'wir': 'https://shotbow.net/forum/forums/wheninrogue/'
-        },
-        supportRoles: {
-            'all': '223821346763833344',
-            'minez': '618856455206076417'
         }
     },
     profiles: {
@@ -100,6 +96,15 @@ module.exports = {
         'Planet Minecraft': 'http://www.planetminecraft.com/server/minez-1398788/',
         'Minecraft Forum': 'http://minecraftforum.net/servers/160-shotbow',
         'MinecraftServers.org': 'http://minecraftservers.org/server/267066'
+    },
+    support: {
+        category: '740654285154549901',
+        types: {
+            'minez': {
+                description: "Support for MineZ: Stuck in a block; Broken dungeons; Death due to cheaters, bugs, and broken dungeons.",
+                roles: ['618856455206076417']
+            }
+        }
     },
     supportCategory: 'Support',
     messageRemoveDelay: 60000,
