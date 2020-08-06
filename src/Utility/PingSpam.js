@@ -15,7 +15,7 @@ module.exports = BotModule.extend({
             if (!message.member) return; // Some messages don't appear to have a member connected to it
 
             /* If the member is already on cooldown, delete their message */
-            const id = message.member.user.id;
+            const id = message.member.id;
             if (this.cooldown.indexOf(id) > -1) {
                 message.delete();
                 return;
@@ -42,17 +42,17 @@ module.exports = BotModule.extend({
 
             /* Set a timeout to remove the amount of pings again after the threshold expired */
             setTimeout(() => {
-                let previousAmountOfPings = this.counts[message.member.user.id];
+                let previousAmountOfPings = this.counts[id];
                 if (previousAmountOfPings) {
                     previousAmountOfPings - amountOfPings <= 0
-                        ? delete this.counts[message.member.user.id]
-                        : this.counts[message.member.user.id] -= amountOfPings;
+                        ? delete this.counts[id]
+                        : this.counts[id] -= amountOfPings;
                 }
             }, this.config.pingspam.timespan);
         });
     },
     notifyVictimMuted: function (message, config, i18n, discordClient) {
-        message.member.user.send({
+        message.member.send({
             embed: {
                 color: 0xff0000,
                 author: {
@@ -85,7 +85,7 @@ module.exports = BotModule.extend({
             });
     },
     notifyVictimUnmuted: function (message, config, i18n, discordClient) {
-        message.member.user.send({
+        message.member.send({
             embed: {
                 color: 0x66ff00,
                 author: {
