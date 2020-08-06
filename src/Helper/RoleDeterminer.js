@@ -5,9 +5,6 @@ module.exports = {
         return member.roles.cache.has(member.guild.roles.cache.find(role => role.name === roleName).id)
     },
     isMuted: function (member) {
-        if (!member) {
-            console.log("member is null!");
-        }
         return member.roles.cache.has(config.mutedRole);
     },
     isAdministrator: function (member) {
