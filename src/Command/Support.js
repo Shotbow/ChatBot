@@ -1,11 +1,12 @@
 const crypto = require('crypto');
+const config = require('config'); // Explicit import is necessary here for command aliases
 
 const Command = require('../Command');
 const RoleHelper = require('../Helper/RoleHelper');
 const timeoutPromise = require('../Helper/TimeoutPromise');
 
 const messages = {
-    'help': 'You can use `!support <type>` to create a room where you can contact the staff team for support in private, where `<type>` is one of the following:{types}',
+    'help': 'You can use `!support <type> <IGN>` to create a room where you can contact the staff team for support in private, where `<IGN>` is your Minecraft username and `<type>` is one of the following:{types}',
     'type': '\n- `{type}`: {description}',
     'unknownType': 'Unknown support type `{type}`.\n\n{help}',
     'roomCreated': 'I\'ve created a support room of type `{type}` and added you to it!',
@@ -32,11 +33,14 @@ const messages = {
 
 module.exports = Command.extend({
     commandName: 'support',
+    commandAliases: Object.keys(config.support.types).map(typeKey => `${typeKey}support`),
     processMessage: async function (message, tokens) {
-        tokens.shift();
+        const commandParameters = this.extractParameters(tokens);
+        console.log(commandParameters);
+        console.log(tokens);
 
-        /* Handle the case of no arguments provided */
-        if (tokens.length === 0) {
+        /* Handle the case of no or invalid arguments provided */
+        if (!commandParameters) {
             const types = Object.keys(this.config.support.types).map(type => this.i18n.__mf(messages.type, {
                 type,
                 description: this.config.support.types[type].description
@@ -45,8 +49,10 @@ module.exports = Command.extend({
         }
 
         /* Handle the unique cases of "close" and "convert" */
+        tokens.shift();
         const supportCategory = message.guild.channels.cache.get(this.config.support.category);
-        if (tokens.length > 0 && RoleHelper.isAdministrator(message.member)
+        if (tokens.length > 0 && commandParameters.command === 'support'
+            && RoleHelper.isAdministrator(message.member)
             && (tokens[0].toLowerCase() === 'close' || tokens[0].toLowerCase() === 'convert')) {
             if (message.channel.parent.id !== supportCategory.id) {
                 return message.channel.send(this.i18n.__mf(messages.notASupportRoom));
@@ -61,7 +67,7 @@ module.exports = Command.extend({
         }
 
         /* Get the support type */
-        const typeKey = tokens[0];
+        const typeKey = commandParameters.supportType;
         const type = this.config.support.types[typeKey];
         if (!type) {
             const types = Object.keys(this.config.support.types).map(type => this.i18n.__mf(messages.type, {
@@ -105,7 +111,8 @@ module.exports = Command.extend({
             })
             .catch(() => {
                 /* If something went wrong with room creation, we delete it (if it was created) and notify the user */
-                supportChannel.delete().catch(() => {});
+                supportChannel.delete().catch(() => {
+                });
                 return message.channel.send(this.i18n.__mf(messages.roomCreationError));
             });
 
@@ -156,7 +163,9 @@ module.exports = Command.extend({
         for (const supportRoleId of oldType.roles) {
             await supportRoom.permissionOverwrites.get(supportRoleId)
                 .delete("Support room type conversion")
-                .catch((e) => {console.log(e)});
+                .catch((e) => {
+                    console.log(e)
+                });
         }
         for (const supportRoleId of newType.roles) {
             await supportRoom.updateOverwrite(supportRoleId, {
@@ -168,13 +177,45 @@ module.exports = Command.extend({
                 USE_EXTERNAL_EMOJIS: true,
                 SEND_TTS_MESSAGES: true,
                 VIEW_CHANNEL: true
-            }).catch((e) => {console.log(e)});
+            }).catch((e) => {
+                console.log(e)
+            });
         }
 
         return supportRoom.send(this.i18n.__mf(messages.roomConverted, {
             oldType: oldTypeKey,
             newType: newTypeKey
         }));
+    },
+    extractParameters: function (tokens) {
+        const clonedTokens = [...tokens];
+        /* Extract the support type */
+        const command = clonedTokens[0].substr(this.commandPrefix.length, clonedTokens[0].length);
+        clonedTokens.shift();
+        let supportType;
+        if (command === 'support') {
+            if (clonedTokens.length === 0) {
+                return null;
+            } else {
+                supportType = clonedTokens[0];
+                clonedTokens.shift();
+            }
+        } else {
+            supportType = command.split("support")[0];
+        }
+
+        /* Extract the IGN */
+        if (clonedTokens.length === 0) {
+            return null;
+        }
+        const ign = clonedTokens[0];
+
+        /* Return the extracted data in an object */
+        return {
+            command,
+            supportType,
+            ign
+        }
     },
     generateRoomName: function (typeKey) {
         return `support-${typeKey}-${crypto.randomBytes(4).toString('hex')}`
