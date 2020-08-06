@@ -58,6 +58,11 @@ for (const key in utilityFiles) {
 
 /* Main command interceptor */
 client.on('message', (message) => {
+    /* Ignore all DMs */
+    if (message.channel.type === 'dm') {
+        return;
+    }
+
     /* If the member is muted, we won't execute their commands */
     if (message.member && RoleDeterminer.isMuted(message.member)) {
         return;
