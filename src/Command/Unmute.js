@@ -1,12 +1,12 @@
 const Command = require('../Command');
-const RoleHelper = require('../Helper/RoleHelper');
+const RoleDeterminer = require('../Helper/RoleDeterminer');
 
 module.exports = Command.extend({
     commandName: 'unmute',
     commandAliases: ['unban'],
     advertisable: false,
     processMessage: function (message, tokens) {
-        if (!RoleHelper.isAdministrator(message.member)) {
+        if (!RoleDeterminer.isAdministrator(message.member)) {
             return;
         }
 

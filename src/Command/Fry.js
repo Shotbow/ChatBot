@@ -1,5 +1,5 @@
 const Command = require('../Command');
-const RoleHelper = require('../Helper/RoleHelper');
+const RoleDeterminer = require('../Helper/RoleDeterminer');
 
 const messages = {
     who: 'Yes master... but who?',
@@ -16,11 +16,11 @@ module.exports = Command.extend({
         tokens.shift();
         let victim = tokens.join(" ");
         // If the person sending the message is an admin OR is whitelisted on the configs
-        if (RoleHelper.hasRoles(message.member) && (message.member.roles.cache.has(message.guild.roles.cache.find(role => role.name === "Administrator").id) || this.config.zaplist.indexOf(message.author.id) > -1)) {
+        if (RoleDeterminer.hasRoles(message.member) && (message.member.roles.cache.has(message.guild.roles.cache.find(role => role.name === "Administrator").id) || this.config.zaplist.indexOf(message.author.id) > -1)) {
             if (victim === '') return message.channel.send(this.i18n.__mf(messages.who));
             else return message.channel.send(this.i18n.__mf(messages.obey, {victim: victim}));
         // If the person sending the message is a mini admin or moderator
-        } else if (RoleHelper.hasRoles(message.member) && (message.member.roles.cache.has(message.guild.roles.cache.find(role => role.name === "Mini-Admin").id) || message.member.roles.cache.has(message.guild.roles.cache.find(role => role.name === "Moderator").id))) {
+        } else if (RoleDeterminer.hasRoles(message.member) && (message.member.roles.cache.has(message.guild.roles.cache.find(role => role.name === "Mini-Admin").id) || message.member.roles.cache.has(message.guild.roles.cache.find(role => role.name === "Moderator").id))) {
             return message.channel.send(this.i18n.__mf(messages.accessDenied));
         } else {
             return message.channel.send(this.i18n.__mf(messages.accessWHOLYDenied, {victim: message.author.toString()}));

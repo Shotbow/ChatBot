@@ -1,12 +1,12 @@
 const Command = require('../Command');
-const RoleHelper = require('../Helper/RoleHelper');
+const RoleDeterminer = require('../Helper/RoleDeterminer');
 
 module.exports = Command.extend({
     commandName: 'mute',
     commandAliases: ['ban'],
     advertisable: false,
     processMessage: function (message, tokens) {
-        if (!RoleHelper.isAdministrator(message.member)) {
+        if (!RoleDeterminer.isAdministrator(message.member)) {
             return;
         }
 
@@ -23,7 +23,7 @@ module.exports = Command.extend({
             message.member.user.send(this.i18n.__mf('You may not mute yourself!'));
             return;
         }
-        if (RoleHelper.isAdministrator(victim)) {
+        if (RoleDeterminer.isAdministrator(victim)) {
             message.member.user.send(this.i18n.__mf('You may not mute another Discord administrator!'));
             return;
         }

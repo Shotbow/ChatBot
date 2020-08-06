@@ -1,5 +1,5 @@
 const BotModule = require('./BotModule');
-const RoleHelper = require('./Helper/RoleHelper');
+const RoleDeterminer = require('./Helper/RoleDeterminer');
 
 module.exports = BotModule.extend({
     commandPrefix: '!',
@@ -18,7 +18,7 @@ module.exports = BotModule.extend({
         this._super(dependencyGraph);
 
         this.discordClient.on('message', message => {
-            if (RoleHelper.isMuted(message.member)) {
+            if (RoleDeterminer.isMuted(message.member)) {
                 return;
             }
 

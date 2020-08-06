@@ -1,11 +1,11 @@
 const Command = require('../Command');
-const RoleHelper = require('../Helper/RoleHelper');
+const RoleDeterminer = require('../Helper/RoleDeterminer');
 
 module.exports = Command.extend({
     commandName: 'warn',
     advertisable: false,
     processMessage: function (message, tokens) {
-        if (!RoleHelper.isAdministrator(message.member)) {
+        if (!RoleDeterminer.isAdministrator(message.member)) {
             return;
         }
 
@@ -21,7 +21,7 @@ module.exports = Command.extend({
             message.member.user.send(this.i18n.__mf('You may not warn yourself!'));
             return;
         }
-        if (RoleHelper.isAdministrator(victim)) {
+        if (RoleDeterminer.isAdministrator(victim)) {
             message.member.user.send(this.i18n.__mf('You may not warn another Discord administrator!'));
             return;
         }
