@@ -1,4 +1,5 @@
 const BotModule = require('../BotModule');
+const RoleDeterminer = require('../Helper/RoleDeterminer');
 
 module.exports = BotModule.extend({
     config: null,
@@ -8,9 +9,7 @@ module.exports = BotModule.extend({
     initialize: function (dependencyGraph) {
         this._super(dependencyGraph);
         this.discordClient.on('message', message => {
-            let member = message.member;
-            let hasRoles = member !== null && typeof member.roles !== 'undefined';
-            if (hasRoles && member.roles.cache.has(this.config.mutedRole)) {
+            if (message.member && RoleDeterminer.isMuted(message.member)) {
                 message.delete();
             }
         });

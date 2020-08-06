@@ -1,11 +1,12 @@
 const Command = require('../Command');
+const RoleDeterminer = require('../Helper/RoleDeterminer');
 
 module.exports = Command.extend({
     commandName: 'mute',
     commandAliases: ['ban'],
     advertisable: false,
     processMessage: function (message, tokens) {
-        if (!this.memberIsAdministrator(message.member)) {
+        if (!RoleDeterminer.isAdministrator(message.member)) {
             return;
         }
 
@@ -22,7 +23,7 @@ module.exports = Command.extend({
             message.member.user.send(this.i18n.__mf('You may not mute yourself!'));
             return;
         }
-        if (this.memberIsAdministrator(victim)) {
+        if (RoleDeterminer.isAdministrator(victim)) {
             message.member.user.send(this.i18n.__mf('You may not mute another Discord administrator!'));
             return;
         }
@@ -119,16 +120,5 @@ module.exports = Command.extend({
                         console.log("Not enough permissions to send a message to the moderation room.");
                     });
             });
-    },
-    memberIsAdministrator: function (member) {
-        if (member == null || typeof member.roles == 'undefined') {
-            return false;
-        }
-        for (let role in this.config.administratorRoles) {
-            if (member.roles.cache.has(this.config.administratorRoles[role])) {
-                return true;
-            }
-        }
-        return false;
     }
 });
