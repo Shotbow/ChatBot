@@ -18,7 +18,7 @@ module.exports = BotModule.extend({
         this._super(dependencyGraph);
 
         this.discordClient.on('message', message => {
-            if (RoleDeterminer.isMuted(message.member)) {
+            if (message.member && RoleDeterminer.isMuted(message.member)) {
                 return;
             }
 

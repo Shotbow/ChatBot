@@ -1,21 +1,17 @@
 const config = require('config');
 
 module.exports = {
-    hasRoles: function (member) {
-        return member !== null && member.roles.cache.array().length > 0;
+    hasRole: function (member, roleName) {
+        return member.roles.cache.has(member.guild.roles.cache.find(role => role.name === roleName).id)
     },
     isMuted: function (member) {
-        return this.hasRoles(member) && member.roles.cache.has(config.mutedRole);
+        if (!member) {
+            console.log("member is null!");
+        }
+        return member.roles.cache.has(config.mutedRole);
     },
     isAdministrator: function (member) {
-        if (!this.hasRoles(member)) {
-            return false;
-        }
-        for (let role in config.administratorRoles) {
-            if (member.roles.cache.has(config.administratorRoles[role])) {
-                return true;
-            }
-        }
-        return false;
+        return Object.keys(config.administratorRoles)
+            .some(administratorRole => member.roles.cache.has(config.administratorRoles[administratorRole]));
     }
 }
