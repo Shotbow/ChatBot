@@ -7,11 +7,13 @@ module.exports = Command.extend({
     dependencies: {
         'commandList': 'commandList'
     },
-    processMessage: function (message, tokens) {
+    processMessage: function (message) {
         let commands = this.commandList.all();
         let advertisableList = [];
         for (let key in commands) {
-            if (commands[key].advertisable) advertisableList.push("`!" + commands[key].commandName + "`");
+            if (commands.hasOwnProperty(key) && commands[key].advertisable) {
+                advertisableList.push(`\`!${key}\``);
+            }
         }
 
         let commandString = advertisableList.join(", ");

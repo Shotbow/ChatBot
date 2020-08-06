@@ -16,39 +16,27 @@ module.exports = BotModule.extend({
     },
     initialize: function (dependencyGraph) {
         this._super(dependencyGraph);
+    },
+    execute: function (message, tokens) {
+        if (typeof this.config.languages.channels[message.channel.id] !== 'undefined') {
+            this.i18n.setLocale(this.config.languages.channels[message.channel.id]);
+        } else {
+            this.i18n.setLocale(this.config.languages.default);
+        }
 
-        this.discordClient.on('message', message => {
-            if (message.member && RoleDeterminer.isMuted(message.member)) {
-                return;
-            }
+        let timeout = this.config.messageRemoveDelay;
+        let promise = this.processMessage(message, tokens);
 
-            let messageText = message.content;
-            if (messageText.substr(0, 1) !== this.commandPrefix) return;
-            let tokens = message.content.split(' ');
-            let command = tokens[0].substr(1).toLowerCase();
+        if (!this.shouldDeleteMessage) {
+            return;
+        }
 
-            if (typeof this.config.languages.channels[message.channel.id] !== 'undefined') {
-                this.i18n.setLocale(this.config.languages.channels[message.channel.id]);
-            } else {
-                this.i18n.setLocale(this.config.languages.default);
-            }
+        message.delete({timeout}).catch(() => {/*do nothing*/});
 
-            if (command === this.commandName || this.commandAliases.includes(command)) {
-                let timeout = this.config.messageRemoveDelay;
-                let promise = this.processMessage(message, tokens);
-
-                if (!this.shouldDeleteMessage) {
-                    return;
-                }
-
-                message.delete({timeout}).catch(() => {/*do nothing*/});
-
-                promise.then(messages => {
-                    this.deleteMessage(messages, timeout);
-                }).catch(error => {
-                    console.error(error.message);
-                });
-            }
+        promise.then(messages => {
+            this.deleteMessage(messages, timeout);
+        }).catch(error => {
+            console.error(error.message);
         });
     },
     processMessage: function (message, tokens) {
