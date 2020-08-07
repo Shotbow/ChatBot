@@ -43,8 +43,8 @@ for (const key in commandFiles) {
     command.initialize(dependencyGraph);
 
     /* Add to the command container */
-    commandList.add(command.commandName, command);
-    command.commandAliases.forEach(alias => commandList.add(alias, command));
+    commandList.addCommand(command.commandName, command);
+    command.commandAliases.forEach(alias => commandList.addAlias(alias, command.commandName));
 }
 
 const utilityFiles = fs.readdirSync('./src/Utility');

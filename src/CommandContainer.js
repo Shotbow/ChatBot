@@ -2,13 +2,31 @@ const Class = require('./Class');
 
 module.exports = Class.extend({
     commandList: {},
-    add: function (key, command) {
+    aliasList: {},
+    addCommand: function (key, command) {
         this.commandList[key] = command;
     },
-    get: function (key) {
-        return this.commandList[key];
+    addAlias: function (key, commandName) {
+        this.aliasList[key] = commandName;
     },
-    all: function() {
+    hasCommand: function (key) {
+        return !!this.commandList[key];
+    },
+    hasAlias: function (key) {
+        return !!this.aliasList[key];
+    },
+    get: function (key) {
+        if (this.hasCommand(key)) {
+            return this.commandList[key];
+        } else if (this.hasAlias(key)) {
+            return this.commandList[this.aliasList[key]];
+        }
+        return null;
+    },
+    allCommands: function () {
         return this.commandList;
+    },
+    allAliases: function () {
+        return this.aliasList;
     }
 });
