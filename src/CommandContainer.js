@@ -5,13 +5,10 @@ module.exports = Class.extend({
     add: function (key, command) {
         this.commandList[key] = command;
     },
-    has: function (key) {
-        return !!this.commandList[key];
-    },
     get: function (key) {
         return this.commandList[key];
     },
-    allCommands: function () {
+    all: function () {
         return this.commandList;
-    },
+    }
 });

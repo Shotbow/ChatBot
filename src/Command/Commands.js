@@ -8,7 +8,7 @@ module.exports = Command.extend({
         'commandList': 'commandList'
     },
     processMessage: function (message) {
-        let commands = this.commandList.allCommands();
+        let commands = this.commandList.all();
         let advertisableList = [];
         for (let key in commands) {
             if (commands.hasOwnProperty(key) && commands[key].advertisable) {
