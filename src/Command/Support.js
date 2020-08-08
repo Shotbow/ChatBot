@@ -4,7 +4,7 @@ const config = require('config'); // Explicit import is necessary here for comma
 const Command = require('../Command');
 const RoleDeterminer = require('../Helper/RoleDeterminer');
 const timeoutPromise = require('../Helper/TimeoutPromise');
-const logChannel = require('../Helper/ChannelLogger');
+const getChannelLog = require('../Helper/ChannelLogger');
 
 const messages = {
     'help': 'You can use `!support <type> <IGN>` to create a room where you can contact the staff team for support in private, where `<IGN>` is your Minecraft username and `<type>` is one of the following:{types}',
@@ -12,6 +12,10 @@ const messages = {
     'unknownType': 'Unknown support type `{type}`.\n\n{help}',
     'roomCreated': 'I\'ve created a support room of type `{type}` and added you to it!',
     'roomConverted': 'I\'ve converted this room\'s support type from `{oldType}` to `{newType}`.',
+    'roomClosing': 'Closing this support room...',
+    'roomClosed': '{user} closed support room `{room}`',
+    'supportType': 'Support type',
+    'roomParticipants': 'Participants',
     'noIgnProvided': 'It looks like you forgot to add your Minecraft username to the support command. Usage: `!{command} <IGN>`, where `<IGN>` refers to your Minecraft username.',
     'noIgnProvidedWithType': 'It looks like you forgot to add your Minecraft username to the support command. Usage: `!{command} {type} <IGN>`, where `<IGN>` refers to your Minecraft username.',
     'notASupportRoom': 'You can only execute this command in a support room.',
@@ -60,7 +64,7 @@ module.exports = Command.extend({
             }
 
             if (tokens[0].toLowerCase() === 'close') {
-                return await this.processDeletion(message, tokens);
+                return await this.processDeletion(message, commandParameters);
             }
             if (tokens[0].toLowerCase() === 'convert') {
                 return await this.processConversion(message, tokens);
@@ -139,8 +143,49 @@ module.exports = Command.extend({
         await supportChannel.send(this.i18n.__mf(messages.supportRules));
         return message.channel.send(this.i18n.__mf(messages.roomCreated, {type: typeKey}))
     },
-    processDeletion: async function (message, tokens) {
-        await logChannel(message.channel);
+    processDeletion: async function (message) {
+        await message.channel.send(this.i18n.__mf(messages.roomClosing));
+        const logFile = await getChannelLog(message.channel);
+        await message.channel.delete("Support room closed").catch(() => {});
+
+        /* Notify the moderation channel */
+        const guild = message.channel.guild;
+        const logChannel = guild.channels.cache.get(this.config.moderationLogsRoom);
+        if (!logChannel) {
+            console.log(`Could not post log for deletion of support room \`${message.channel.name}\`: 
+            invalid configuration of log channel`);
+            return;
+        }
+        const embedMessage = await logChannel.send({
+            embed: {
+                color: 0x2196f3,
+                author: {
+                    name: this.discordClient.user.username,
+                    icon_url: this.discordClient.user.displayAvatarURL()
+                },
+                title: this.i18n.__mf(messages.roomClosed, {
+                    user: `@${message.author.username}`,
+                    room: message.channel.name
+                }),
+                fields: [
+                    {
+                        name: this.i18n.__mf(messages.supportType),
+                        value: this.parseRoomType(message.channel.name)
+                    },
+                    {
+                        name: this.i18n.__mf(messages.roomParticipants),
+                        value: (await this.getRoomParticipants(message.channel)).join(',')
+                    }
+                ],
+                timestamp: new Date(),
+                footer: {
+                    icon_url: this.discordClient.user.displayAvatarURL(),
+                    text: "Shotbow Chat Bot"
+                }
+            }
+        });
+        const fileMessage = await logChannel.send({files: [logFile]});
+        return [embedMessage, fileMessage];
     },
     processConversion: async function (message, tokens) {
         const supportRoom = message.channel;
@@ -257,5 +302,17 @@ module.exports = Command.extend({
         }
 
         return typeKey;
+    },
+    getRoomParticipants: async function (channel) {
+        const guild = channel.guild;
+        const permissionOverwrites = channel.permissionOverwrites.array();
+        const participants = [];
+        for (const permissionOverwrite of permissionOverwrites) {
+            await guild.members.fetch(permissionOverwrite.id)
+                .then(participant => participants.push(participant))
+                .catch(() => {});
+        }
+
+        return participants;
     }
 });
