@@ -11,6 +11,8 @@ const messages = {
     'unknownType': 'Unknown support type `{type}`.\n\n{help}',
     'roomCreated': 'I\'ve created a support room of type `{type}` and added you to it!',
     'roomConverted': 'I\'ve converted this room\'s support type from `{oldType}` to `{newType}`.',
+    'noIgnProvided': 'It looks like you forgot to add your Minecraft username to the support command. Usage: `!{command} <IGN>`, where `<IGN>` refers to your Minecraft username.',
+    'noIgnProvidedWithType': 'It looks like you forgot to add your Minecraft username to the support command. Usage: `!{command} {type} <IGN>`, where `<IGN>` refers to your Minecraft username.',
     'notASupportRoom': 'You can only execute this command in a support room.',
     'roomConversionTimeout': 'Sorry, I could not rename the channel and thus not convert the support room\'s type. This could be caused by Discord rate limiting me. Try again in a few minutes!',
     'roomConversionSameType': 'Hey! This support room is already of type `{type}`.',
@@ -18,7 +20,7 @@ const messages = {
     'roomConversionNotEnoughArguments': 'You haven\'t provided me with a type to convert to! Use `!support convert <type>` instead.',
     'roomConversionUnknownType': 'Sorry, I cannot convert this room to support type `{type}` as that type does not exist.',
     'roomCreationError': 'Sorry, it appears that I have encountered an error whilst trying to create a room. Check back later!',
-    'supportWelcome': 'Hello {user}! I have created this room for you to ask a question relating to `{type}` to the staff team in private. Before asking your question, please read through the support rules below.',
+    'supportWelcome': 'Hello {user} (IGN: {IGN})! I have created this room for you to ask a question relating to `{type}` to the staff team in private. Before asking your question, please read through the support rules below.',
     'supportRules': '**• Do not ping staff**\n' +
         'Members of our team (believe it or not) have lives of their own, and being disturbed whilst working or while in class can be very frustrating, so please refrain from pinging any staff without very good cause.  If there\'s a forum thread you can use, it is not good cause to ping staff.\n' +
         '\n' +
@@ -36,8 +38,6 @@ module.exports = Command.extend({
     commandAliases: Object.keys(config.support.types).map(typeKey => `${typeKey}support`),
     processMessage: async function (message, tokens) {
         const commandParameters = this.extractParameters(tokens);
-        console.log(commandParameters);
-        console.log(tokens);
 
         /* Handle the case of no or invalid arguments provided */
         if (!commandParameters) {
@@ -63,6 +63,20 @@ module.exports = Command.extend({
             }
             if (tokens[0].toLowerCase() === 'convert') {
                 return await this.processConversion(message, tokens);
+            }
+        }
+
+        /* Handle the case of no username provided */
+        if (!commandParameters.ign) {
+            if (commandParameters.command === 'support') {
+                return message.channel.send(this.i18n.__mf(messages.noIgnProvidedWithType, {
+                    command: commandParameters.command,
+                    type: commandParameters.supportType
+                }));
+            } else {
+                return message.channel.send(this.i18n.__mf(messages.noIgnProvided, {
+                    command: commandParameters.command
+                }));
             }
         }
 
@@ -118,6 +132,7 @@ module.exports = Command.extend({
 
         await supportChannel.send(this.i18n.__mf(messages.supportWelcome, {
             user: `<@${message.author.id}>`,
+            IGN: commandParameters.ign,
             type: typeKey
         }));
         await supportChannel.send(this.i18n.__mf(messages.supportRules));
@@ -162,7 +177,7 @@ module.exports = Command.extend({
         /* Remove old support roles and add new ones */
         for (const supportRoleId of oldType.roles) {
             await supportRoom.permissionOverwrites.get(supportRoleId)
-                .delete("Support room type conversion")
+                .delete('Support room type conversion')
                 .catch((e) => {
                     console.log(e)
                 });
@@ -177,7 +192,7 @@ module.exports = Command.extend({
                 USE_EXTERNAL_EMOJIS: true,
                 SEND_TTS_MESSAGES: true,
                 VIEW_CHANNEL: true
-            }).catch((e) => {
+            }, 'Support room type conversion').catch((e) => {
                 console.log(e)
             });
         }
@@ -201,12 +216,16 @@ module.exports = Command.extend({
                 clonedTokens.shift();
             }
         } else {
-            supportType = command.split("support")[0];
+            supportType = command.split('support')[0];
         }
 
         /* Extract the IGN */
         if (clonedTokens.length === 0) {
-            return null;
+            return {
+                command,
+                supportType,
+                ign: null
+            }
         }
         const ign = clonedTokens[0];
 
