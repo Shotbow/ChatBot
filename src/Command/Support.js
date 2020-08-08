@@ -2,8 +2,9 @@ const crypto = require('crypto');
 const config = require('config'); // Explicit import is necessary here for command aliases
 
 const Command = require('../Command');
-const RoleHelper = require('../Helper/RoleHelper');
+const RoleDeterminer = require('../Helper/RoleDeterminer');
 const timeoutPromise = require('../Helper/TimeoutPromise');
+const logChannel = require('../Helper/ChannelLogger');
 
 const messages = {
     'help': 'You can use `!support <type> <IGN>` to create a room where you can contact the staff team for support in private, where `<IGN>` is your Minecraft username and `<type>` is one of the following:{types}',
@@ -52,14 +53,14 @@ module.exports = Command.extend({
         tokens.shift();
         const supportCategory = message.guild.channels.cache.get(this.config.support.category);
         if (tokens.length > 0 && commandParameters.command === 'support'
-            && RoleHelper.isAdministrator(message.member)
+            && RoleDeterminer.isAdministrator(message.member)
             && (tokens[0].toLowerCase() === 'close' || tokens[0].toLowerCase() === 'convert')) {
             if (message.channel.parent.id !== supportCategory.id) {
                 return message.channel.send(this.i18n.__mf(messages.notASupportRoom));
             }
 
             if (tokens[0].toLowerCase() === 'close') {
-                return message.channel.send("Closing channel...");
+                return await this.processDeletion(message, tokens);
             }
             if (tokens[0].toLowerCase() === 'convert') {
                 return await this.processConversion(message, tokens);
@@ -137,6 +138,9 @@ module.exports = Command.extend({
         }));
         await supportChannel.send(this.i18n.__mf(messages.supportRules));
         return message.channel.send(this.i18n.__mf(messages.roomCreated, {type: typeKey}))
+    },
+    processDeletion: async function (message, tokens) {
+        await logChannel(message.channel);
     },
     processConversion: async function (message, tokens) {
         const supportRoom = message.channel;

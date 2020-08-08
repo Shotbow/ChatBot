@@ -4,3 +4,4 @@ node_modules/
 config/local.js
 config/production.js
 /.idea/
+/archive/
