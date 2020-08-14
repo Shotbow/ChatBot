@@ -71,6 +71,18 @@ module.exports = Command.extend({
             }
         }
 
+        /* Get the support type */
+        const typeKey = commandParameters.supportType;
+        const type = this.config.support.types[typeKey];
+        if (!type) {
+            const types = Object.keys(this.config.support.types).map(type => this.i18n.__mf(messages.type, {
+                type,
+                description: this.config.support.types[type].description
+            }));
+            const helpText = this.i18n.__mf(messages.help, {types});
+            return message.channel.send(this.i18n.__mf(messages.unknownType, {type: typeKey, help: helpText}));
+        }
+
         /* Handle the case of no username provided */
         if (!commandParameters.ign) {
             if (commandParameters.command === 'support') {
@@ -83,18 +95,6 @@ module.exports = Command.extend({
                     command: commandParameters.command
                 }));
             }
-        }
-
-        /* Get the support type */
-        const typeKey = commandParameters.supportType;
-        const type = this.config.support.types[typeKey];
-        if (!type) {
-            const types = Object.keys(this.config.support.types).map(type => this.i18n.__mf(messages.type, {
-                type,
-                description: this.config.support.types[type].description
-            }));
-            const helpText = this.i18n.__mf(messages.help, {types});
-            return message.channel.send(this.i18n.__mf(messages.unknownType, {type: typeKey, help: helpText}));
         }
 
         /* Create the channel and add the correct people to it */
