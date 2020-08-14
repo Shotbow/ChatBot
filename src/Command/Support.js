@@ -146,7 +146,8 @@ module.exports = Command.extend({
     processDeletion: async function (message) {
         await message.channel.send(this.i18n.__mf(messages.roomClosing));
         const logFile = await getChannelLog(message.channel);
-        await message.channel.delete("Support room closed").catch(() => {});
+        await message.channel.delete("Support room closed").catch(() => {
+        });
 
         /* Notify the moderation channel */
         const guild = message.channel.guild;
@@ -156,6 +157,13 @@ module.exports = Command.extend({
             invalid configuration of log channel`);
             return;
         }
+
+        /* Fetch all the participants and turn them into a displayable string */
+        let participants = (await this.getRoomParticipants(message.channel))
+            .filter(participant => participant.id !== this.discordClient.user.id)
+            .map(participant => participant.displayName)
+            .join(', ');
+
         const embedMessage = await logChannel.send({
             embed: {
                 color: 0x2196f3,
@@ -174,7 +182,7 @@ module.exports = Command.extend({
                     },
                     {
                         name: this.i18n.__mf(messages.roomParticipants),
-                        value: (await this.getRoomParticipants(message.channel)).join(',')
+                        value: participants
                     }
                 ],
                 timestamp: new Date(),
@@ -310,7 +318,8 @@ module.exports = Command.extend({
         for (const permissionOverwrite of permissionOverwrites) {
             await guild.members.fetch(permissionOverwrite.id)
                 .then(participant => participants.push(participant))
-                .catch(() => {});
+                .catch(() => {
+                });
         }
 
         return participants;
