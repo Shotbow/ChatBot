@@ -16,7 +16,7 @@ jobs:
           environment: production
           
       - name: Mark Deployment In-Progress
-        uses: chrnorm/deployment-statuses@releases/v1
+        uses: chrnorm/deployment-status@releases/v1
         with:
           state: "in_progress"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
@@ -34,14 +34,14 @@ jobs:
       
       - name: Mark Deployment Successful
         if: success()
-        uses: chrnorm/deployment-statuses@releases/v1
+        uses: chrnorm/deployment-status@releases/v1
         with:
           state: "success"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           
       - name: Mark Deployment Failure
         if: failure()
-        uses: chrnorm/deployment-statuses@releases/v1
+        uses: chrnorm/deployment-status@releases/v1
         with:
           state: "failure"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
