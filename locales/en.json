@@ -94,5 +94,6 @@
 	"Closing this support room...": "Closing this support room...",
 	"Support type": "Support type",
 	"Participants": "Participants",
-	"{user} closed support room `{room}`": "{user} closed support room `{room}`"
+	"{user} closed support room `{room}`": "{user} closed support room `{room}`",
+	"*none*": "*none*"
 }
