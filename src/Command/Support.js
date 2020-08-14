@@ -9,6 +9,7 @@ const getChannelLog = require('../Helper/ChannelLogger');
 const messages = {
     'help': 'You can use `!support <type> <IGN>` to create a room where you can contact the staff team for support in private, where `<IGN>` is your Minecraft username and `<type>` is one of the following:{types}',
     'type': '\n- `{type}`: {description}',
+    'none': '*none*',
     'unknownType': 'Unknown support type `{type}`.\n\n{help}',
     'roomCreated': 'I\'ve created a support room of type `{type}` and added you to it!',
     'roomConverted': 'I\'ve converted this room\'s support type from `{oldType}` to `{newType}`.',
@@ -159,7 +160,7 @@ module.exports = Command.extend({
         }
 
         /* Fetch all the participants and turn them into a displayable string */
-        let participants = (await this.getRoomParticipants(message.channel))
+        const participants = (await this.getRoomParticipants(message.channel))
             .filter(participant => participant.id !== this.discordClient.user.id)
             .map(participant => participant.displayName)
             .join(', ');
@@ -182,7 +183,7 @@ module.exports = Command.extend({
                     },
                     {
                         name: this.i18n.__mf(messages.roomParticipants),
-                        value: participants
+                        value: participants.length === 0 ? this.i18n.__mf(messages.none) : participants
                     }
                 ],
                 timestamp: new Date(),
