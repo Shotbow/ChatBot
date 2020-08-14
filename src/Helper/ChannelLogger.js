@@ -41,10 +41,10 @@ const fetchAllMessages = async (channel) => {
 }
 
 const convertMessageToLogMessage = (message) => {
+    const attachmentUrls = message.attachments.map(attachment => attachment.url);
+    const attachmentPart = attachmentUrls.length > 0 ? ` - attachments: ${attachmentUrls.join(', ')}` : "";
     const timestamp = moment(message.createdAt).tz('UTC').toISOString();
-    const logMessage = `${timestamp} - <@${message.author.id}> (${message.author.username}) - ${message.content}`;
-    logMessage.replace(/\\n/g, '\\n');
-    return logMessage;
+    return `${timestamp} - <@${message.author.id}> (${message.author.username}) - ${message.content}${attachmentPart}`;
 }
 
 const getLogFileName = (channel) => {
