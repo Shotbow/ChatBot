@@ -6,6 +6,7 @@ const moment = require('moment-timezone');
 const config = require('config');
 client.setMaxListeners(0);
 
+const RoleDeterminer = require('./src/Helper/RoleDeterminer');
 const commandList = new (require('./src/CommandContainer'));
 const cache = new (require('./src/Cache'));
 const dependencyGraph = {
@@ -40,7 +41,10 @@ for (const key in commandFiles) {
 
     const command = new (require(`./src/Command/${file}`));
     command.initialize(dependencyGraph);
-    commandList.add(key, command);
+
+    /* Add to the command container */
+    commandList.add(command.commandName, command);
+    command.commandAliases.forEach(alias => commandList.add(alias, command));
 }
 
 const utilityFiles = fs.readdirSync('./src/Utility');
@@ -51,6 +55,31 @@ for (const key in utilityFiles) {
     let utility = new (require(`./src/Utility/${file}`));
     utility.initialize(dependencyGraph);
 }
+
+/* Main command interceptor */
+client.on('message', (message) => {
+    /* Ignore all DMs */
+    if (message.channel.type === 'dm') {
+        return;
+    }
+
+    /* If the member is muted, we won't execute their commands */
+    if (message.member && RoleDeterminer.isMuted(message.member)) {
+        return;
+    }
+
+    /* Retrieve command and tokens */
+    let messageText = message.content;
+    if (messageText.substr(0, dependencyGraph.commandPrefix.length) !== dependencyGraph.commandPrefix) return;
+    let tokens = messageText.split(' ');
+    let commandName = tokens[0].substr(dependencyGraph.commandPrefix.length).toLowerCase();
+
+    /* Get the command executor for the provided command and execute the command */
+    const command = commandList.get(commandName);
+    if (command) {
+        command.execute(message, tokens);
+    }
+});
 
 client.on('ready', () => {
     client.user.setActivity("on Shotbow");

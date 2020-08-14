@@ -8,7 +8,7 @@ module.exports = Class.extend({
     get: function (key) {
         return this.commandList[key];
     },
-    all: function() {
+    all: function () {
         return this.commandList;
     }
 });
