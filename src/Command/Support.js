@@ -272,7 +272,7 @@ module.exports = Command.extend({
         if (clonedTokens.length === 0) {
             return {
                 command,
-                supportType,
+                supportType: supportType.toLowerCase(),
                 ign: null
             }
         }
