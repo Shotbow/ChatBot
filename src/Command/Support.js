@@ -110,7 +110,7 @@ module.exports = Command.extend({
                 READ_MESSAGE_HISTORY: true,
                 SEND_MESSAGES: true,
                 USE_EXTERNAL_EMOJIS: true,
-                SEND_TTS_MESSAGES: true,
+                SEND_TTS_MESSAGES: false,
                 VIEW_CHANNEL: true
             }))
             .then(async channel => {
