@@ -151,8 +151,21 @@ module.exports = Command.extend({
     },
     addCollector: function (supportChannel, creator, welcomeMessage) {
         const collectorFilter = (message) => message.member.id === creator.id;
-        const collector = supportChannel.createMessageCollector(collectorFilter,
-            {time: this.config.support.automaticDeletion});
+
+        const automaticDelete = this.config.support.automaticDeletion;
+        let collector;
+        if (automaticDelete < 0) {
+            collector = supportChannel.createMessageCollector(collectorFilter);
+        } else {
+            collector = supportChannel.createMessageCollector(collectorFilter,
+                {time: automaticDelete});
+            collector.on('end', async (_, reason) => {
+                if (reason === 'time') {
+                    await this.processDeletion(welcomeMessage);
+                }
+            });
+        }
+
         collector.once('collect', (message) => {
             const supportType = this.parseRoomType(supportChannel.name);
             const supportRoles = this.config.support.types[supportType].roles
@@ -161,11 +174,6 @@ module.exports = Command.extend({
 
             message.channel.send(this.i18n.__mf(messages.supportMessageReceived, {roles: supportRoles}));
             collector.stop();
-        });
-        collector.on('end', async (_, reason) => {
-            if (reason === 'time') {
-                await this.processDeletion(welcomeMessage);
-            }
         });
     },
     processDeletion: async function (message) {
