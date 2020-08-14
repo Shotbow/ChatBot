@@ -36,7 +36,8 @@ const messages = {
         '**• Cheaters**\n' +
         'If someone is cheating use the /report command.  This is the best way to get the attention of staff currently active in patrol duty.  Hackusations are not allowed, and staff should not be pinged to deal with cheaters.\n' +
         '\n' +
-        'If you have a question or issue that doesn\'t require the attention of a staff member, it\'s probably better to ask politely in #shotbow without a ping and someone will gladly help you get to where you need to be.\n'
+        'If you have a question or issue that doesn\'t require the attention of a staff member, it\'s probably better to ask politely in #shotbow without a ping and someone will gladly help you get to where you need to be.\n',
+    'supportMessageReceived': 'Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})'
 };
 
 module.exports = Command.extend({
@@ -136,13 +137,36 @@ module.exports = Command.extend({
                 return message.channel.send(this.i18n.__mf(messages.roomCreationError));
             });
 
-        await supportChannel.send(this.i18n.__mf(messages.supportWelcome, {
+        const welcomeMessage = await supportChannel.send(this.i18n.__mf(messages.supportWelcome, {
             user: `<@${message.author.id}>`,
             IGN: commandParameters.ign,
             type: typeKey
         }));
+
+        /* Add the collector to deal with post-creation events */
+        this.addCollector(supportChannel, message.member, welcomeMessage);
+
         await supportChannel.send(this.i18n.__mf(messages.supportRules));
-        return message.channel.send(this.i18n.__mf(messages.roomCreated, {type: typeKey}))
+        return message.channel.send(this.i18n.__mf(messages.roomCreated, {type: typeKey}));
+    },
+    addCollector: function (supportChannel, creator, welcomeMessage) {
+        const collectorFilter = (message) => message.member.id === creator.id;
+        const collector = supportChannel.createMessageCollector(collectorFilter,
+            {time: this.config.support.automaticDeletion});
+        collector.once('collect', (message) => {
+            const supportType = this.parseRoomType(supportChannel.name);
+            const supportRoles = this.config.support.types[supportType].roles
+                .map(supportRole => `<@&${supportRole}>`)
+                .join(', ');
+
+            message.channel.send(this.i18n.__mf(messages.supportMessageReceived, {roles: supportRoles}));
+            collector.stop();
+        });
+        collector.on('end', async (_, reason) => {
+            if (reason === 'time') {
+                await this.processDeletion(welcomeMessage);
+            }
+        });
     },
     processDeletion: async function (message) {
         await message.channel.send(this.i18n.__mf(messages.roomClosing));

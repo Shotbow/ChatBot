@@ -99,6 +99,7 @@ module.exports = {
     },
     support: {
         category: '740654285154549901',
+        automaticDeletion: 3600000,
         types: {
             'minez': {
                 description: "Support for MineZ: Stuck in a block; Broken dungeons; Death due to cheaters, bugs, and broken dungeons.",
