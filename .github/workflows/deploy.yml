@@ -14,11 +14,13 @@ jobs:
         id: deployment
         with:
           environment: production
+          token: "${{ github.token }}"
           
       - name: Mark Deployment In-Progress
         uses: chrnorm/deployment-status@releases/v1
         with:
           state: "in_progress"
+          token: "${{ github.token }}"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           
       - name: Trigger Rancher Upgrade
@@ -37,6 +39,7 @@ jobs:
         uses: chrnorm/deployment-status@releases/v1
         with:
           state: "success"
+          token: "${{ github.token }}"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           
       - name: Mark Deployment Failure
@@ -44,4 +47,5 @@ jobs:
         uses: chrnorm/deployment-status@releases/v1
         with:
           state: "failure"
+          token: "${{ github.token }}"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
