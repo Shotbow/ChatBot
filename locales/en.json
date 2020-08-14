@@ -96,5 +96,6 @@
 	"Participants": "Participants",
 	"{user} closed support room `{room}`": "{user} closed support room `{room}`",
 	"*none*": "*none*",
-	"Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})": "Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})"
+	"Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})": "Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})",
+	"Sorry, it appears that you do not have access to perform this action.": "Sorry, it appears that you do not have access to perform this action."
 }

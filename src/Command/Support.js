@@ -17,6 +17,7 @@ const messages = {
     'roomClosed': '{user} closed support room `{room}`',
     'supportType': 'Support type',
     'roomParticipants': 'Participants',
+    'noPermission': 'Sorry, it appears that you do not have access to perform this action.',
     'noIgnProvided': 'It looks like you forgot to add your Minecraft username to the support command. Usage: `!{command} <IGN>`, where `<IGN>` refers to your Minecraft username.',
     'noIgnProvidedWithType': 'It looks like you forgot to add your Minecraft username to the support command. Usage: `!{command} {type} <IGN>`, where `<IGN>` refers to your Minecraft username.',
     'notASupportRoom': 'You can only execute this command in a support room.',
@@ -57,12 +58,16 @@ module.exports = Command.extend({
 
         /* Handle the unique cases of "close" and "convert" */
         tokens.shift();
-        const supportCategory = message.guild.channels.cache.get(this.config.support.category);
-        if (tokens.length > 0 && commandParameters.command === 'support'
-            && RoleDeterminer.isAdministrator(message.member)
+        if (tokens.length > 0
+            && commandParameters.command === 'support'
             && (tokens[0].toLowerCase() === 'close' || tokens[0].toLowerCase() === 'convert')) {
-            if (message.channel.parent.id !== supportCategory.id) {
+            const typeKey = this.parseRoomType(message.channel.name);
+            if (!typeKey) {
                 return message.channel.send(this.i18n.__mf(messages.notASupportRoom));
+            }
+
+            if (!RoleDeterminer.hasOneOfRoles(message.member, this.config.support.types[typeKey].roles)) {
+                return message.channel.send(this.i18n.__mf(messages.noPermission));
             }
 
             if (tokens[0].toLowerCase() === 'close') {
@@ -100,6 +105,7 @@ module.exports = Command.extend({
         }
 
         /* Create the channel and add the correct people to it */
+        const supportCategory = message.guild.channels.cache.get(this.config.support.category);
         const supportChannel = await message.guild.channels.create(this.generateRoomName(typeKey), {
             type: 'text',
             parent: supportCategory,
