@@ -30,8 +30,8 @@ jobs:
           rancher_access: ${{ secrets.RANCHER_ACCESS }}
           rancher_key: ${{ secrets.RANCHER_KEY }}
           project_id: 1a5
-          stack_name: web
-          service_name: chatbot
+          stack_name: chatbot
+          service_name: discord-bot
           docker_image: shotbowofficial/chatbot:${{ github.event.inputs.tag }}
       
       - name: Mark Deployment Successful
