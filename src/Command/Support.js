@@ -53,7 +53,7 @@ module.exports = Command.extend({
         if (tokens.length > 0
             && commandParameters.command === 'support'
             && (tokens[0].toLowerCase() === 'close' || tokens[0].toLowerCase() === 'convert')) {
-            const typeKey = this.parseRoomType(message.channel.name);
+            const typeKey = parseRoomType(message.channel.name);
             if (!typeKey) {
                 return message.channel.send(this.i18n.__mf(messages.notASupportRoom));
             }
