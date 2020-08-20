@@ -107,7 +107,7 @@ module.exports = {
             }
         },
         autoClose: {
-            warning: 2 * 24 * 60 * 60 * 1000,
+            warning: 1 * 24 * 60 * 60 * 1000,
             closing: 2 * 24 * 60 * 60 * 1000
         }
     },
