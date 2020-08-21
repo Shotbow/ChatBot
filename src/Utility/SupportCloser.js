@@ -21,7 +21,7 @@ module.exports = BotModule.extend({
         this.discordClient.once("ready", () => {
             const supportCategory = this.retrieveSupportCategory();
             if (!supportCategory || !supportCategory.children) {
-                console.log("WARNING: could not retrieve support category for automatic support closer utility");
+                console.warn("Warning: Could not retrieve support category for automatic support closer utility");
                 return;
             }
 
