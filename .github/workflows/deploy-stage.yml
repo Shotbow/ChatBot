@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy to Staging
 on:
   workflow_dispatch:
     inputs:
@@ -13,7 +13,7 @@ jobs:
         uses: chrnorm/deployment-action@releases/v1
         id: deployment
         with:
-          environment: production
+          environment: staging
           token: "${{ github.token }}"
           
       - name: Mark Deployment In-Progress
@@ -31,7 +31,7 @@ jobs:
           rancher_key: ${{ secrets.RANCHER_KEY }}
           project_id: 1a5
           stack_name: chatbot
-          service_name: discord-bot
+          service_name: discord-bot-staging
           docker_image: shotbowofficial/chatbot:${{ github.event.inputs.tag }}
       
       - name: Mark Deployment Successful
