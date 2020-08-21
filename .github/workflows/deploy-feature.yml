@@ -1,0 +1,66 @@
+name: Deploy Feature to Staging
+on: [workflow_dispatch]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Extract version from ref
+        id: extract-version
+        run: echo ::set-output name=version::${GITHUB_SHA}
+
+      - name: Docker build
+        run: docker build -t $IMAGE_NAME .
+
+      - name: Docker login
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Push to Dockerhub
+        run: |
+          FULL_IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:dev-${{ steps.extract-version.outputs.version }}"
+          docker tag $IMAGE_NAME $FULL_IMAGE_NAME
+          docker push $FULL_IMAGE_NAME
+
+      - name: Create GitHub Deployment
+        uses: chrnorm/deployment-action@releases/v1
+        id: deployment
+        with:
+          environment: staging
+          ref: ${GITHUB_SHA}
+          token: "${{ github.token }}"
+          
+      - name: Mark Deployment In-Progress
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          state: "in_progress"
+          token: "${{ github.token }}"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          
+      - name: Trigger Rancher Upgrade
+        uses: sekassel-research/actions-rancher-update@1.1.3
+        with:
+          rancher_url: ${{ secrets.RANCHER_URL }}
+          rancher_access: ${{ secrets.RANCHER_ACCESS }}
+          rancher_key: ${{ secrets.RANCHER_KEY }}
+          project_id: 1a5
+          stack_name: chatbot
+          service_name: discord-bot-staging
+          docker_image: shotbowofficial/chatbot:${{ github.event.inputs.tag }}
+      
+      - name: Mark Deployment Successful
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          state: "success"
+          token: "${{ github.token }}"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          
+      - name: Mark Deployment Failure
+        if: failure()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          state: "failure"
+          token: "${{ github.token }}"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
