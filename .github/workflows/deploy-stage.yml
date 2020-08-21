@@ -1,0 +1,51 @@
+name: Deploy to Staging
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Docker Tag'
+        required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub Deployment
+        uses: chrnorm/deployment-action@releases/v1
+        id: deployment
+        with:
+          environment: staging
+          token: "${{ github.token }}"
+          
+      - name: Mark Deployment In-Progress
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          state: "in_progress"
+          token: "${{ github.token }}"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          
+      - name: Trigger Rancher Upgrade
+        uses: sekassel-research/actions-rancher-update@1.1.3
+        with:
+          rancher_url: ${{ secrets.RANCHER_URL }}
+          rancher_access: ${{ secrets.RANCHER_ACCESS }}
+          rancher_key: ${{ secrets.RANCHER_KEY }}
+          project_id: 1a5
+          stack_name: chatbot
+          service_name: discord-bot-staging
+          docker_image: shotbowofficial/chatbot:${{ github.event.inputs.tag }}
+      
+      - name: Mark Deployment Successful
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          state: "success"
+          token: "${{ github.token }}"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          
+      - name: Mark Deployment Failure
+        if: failure()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          state: "failure"
+          token: "${{ github.token }}"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
