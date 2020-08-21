@@ -47,7 +47,7 @@ jobs:
           project_id: 1a5
           stack_name: chatbot
           service_name: discord-bot-staging
-          docker_image: shotbowofficial/chatbot:${{ github.event.inputs.tag }}
+          docker_image: shotbowofficial/chatbot:dev-${{ steps.extract-version.outputs.version }}
       
       - name: Mark Deployment Successful
         if: success()
