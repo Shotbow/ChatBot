@@ -30,7 +30,7 @@ jobs:
         id: deployment
         with:
           environment: staging
-          ref: ${GITHUB_SHA}
+          ref: "${{ steps.extract-version.outputs.version }}"
           token: "${{ github.token }}"
           
       - name: Mark Deployment In-Progress
