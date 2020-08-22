@@ -2,7 +2,10 @@ const config = require('config'); // Explicit import is necessary here for comma
 
 const Command = require('../Command');
 const RoleDeterminer = require('../Helper/RoleDeterminer');
-const { generateRoomName, parseRoomType, convertRoom, archiveRoom } = require('../Helper/SupportRoomHelper');
+const generateRoomName = require('../Helper/SupportRoomNameGenerator');
+const parseRoomType = require('../Helper/SupportRoomTypeParser');
+const convertRoom = require('../Helper/SupportRoomConverter');
+const archiveRoom = require('../Helper/SupportRoomArchiver');
 
 const messages = {
     'help': 'You can use `!support <type> <IGN>` to create a room where you can contact the staff team for support in private, where `<IGN>` is your Minecraft username and `<type>` is one of the following:{types}',
@@ -130,7 +133,8 @@ module.exports = Command.extend({
             })
             .catch(() => {
                 /* If something went wrong with room creation, we delete it (if it was created) and notify the user */
-                supportChannel.delete().catch(() => {});
+                supportChannel.delete().catch(() => {
+                });
                 return message.channel.send(this.i18n.__mf(messages.roomCreationError));
             });
 

@@ -1,5 +1,5 @@
 const BotModule = require('../BotModule');
-const { archiveRoom } = require('../Helper/SupportRoomHelper');
+const archiveRoom = require('../Helper/SupportRoomArchiver');
 
 const messages = {
     'warning': 'It appears that there was no activity in this room for a while. If no more activity takes place, I will automatically close this channel.'
