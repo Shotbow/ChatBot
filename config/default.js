@@ -105,6 +105,10 @@ module.exports = {
                 description: "Support for MineZ: Stuck in a block; Broken dungeons; Death due to cheaters, bugs, and broken dungeons.",
                 roles: ['618856455206076417']
             }
+        },
+        autoClose: {
+            warning: 1 * 24 * 60 * 60 * 1000,
+            closing: 2 * 24 * 60 * 60 * 1000
         }
     },
     supportCategory: 'Support',
