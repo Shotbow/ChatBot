@@ -11,25 +11,8 @@ module.exports = Command.extend({
     advertisable: false,
     proc: null,
     version: null,
-    dependencies: {
-        'child_process': 'proc'
-    },
-
-    initialize: function (dependencyGraph) {
-        this._super(dependencyGraph);
-
-        this.proc.exec('git rev-parse HEAD', function (err, stdout) {
-            if (stdout) {
-                this.version = stdout.trim();
-            }
-        }.bind(this))
-    },
 
     processMessage: function (message, tokens) {
-        if (this.version) {
-            return message.channel.send(this.i18n.__mf(messages.success, {key: this.version}));
-        } else {
-            return message.channel.send(this.i18n.__mf(messages.error));
-        }
+        return message.channel.send(this.i18n.__mf(messages.success, {key: this.config.ref}));
     }
 });

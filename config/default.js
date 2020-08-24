@@ -1,5 +1,5 @@
 module.exports = {
-    token: 'KEEP_YOUR_TOKEN_SECRET',
+    token: 'KEEP_YOUR_TOKEN_SECRET', /* Do not remove this line */
     languages: {
         locales: ['en', 'ja'],
         default: 'en',

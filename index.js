@@ -86,4 +86,6 @@ client.on('ready', () => {
     console.log("Successfully logged in!");
 });
 
+console.log(config.ref);
+
 client.login(process.env.TOKEN ? process.env.TOKEN : config.token);
