@@ -20,6 +20,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
+COPY . .
 COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
 
 ENV NODE_ENV=production
