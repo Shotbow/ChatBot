@@ -1,12 +1,13 @@
-FROM node:12.18.2-alpine AS BUILD_IMAGE
+FROM node:12.18.3-alpine AS BUILD_IMAGE
 
 # Create app directory
 WORKDIR /usr/src/app
 
 RUN apk update && apk add git
 
-# Bundle app source
-COPY . .
+COPY package*.json ./
+COPY .git ./.git
+COPY config/default.js ./config/default.js
 
 # Install production-only dependencies
 RUN npm install --production
@@ -14,11 +15,9 @@ RUN npm install --production
 # Add Git revision to Config during build
 RUN sed -i "s/token: 'KEEP_YOUR_TOKEN_SECRET'/ref: '$(git rev-parse HEAD)'/" config/default.js
 
-FROM node:12.18.2-alpine
+FROM node:12.18.3-alpine
 
 WORKDIR /usr/src/app
-
-COPY package*.json ./
 
 COPY . .
 COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
