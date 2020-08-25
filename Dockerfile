@@ -5,12 +5,14 @@ WORKDIR /usr/src/app
 
 RUN apk update && apk add git
 
-COPY package*.json ./
-COPY .git ./.git
 COPY config/default.js ./config/default.js
+
+COPY package*.json ./
 
 # Install production-only dependencies
 RUN npm install --production
+
+COPY .git ./.git
 
 # Add Git revision to Config during build
 RUN sed -i "s/token: 'KEEP_YOUR_TOKEN_SECRET'/ref: '$(git rev-parse HEAD)'/" config/default.js
