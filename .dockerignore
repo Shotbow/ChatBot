@@ -3,6 +3,4 @@ npm-debug.log
 .dockerignore
 .gitignore
 Dockerfile
-LICENSE.md
-README.md
 .github
