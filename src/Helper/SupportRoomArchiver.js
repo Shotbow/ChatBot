@@ -25,6 +25,15 @@ const getRoomParticipants = async (supportRoom) => {
     return participants;
 }
 
+const determineLogChannel = function (message) {
+    const type = parseRoomType(message.channel.name);
+    let room = config.moderationLogsRoom;
+    if (typeof config.support.types[type].logRoom !== 'undefined') {
+        room = config.support.types[type].logRoom;
+    }
+    return message.channel.guild.channels.cache.get(room);
+}
+
 const archiveRoom = async (message, i18n, discordClient) => {
     await message.channel.send(i18n.__mf(messages.roomClosing));
     const logFile = await getChannelLog(message.channel);
@@ -32,8 +41,7 @@ const archiveRoom = async (message, i18n, discordClient) => {
     });
 
     /* Notify the moderation channel */
-    const guild = message.channel.guild;
-    const logChannel = guild.channels.cache.get(config.moderationLogsRoom);
+    const logChannel = determineLogChannel(message);
     if (!logChannel) {
         console.log(`Could not post log for deletion of support room \`${message.channel.name}\`: 
             invalid configuration of log channel`);
