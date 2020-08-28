@@ -1,3 +1,5 @@
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+
 module.exports = {
     token: 'KEEP_YOUR_TOKEN_SECRET', /* Do not remove this line */
     languages: {
@@ -104,11 +106,16 @@ module.exports = {
             'minez': {
                 description: "Support for MineZ: Stuck in a block; Broken dungeons; Death due to cheaters, bugs, and broken dungeons.",
                 roles: ['618856455206076417']
+            },
+            'abuse': {
+                description: "Open a private chat with the leadership team to report staff abuse.",
+                roles: ['440505209580683274', '441611057878794240'],
+                logRoom: '748963030888349736'
             }
         },
         autoClose: {
-            warning: 1 * 24 * 60 * 60 * 1000,
-            closing: 2 * 24 * 60 * 60 * 1000
+            warning: ONE_DAY_IN_MS,
+            closing: 2 * ONE_DAY_IN_MS
         }
     },
     supportCategory: 'Support',
