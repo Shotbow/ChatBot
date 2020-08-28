@@ -4,6 +4,9 @@ const RoleDeterminer = require('../Helper/RoleDeterminer');
 module.exports = Command.extend({
     commandName: 'mute',
     commandAliases: ['ban'],
+    dependencies: {
+        'muteRepository': 'muteRepository'
+    },
     advertisable: false,
     processMessage: function (message, tokens) {
         if (!RoleDeterminer.isAdministrator(message.member)) {
@@ -34,6 +37,15 @@ module.exports = Command.extend({
             message.member.user.send(this.i18n.__mf('Please use the correct format: `{command} <@User#9999> <Reason>`.', {command: tokens[0]}));
             return;
         }
+
+        this.muteRepository.add(victim.user.id);
+        victim.roles.add(this.config.mutedRole)
+            .catch(error => {
+                message.guild.channels.cache.find(this.config.moderationLogsRoom).send(this.i18n.__mf('In addition, I was unable to grant them the `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```', {error: error}))
+                    .catch(() => {
+                        console.log("Not enough permissions to send a message to the moderation room.");
+                    });
+            });
 
         message.guild.channels.cache.get(this.config.moderationLogsRoom).send({
             embed: {
@@ -80,14 +92,6 @@ module.exports = Command.extend({
             }
         })
             .catch(() => {});
-
-        victim.roles.add(this.config.mutedRole)
-            .catch(error => {
-                message.guild.channels.cache.find(this.config.moderationLogsRoom).send(this.i18n.__mf('In addition, I was unable to grant them the `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```', {error: error}))
-                    .catch(() => {
-                        console.log("Not enough permissions to send a message to the moderation room.");
-                    });
-            });
 
         victim.user.send({
             embed: {

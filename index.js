@@ -22,7 +22,8 @@ const dependencyGraph = {
     'fs': fs,
     'i18n': i18n,
     'moment': moment,
-    'config': config
+    'config': config,
+    'muteRepository': new (require('./src/Helper/MuteRepository'))
 };
 cache.initialize(dependencyGraph);
 
