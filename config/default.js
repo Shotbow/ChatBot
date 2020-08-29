@@ -118,6 +118,10 @@ module.exports = {
             closing: 2 * ONE_DAY_IN_MS
         }
     },
+    nitro: {
+        channel: '585535847110017028',
+        manualUpgradeStaffer: 'Navarr'
+    },
     supportCategory: 'Support',
     messageRemoveDelay: 60000,
     pingspam: {

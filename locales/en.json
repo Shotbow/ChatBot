@@ -101,5 +101,6 @@
 	"*none*": "*none*",
 	"Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})": "Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})",
 	"It appears that there was no activity in this room for a while. If no more activity takes place, I will automatically close this channel.": "It appears that there was no activity in this room for a while. If no more activity takes place, I will automatically close this channel.",
-	"Sorry, it appears that you do not have access to perform this action.": "Sorry, it appears that you do not have access to perform this action."
+	"Sorry, it appears that you do not have access to perform this action.": "Sorry, it appears that you do not have access to perform this action.",
+	"<@{discordId}> Thanks for boosting!\\nIf you would like to claim your in-game rank, please [private message {upgrader} on the forums]({link}) with your Discord Username and Discriminator ({username}#{discriminator})": "<@{discordId}> Thanks for boosting!\\nIf you would like to claim your in-game rank, please [private message {upgrader} on the forums]({link}) with your Discord Username and Discriminator ({username}#{discriminator})"
 }
