@@ -1,6 +1,6 @@
 const BotModule = require('../BotModule');
 
-const Message = {
+const messages = {
     boost: "<@{discordId}> Thanks for boosting!\nIf you would like to claim your in-game rank, please private message {upgrader} on the forums with the title \"Nitro role\" as well as your Discord Username and Discriminator ({username}#{discriminator})\n<{link}>"
 }
 
@@ -32,7 +32,7 @@ module.exports = BotModule.extend({
 
         newMember.guild.channels.find(this.config.nitro.channel).send(
             this.i18n.__mf(
-                Message.boost,
+                messages.boost,
                 {
                     discordId: newMember.user.id,
                     upgrader: this.config.nitro.manualUpgradeStaffer,
