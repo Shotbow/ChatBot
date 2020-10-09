@@ -15,7 +15,7 @@ module.exports = {
             stripWhitespace: true
         },
         {
-            regex: "(?<!mi)[s\\$5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+(?!(tah|tim|ake))",
+            regex: "(?<!mi)[s\\$5ｓ]+(ｈ|h|\\|\\-\\|n)+[ｉi1|]+[ｔt7]+(?!(tah|tim|ake|ai|akunai|a|sureishimasu|sureisuru|sureishimashita|sureishita))",
             stripWhitespace: false
         },
         {
