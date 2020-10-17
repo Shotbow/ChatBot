@@ -6,6 +6,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Configuration
+        run: |
+          echo "${{ secrets.RANCHER_IP }} oldrancher.shotbow.net" | sudo tee -a /etc/hosts > /dev/null
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
