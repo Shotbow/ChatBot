@@ -14,9 +14,10 @@ module.exports = BotModule.extend({
             message.guild.channels.cache.get(this.config.deletedLogsRoom).send({
                 embed: {
                     color: 0xff0000,
-                    title: this.i18n.__mf("Deleted message authored by @{username}#{discriminator}", {
+                    title: this.i18n.__mf("Deleted message authored by @{username}#{discriminator} in #{room}", {
                         username: message.author.username,
-                        discriminator: message.author.discriminator
+                        discriminator: message.author.discriminator,
+                        room: message.channel.name,
                     }),
                     description: message.content,
                     timestamp: new Date(),
