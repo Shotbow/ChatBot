@@ -49,11 +49,9 @@ module.exports = BotModule.extend({
             return;
         }
 
-        message.member.is
-
-        const isTricordTreatCommand = this.trickcordTreatCommands.indexOf(message.content) >= 0;
-        const isTricordTreatBot = message.member.id == '755580145078632508';
-        if (!isTricordTreatBot && !isTricordTreatCommand) {
+        const isTrickcordTreatCommand = this.trickcordTreatCommands.indexOf(message.content) >= 0;
+        const isTrickcordTreatBot = message.member.id == '755580145078632508';
+        if (!isTrickcordTreatBot && !isTrickcordTreatCommand) {
             return; // Not a message we care about
         }
 
