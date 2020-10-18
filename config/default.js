@@ -1,4 +1,5 @@
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+const ONE_MINUTE_IN_MS = 60 * 1000;
 
 module.exports = {
     token: 'KEEP_YOUR_TOKEN_SECRET', /* Do not remove this line */
@@ -34,6 +35,8 @@ module.exports = {
     mutedRole: '468154703138521088',
     moderationLogsRoom: '468053291717361664',
     deletedLogsRoom: '615737464643911680',
+    trickcordTreatRoom: '766318346424680460',
+    trickcordTreatDeleteTime: ONE_MINUTE_IN_MS,
     games: {
         aliases: {
             'hcf': 'hcfactions',
