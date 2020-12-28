@@ -131,5 +131,10 @@ module.exports = {
         threshold: 5,
         timespan: 30000,
         cooldown: 60000
+    },
+    notificationRoles: {
+        warband: '792966769475321896',
+        minez: '793166203782692884',
+        wir: '793166266096418837'
     }
 }
