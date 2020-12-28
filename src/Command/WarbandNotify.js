@@ -2,7 +2,7 @@ const Command = require('../Command');
 
 module.exports = Command.extend({
     commandName: 'warbandnotify',
-    commandAliases: ['notifywarband', 'wbnotify'],
+    commandAliases: ['notifywarband', 'wbnotify', 'war'],
     advertisable: false,
     processMessage: function (message, tokens) {
         message.delete();
