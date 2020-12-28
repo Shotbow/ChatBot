@@ -78,7 +78,7 @@ client.on('message', (message) => {
     /* Get the command executor for the provided command and execute the command */
     const command = commandList.get(commandName);
     if (command) {
-        command.execute(message, tokens);
+        command.execute(message, tokens, commandName);
     }
 });
 

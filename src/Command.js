@@ -17,7 +17,7 @@ module.exports = BotModule.extend({
     initialize: function (dependencyGraph) {
         this._super(dependencyGraph);
     },
-    execute: function (message, tokens) {
+    execute: function (message, tokens, commandName) {
         if (typeof this.config.languages.channels[message.channel.id] !== 'undefined') {
             this.i18n.setLocale(this.config.languages.channels[message.channel.id]);
         } else {
@@ -25,7 +25,7 @@ module.exports = BotModule.extend({
         }
 
         let timeout = this.config.messageRemoveDelay;
-        let promise = this.processMessage(message, tokens);
+        let promise = this.processMessage(message, tokens, commandName);
 
         if (!this.shouldDeleteMessage) {
             return;
@@ -39,7 +39,7 @@ module.exports = BotModule.extend({
             console.error(error.message);
         });
     },
-    processMessage: function (message, tokens) {
+    processMessage: function (message, tokens, commandName) {
 
     },
     deleteMessage(element, timeout) {
@@ -47,7 +47,7 @@ module.exports = BotModule.extend({
             for (let message in element) {
                 element.delete({timeout}).catch(() => {/*do nothing*/});
             }
-        } else {
+        } else if (element) {
             element.delete({timeout}).catch(() => {/*do nothing*/});
         }
     }
