@@ -30,7 +30,7 @@ module.exports = BotModule.extend({
             return;
         }
 
-        newMember.guild.channels.cache.find(this.config.nitro.channel).send(
+        newMember.guild.channels.cache.get(this.config.nitro.channel).send(
             this.i18n.__mf(
                 messages.boost,
                 {
