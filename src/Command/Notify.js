@@ -33,10 +33,10 @@ module.exports = Command.extend({
             notifyGame = tokens[1].toLowerCase();
         }
 
-        const roleId = message.guild.roles.cache.find(role => role.id === this.config.notificationRoles[notifyGame]);
+        const role = message.guild.roles.cache.get(this.config.notificationRoles[notifyGame]);
 
         let result;
-        message.member.roles.add(roleId)
+        message.member.roles.add(role)
             .catch(error => {
                 console.error(error);
                 result = message.channel.send(this.i18n.__mf(messages.cantGrant))
