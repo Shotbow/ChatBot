@@ -4,10 +4,11 @@ const ONE_MINUTE_IN_MS = 60 * 1000;
 module.exports = {
     token: 'KEEP_YOUR_TOKEN_SECRET', /* Do not remove this line */
     languages: {
-        locales: ['en', 'ja'],
+        locales: ['en', 'ja', 'es'],
         default: 'en',
         channels: {
-            '368751492963893248': 'ja'
+            '368751492963893248': 'ja',
+            '800562396275540019': 'es'
         }
     },
     swearRegexes: [
