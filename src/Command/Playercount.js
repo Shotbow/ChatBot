@@ -1,8 +1,8 @@
 const Command = require('../Command');
 
 const messages = {
-    'errorChecking': 'Hmm.. I encountered some issues looking up the players.  Is Shotbow.net offline?',
-    'errorBadKey': 'Hmm.. I couldn\'t find the game you were talking about.  Try again?',
+    'errorChecking': 'Hmm.. I encountered some issues looking up the players. Is Shotbow.net offline?',
+    'errorBadKey': 'Hmm.. I couldn\'t find the game you were talking about. Try again?',
     'result': 'There { count, plural, one {is currently # player} other {are currently # players} } connected to {game}.',
     'help': 'You can use `!playercount` to show the players connected to the network or some of the games.\nYou can use any of the following names: {names}'
 };

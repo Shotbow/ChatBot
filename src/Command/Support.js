@@ -23,16 +23,7 @@ const messages = {
     'notASupportRoom': 'You can only execute this command in a support room.',
     'roomCreationError': 'Sorry, it appears that I have encountered an error whilst trying to create a room. Check back later!',
     'supportWelcome': 'Hello {user} (IGN: {IGN})! I have created this room for you to ask a question relating to `{type}` to the staff team in private. Before asking your question, please read through the support rules below.',
-    'supportRules': '**• Do not ping staff**\n' +
-        'Members of our team (believe it or not) have lives of their own, and being disturbed whilst working or while in class can be very frustrating, so please refrain from pinging any staff without very good cause.  If there\'s a forum thread you can use, it is not good cause to ping staff.\n' +
-        '\n' +
-        '**• Don\'t expect live support on this server**\n' +
-        'Shotbow does not offer live support. Should you be in luck, and a member of staff is actively chatting at the time you have a matter to raise, you may of course ask them for help. Under no conditions should you ping staff members individually for help.\n' +
-        '\n' +
-        '**• Cheaters**\n' +
-        'If someone is cheating use the /report command.  This is the best way to get the attention of staff currently active in patrol duty.  Hackusations are not allowed, and staff should not be pinged to deal with cheaters.\n' +
-        '\n' +
-        'If you have a question or issue that doesn\'t require the attention of a staff member, it\'s probably better to ask politely in #shotbow without a ping and someone will gladly help you get to where you need to be.\n',
+    'supportRules': '**• Do not ping staff**\nMembers of our team (believe it or not) have lives of their own, and being disturbed whilst working or while in class can be very frustrating, so please refrain from pinging any staff without very good cause. If there\'s a forum thread you can use, it is not good cause to ping staff.\n\n**• Don\'t expect live support on this server**\nShotbow does not offer live support. Should you be in luck, and a member of staff is actively chatting at the time you have a matter to raise, you may of course ask them for help. Under no conditions should you ping staff members individually for help.\n\n**• Cheaters**\nIf someone is cheating use the /report command. This is the best way to get the attention of staff currently active in patrol duty. Hackusations are not allowed, and staff should not be pinged to deal with cheaters.\n\nIf you have a question or issue that doesn\'t require the attention of a staff member, it\'s probably better to ask politely in #shotbow without a ping and someone will gladly help you get to where you need to be.\n',
     'supportMessageReceived': 'Thank you for your message! If you have more information, you can continue sending messages in this channel. A staff member will get to you soon. ({roles})'
 };
 
