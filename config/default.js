@@ -100,8 +100,12 @@ module.exports = {
     },
     votes: {
         'Planet Minecraft': 'http://www.planetminecraft.com/server/minez-1398788/',
-        'Minecraft Forum': 'http://minecraftforum.net/servers/160-shotbow',
-        'MinecraftServers.org': 'http://minecraftservers.org/server/267066'
+        'NameMC': 'https://namemc.com/server/shotbow.net?q=Shotbow.net',
+        'MinecraftServers.org': 'http://minecraftservers.org/server/267066',
+        'Minecraft Server List': 'https://minecraft-server-list.com/server/419065/',
+        'TopG': 'https://topg.org/Minecraft/server-608505',
+        'Minecraft-MP': 'https://minecraft-mp.com/server-s260086',
+        'Minecraft Servers': 'https://minecraft-server.net/details/Shotbow/'
     },
     support: {
         category: '740654285154549901',
