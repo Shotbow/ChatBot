@@ -36,12 +36,13 @@ module.exports = Command.extend({
         const role = message.guild.roles.cache.get(this.config.notificationRoles[notifyGame]);
 
         let result;
-        message.member.roles.remove(role)
-            .catch(error => {
-                console.error(error);
-                result = message.channel.send(this.i18n.__mf(messages.cantRemove))
-                    .catch(error => { console.error(error) });
-            });
+        try {
+            await message.member.roles.remove(role);
+        } catch (error) {
+            console.error(error);
+            result = await message.channel.send(this.i18n.__mf(messages.cantRemove));
+        }
+
         if (result) {
             return result;
         }
