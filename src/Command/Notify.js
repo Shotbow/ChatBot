@@ -33,6 +33,15 @@ module.exports = Command.extend({
             notifyGame = tokens[1].toLowerCase();
         }
 
+        if (!(notifyGame in this.config.notificationRoles)) {
+            return message.channel.send(this.i18n.__mf(
+                messages.noGame,
+                {
+                    types: Object.keys(this.config.notificationRoles).join(this.i18n.__mf(messages.notifyGameSeparator))
+                }
+            ));
+        }
+
         const role = message.guild.roles.cache.get(this.config.notificationRoles[notifyGame]);
 
         let result;
