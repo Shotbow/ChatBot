@@ -106,5 +106,8 @@
 	"I was unable to grant you the role.": "No pude concederte el rol.",
 	"Your role has been granted.": "Se te ha concedido el rol.",
 	"Come join me on Shotbow using the address `play.shotbow.net`! We support versions 1.12.2 through 1.16.5.": "Únete a mi en Shotbow usando la IP `play.shotbow.net`! Soportamos versiones 1.12.2 - 1.16.5.",
-	"In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```": "In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```"
+	"In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```": "In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```",
+	"You must specify one of the available notifications to unsubscribe from: {types}": "Debes especificar una de las notificaciones disponibles para cancelar la suscripción: {types}",
+	"I was unable to remove the role from your user.": "No pude eliminar el rol de tu usuario.",
+	"Your role has been removed.": "Tu rol ha sido eliminado."
 }
