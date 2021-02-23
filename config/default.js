@@ -47,7 +47,11 @@ module.exports = {
             'ghost': 'ghostcraft',
             'mine theft auto': 'mta',
             'death by void': 'dbv',
-            'when in rogue': 'wir'
+            'when in rogue': 'wir',
+            'wasted': 'wasted_sandbox',
+            'miner problems': 'minerproblems',
+            'miner': 'minerproblems',
+            'mp': 'minerproblems'
         },
         names: {
             'all': 'Shotbow',
@@ -58,10 +62,13 @@ module.exports = {
             'smash': 'SMASH',
             'slaughter': 'Slaughter',
             'gg': 'GG',
+            'minerproblems': 'Miner Problems',
             'mta': 'Mine Theft Auto',
             'ghostcraft': 'GhostCraft',
             'lobby': 'Lobby',
-            'wir': 'When in Rogue'
+            'wir': 'When in Rogue',
+            'wasted': 'Wasted',
+            'warband': 'Warband'
         },
         rooms: {
             '228706232133746688': 'annihilation',
@@ -69,10 +76,13 @@ module.exports = {
             '228706280951382016': 'gg',
             '368735807345000449': 'ghostcraft',
             '228706314233184256': 'mta',
+            '772623043473702912': 'minerproblems',
             '228706218351394816': 'minez',
             '228706292913537027': 'slaughter',
             '228706345807904768': 'smash',
-            '703452304493510757': 'wir'
+            '703452304493510757': 'wir',
+            '812523519170314270': 'wasted_sandbox',
+            '764945691348434976': 'warband'
         },
         forums: {
             'all': 'https://shotbow.net/forums/',
