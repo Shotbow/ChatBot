@@ -124,8 +124,9 @@ module.exports = Command.extend({
             })
             .catch(() => {
                 /* If something went wrong with room creation, we delete it (if it was created) and notify the user */
-                supportChannel.delete().catch(() => {
-                });
+                if (supportChannel) {
+                    supportChannel.delete().catch(() => {});
+                }
                 return message.channel.send(this.i18n.__mf(messages.roomCreationError));
             });
 
@@ -136,19 +137,20 @@ module.exports = Command.extend({
         }));
 
         /* Add the collector to deal with post-creation events */
-        this.addCollector(supportChannel, message.member, welcomeMessage);
+        this.addCollector(supportChannel, type, message.member, welcomeMessage);
 
         await supportChannel.send(this.i18n.__mf(messages.supportRules));
         return message.channel.send(this.i18n.__mf(messages.roomCreated, {type: typeKey}));
     },
-    addCollector: function (supportChannel, creator, welcomeMessage) {
+    addCollector: function (supportChannel, supportType, creator, welcomeMessage) {
         const collectorFilter = (message) => message.member.id === creator.id;
-
-        const automaticDelete = this.config.support.automaticDeletion;
+        
         let collector;
-        if (automaticDelete < 0) {
+        if (!supportType.autoClose || !supportType.autoClose.closing 
+            || supportType.autoClose.closing < 0) {
             collector = supportChannel.createMessageCollector(collectorFilter);
         } else {
+            const automaticDelete = supportType.autoClose.closing;
             collector = supportChannel.createMessageCollector(collectorFilter,
                 {time: automaticDelete});
             collector.on('end', async (_, reason) => {

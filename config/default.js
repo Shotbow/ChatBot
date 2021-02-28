@@ -109,28 +109,36 @@ module.exports = {
     },
     support: {
         category: '740654285154549901',
-        automaticDeletion: 3600000,
         types: {
             'minez': {
                 description: "Support for MineZ: Stuck in a block; Broken dungeons; Death due to cheaters, bugs, and broken dungeons.",
-                roles: ['618856455206076417']
+                roles: ['618856455206076417'],
+                logRoom: '748963030888349736',
+                autoClose: {
+                    warning: ONE_DAY_IN_MS,
+                    closing: 2 * ONE_DAY_IN_MS
+                }
             },
             'abuse': {
                 description: "Open a private chat with the leadership team to report staff abuse.",
                 roles: ['440505209580683274', '441611057878794240'],
+                logRoom: '748963030888349736',
+                autoClose: {
+                    warning: ONE_DAY_IN_MS,
+                    closing: 2 * ONE_DAY_IN_MS
+                }
+            },
+            'bug': {
+                description: "Open a support channel to report a bug to the development team.",
+                roles: ['223821346763833344'],
                 logRoom: '748963030888349736'
             }
-        },
-        autoClose: {
-            warning: ONE_DAY_IN_MS,
-            closing: 2 * ONE_DAY_IN_MS
         }
     },
     nitro: {
         channel: '585535847110017028',
         manualUpgradeStaffer: 'Navarr'
     },
-    supportCategory: 'Support',
     messageRemoveDelay: 60000,
     pingspam: {
         threshold: 5,
