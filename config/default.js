@@ -112,7 +112,7 @@ module.exports = {
         types: {
             'minez': {
                 description: "Support for MineZ: Stuck in a block; Broken dungeons; Death due to cheaters, bugs, and broken dungeons.",
-                roles: ['618856455206076417'],
+                roles: [{ id: '618856455206076417', ping: true }],
                 logRoom: '748963030888349736',
                 autoClose: {
                     warning: ONE_DAY_IN_MS,
@@ -121,7 +121,10 @@ module.exports = {
             },
             'abuse': {
                 description: "Open a private chat with the leadership team to report staff abuse.",
-                roles: ['440505209580683274', '441611057878794240'],
+                roles: [
+                    { id: '440505209580683274', ping: true },
+                    { id: '441611057878794240', ping: true }
+                ],
                 logRoom: '748963030888349736',
                 autoClose: {
                     warning: ONE_DAY_IN_MS,
@@ -130,7 +133,7 @@ module.exports = {
             },
             'bug': {
                 description: "Open a support channel to report a bug to the development team.",
-                roles: ['223821346763833344'],
+                roles: [{id: '223821346763833344', ping: true}],
                 logRoom: '748963030888349736'
             }
         }

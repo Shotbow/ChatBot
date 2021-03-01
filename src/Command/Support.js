@@ -52,7 +52,8 @@ module.exports = Command.extend({
                 return message.channel.send(this.i18n.__mf(messages.notASupportRoom));
             }
 
-            if (!RoleDeterminer.hasOneOfRoles(message.member, this.config.support.types[typeKey].roles)) {
+            const roleIds = this.config.support.types[typeKey].roles.map(role => role.id);
+            if (!RoleDeterminer.hasOneOfRoles(message.member, roleIds)) {
                 return message.channel.send(this.i18n.__mf(messages.noPermission));
             }
 
@@ -108,8 +109,8 @@ module.exports = Command.extend({
                 VIEW_CHANNEL: true
             }))
             .then(async channel => {
-                for (const supportRoleId of type.roles) {
-                    await channel.updateOverwrite(supportRoleId, {
+                for (const supportRole of type.roles) {
+                    await channel.updateOverwrite(supportRole.id, {
                         ADD_REACTIONS: true,
                         ATTACH_FILES: true,
                         EMBED_LINKS: true,
@@ -163,7 +164,8 @@ module.exports = Command.extend({
         collector.once('collect', (message) => {
             const supportType = parseRoomType(supportChannel.name);
             const supportRoles = this.config.support.types[supportType].roles
-                .map(supportRole => `<@&${supportRole}>`)
+                .filter(supportRole => supportRole.ping)
+                .map(supportRole => `<@&${supportRole.id}>`)
                 .join(', ');
 
             message.channel.send(this.i18n.__mf(messages.supportMessageReceived, {roles: supportRoles}));
