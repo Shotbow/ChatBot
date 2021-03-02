@@ -133,7 +133,10 @@ module.exports = {
             },
             'bug': {
                 description: "Open a support channel to report a bug to the development team.",
-                roles: [{id: '223821346763833344', ping: true}],
+                roles: [
+                    { id: '223821346763833344', ping: false },
+                    { id: '815871997871128576', ping: true }
+                ],
                 logRoom: '748963030888349736'
             }
         }
