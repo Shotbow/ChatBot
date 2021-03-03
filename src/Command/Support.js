@@ -52,7 +52,8 @@ module.exports = Command.extend({
                 return message.channel.send(this.i18n.__mf(messages.notASupportRoom));
             }
 
-            if (!RoleDeterminer.hasOneOfRoles(message.member, this.config.support.types[typeKey].roles)) {
+            const roleIds = this.config.support.types[typeKey].roles.map(role => role.id);
+            if (!RoleDeterminer.hasOneOfRoles(message.member, roleIds)) {
                 return message.channel.send(this.i18n.__mf(messages.noPermission));
             }
 
@@ -108,8 +109,8 @@ module.exports = Command.extend({
                 VIEW_CHANNEL: true
             }))
             .then(async channel => {
-                for (const supportRoleId of type.roles) {
-                    await channel.updateOverwrite(supportRoleId, {
+                for (const supportRole of type.roles) {
+                    await channel.updateOverwrite(supportRole.id, {
                         ADD_REACTIONS: true,
                         ATTACH_FILES: true,
                         EMBED_LINKS: true,
@@ -124,8 +125,9 @@ module.exports = Command.extend({
             })
             .catch(() => {
                 /* If something went wrong with room creation, we delete it (if it was created) and notify the user */
-                supportChannel.delete().catch(() => {
-                });
+                if (supportChannel) {
+                    supportChannel.delete().catch(() => {});
+                }
                 return message.channel.send(this.i18n.__mf(messages.roomCreationError));
             });
 
@@ -136,19 +138,20 @@ module.exports = Command.extend({
         }));
 
         /* Add the collector to deal with post-creation events */
-        this.addCollector(supportChannel, message.member, welcomeMessage);
+        this.addCollector(supportChannel, type, message.member, welcomeMessage);
 
         await supportChannel.send(this.i18n.__mf(messages.supportRules));
         return message.channel.send(this.i18n.__mf(messages.roomCreated, {type: typeKey}));
     },
-    addCollector: function (supportChannel, creator, welcomeMessage) {
+    addCollector: function (supportChannel, supportType, creator, welcomeMessage) {
         const collectorFilter = (message) => message.member.id === creator.id;
-
-        const automaticDelete = this.config.support.automaticDeletion;
+        
         let collector;
-        if (automaticDelete < 0) {
+        if (!supportType.autoClose || !supportType.autoClose.closing 
+            || supportType.autoClose.closing < 0) {
             collector = supportChannel.createMessageCollector(collectorFilter);
         } else {
+            const automaticDelete = supportType.autoClose.closing;
             collector = supportChannel.createMessageCollector(collectorFilter,
                 {time: automaticDelete});
             collector.on('end', async (_, reason) => {
@@ -161,7 +164,8 @@ module.exports = Command.extend({
         collector.once('collect', (message) => {
             const supportType = parseRoomType(supportChannel.name);
             const supportRoles = this.config.support.types[supportType].roles
-                .map(supportRole => `<@&${supportRole}>`)
+                .filter(supportRole => supportRole.ping)
+                .map(supportRole => `<@&${supportRole.id}>`)
                 .join(', ');
 
             message.channel.send(this.i18n.__mf(messages.supportMessageReceived, {roles: supportRoles}));

@@ -28,8 +28,6 @@ module.exports = BotModule.extend({
         this.timeout = typeof this.config.trickcordTreatDeleteTime != 'undefined' ?
             this.config.trickcordTreatDeleteTime :
             ONE_MINUTE_IN_MS;
-
-        console.log(this.config.trickcordTreatRoom);
     },
 
     /**

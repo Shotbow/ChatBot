@@ -50,15 +50,15 @@ const convertRoom = async (message, tokens, i18n) => {
     }
 
     /* Remove old support roles and add new ones */
-    for (const supportRoleId of oldType.roles) {
-        await supportRoom.permissionOverwrites.get(supportRoleId)
+    for (const supportRole of oldType.roles) {
+        await supportRoom.permissionOverwrites.get(supportRole.id)
             .delete('Support room type conversion')
             .catch((e) => {
                 console.log(e)
             });
     }
-    for (const supportRoleId of newType.roles) {
-        await supportRoom.updateOverwrite(supportRoleId, {
+    for (const supportRole of newType.roles) {
+        await supportRoom.updateOverwrite(supportRole.id, {
             ADD_REACTIONS: true,
             ATTACH_FILES: true,
             EMBED_LINKS: true,
