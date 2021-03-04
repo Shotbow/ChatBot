@@ -113,7 +113,7 @@ module.exports = {
             'minez': {
                 description: "Support for MineZ: Stuck in a block; Broken dungeons; Death due to cheaters, bugs, and broken dungeons.",
                 roles: [{ id: '618856455206076417', ping: true }],
-                logRoom: '748963030888349736',
+                logRoom: '468053291717361664',
                 autoClose: {
                     warning: ONE_DAY_IN_MS,
                     closing: 2 * ONE_DAY_IN_MS
@@ -137,7 +137,7 @@ module.exports = {
                     { id: '223821346763833344', ping: false },
                     { id: '815871997871128576', ping: true }
                 ],
-                logRoom: '748963030888349736'
+                logRoom: '468053291717361664'
             }
         }
     },
