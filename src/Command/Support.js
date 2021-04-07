@@ -28,6 +28,7 @@ const messages = {
 };
 
 module.exports = Command.extend({
+    shouldDeleteMessage: true,
     commandName: 'support',
     commandAliases: Object.keys(config.support.types).map(typeKey => `${typeKey}support`),
     processMessage: async function (message, tokens) {
