@@ -1,5 +1,4 @@
 const BotModule = require('./BotModule');
-const RoleDeterminer = require('./Helper/RoleDeterminer');
 
 module.exports = BotModule.extend({
     commandPrefix: '!',
@@ -36,16 +35,16 @@ module.exports = BotModule.extend({
         promise.then(messages => {
             this.deleteMessage(messages, timeout);
         }).catch(error => {
-            console.error(error.message);
+            console.error(`Failed to delete message(s) in command '${commandName}': ${error.message}`);
         });
     },
     processMessage: function (message, tokens, commandName) {
 
     },
     deleteMessage(element, timeout) {
-        if (element.isArray) {
-            for (let message in element) {
-                element.delete({timeout}).catch(() => {/*do nothing*/});
+        if (Array.isArray(element)) {
+            for (let message of element) {
+                message.delete({timeout}).catch(() => {/*do nothing*/});
             }
         } else if (element) {
             element.delete({timeout}).catch(() => {/*do nothing*/});
