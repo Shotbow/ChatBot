@@ -67,7 +67,7 @@ module.exports = {
             'ghostcraft': 'GhostCraft',
             'lobby': 'Lobby',
             'wir': 'When in Rogue',
-            'wasted': 'Wasted',
+            'wasted_sandbox': 'Wasted',
             'warband': 'Warband'
         },
         rooms: {
@@ -95,7 +95,10 @@ module.exports = {
             'gg': 'https://shotbow.net/forum/forums/gg/',
             'mta': 'https://shotbow.net/forum/forums/minetheftauto/',
             'ghostcraft': 'https://shotbow.net/forum/forums/ghostcraft/',
-            'wir': 'https://shotbow.net/forum/forums/wheninrogue/'
+            'wir': 'https://shotbow.net/forum/forums/wheninrogue/',
+            'warband': 'https://shotbow.net/forum/forums/warband/',
+            'minerproblems': 'https://shotbow.net/forum/forums/miner-problems/',
+            'wasted_sandbox': 'https://shotbow.net/forum/forums/wasted/'
         }
     },
     profiles: {
