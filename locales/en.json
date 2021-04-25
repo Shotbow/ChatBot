@@ -106,6 +106,7 @@
 	"I was unable to grant you the role.": "I was unable to grant you the role.",
 	"Your role has been granted.": "Your role has been granted.",
 	"Come join me on Shotbow using the address `play.shotbow.net`! We support versions 1.12.2 through 1.16.5.": "Come join me on Shotbow using the address `play.shotbow.net`! We support versions 1.12.2 through 1.16.5.",
+	"In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```": "In addition, I was unable to remove their `Muted` role for some reason. My permissions may be messed up. Please contact a developer immediately.\n**Error: ** ```{error}```",
 	"You must specify one of the available notifications to unsubscribe from: {types}": "You must specify one of the available notifications to unsubscribe from: {types}",
 	"I was unable to remove the role from your user.": "I was unable to remove the role from your user.",
 	"Your role has been removed.": "Your role has been removed."
