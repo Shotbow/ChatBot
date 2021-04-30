@@ -141,7 +141,7 @@ module.exports = Command.extend({
         /* Add the collector to deal with post-creation events */
         this.addCollector(supportChannel, type, message.member, welcomeMessage);
 
-        await supportChannel.send(this.i18n.__mf(messages.supportRules));
+        await supportChannel.send(type.rules ? this.i18n.__mf(type.rules) : this.i18n.__mf(messages.supportRules));
         return message.channel.send(this.i18n.__mf(messages.roomCreated, {type: typeKey}));
     },
     addCollector: function (supportChannel, supportType, creator, welcomeMessage) {
