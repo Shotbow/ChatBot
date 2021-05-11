@@ -144,6 +144,11 @@ module.exports = {
                     closing: 2 * ONE_DAY_IN_MS
                 }
             },
+            'spamdm': {
+                description: "Open a private chat with Moderators to report spam happening over DMs",
+                roles: [{ id: "258257313448722434", ping: true }],
+                logRoom: '468053291717361664',
+            },
             'bug': {
                 description: "Open a support channel to report a bug to the development team.",
                 roles: [

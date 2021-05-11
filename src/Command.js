@@ -34,9 +34,7 @@ module.exports = BotModule.extend({
 
         promise.then(messages => {
             this.deleteMessage(messages, timeout);
-        }).catch(error => {
-            console.error(`Failed to delete message(s) in command '${commandName}': ${error.message}`);
-        });
+        }).catch(() => {/*do nothing*/});
     },
     processMessage: function (message, tokens, commandName) {
 
