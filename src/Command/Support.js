@@ -55,14 +55,14 @@ module.exports = Command.extend({
 
             const roleIds = this.config.support.types[typeKey].roles.map(role => role.id);
             if (!RoleDeterminer.hasOneOfRoles(message.member, roleIds)) {
-                return message.channel.send(this.i18n.__mf(messages.noPermission));
+                await message.channel.send(this.i18n.__mf(messages.noPermission));
             }
 
             if (tokens[0].toLowerCase() === 'close') {
-                return await archiveRoom(message, this.i18n, this.discordClient);
+                await archiveRoom(message, this.i18n, this.discordClient);
             }
             if (tokens[0].toLowerCase() === 'convert') {
-                return await convertRoom(message, tokens, this.i18n, this.discordClient);
+                await convertRoom(message, tokens, this.i18n, this.discordClient);
             }
         }
 
