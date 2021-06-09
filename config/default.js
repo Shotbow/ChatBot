@@ -168,7 +168,8 @@ module.exports = {
     pingspam: {
         threshold: 5,
         timespan: 30000,
-        cooldown: 60000
+        cooldown: 60000,
+        ban: true
     },
     notificationRoles: {
         warband: '792966769475321896',
