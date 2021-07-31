@@ -52,7 +52,7 @@ module.exports = Command.extend({
             return;
         }
 
-        let messages = null;
+        let messageIds = [];
         let lastMessage = startMessage;
         message.channel.send("Fetching messages, this can take some time...");
         do {
@@ -62,24 +62,29 @@ module.exports = Command.extend({
             });
 
             resolvedMessages = resolvedMessages.filter((m) => m.createdTimestamp < endMessage.createdTimestamp);
+            messageIds = messageIds.concat(Array.from(resolvedMessages.keys()));
 
-            if (!messages) {
-                messages = resolvedMessages;
-            } else {
-                messages = messages.concat(resolvedMessages);
-            }
-
-            lastMessage = resolvedMessages.size == 0 ? null : resolvedMessages.last();
+            lastMessage = resolvedMessages.size == 0 ? null : resolvedMessages.first();
         } while (lastMessage != null && lastMessage.createdTimestamp < endMessage.createdTimestamp);
 
-        if (messages.size > 0) {
-            message.channel.send(`Found ${messages.size} messages, going to delete them now!`);
-            await startMessage.delete().catch((e) => {});
-            await endMessage.delete().catch((e) => {});
-            await channel.bulkDelete(messages);
-            message.channel.send(`Successfully deleted ${messages.size} messages in ${channel}`);
-        } else {
+        if (messageIds.length == 0) {
             message.channel.send("Found no messages to delete");
+            return;
         }
+
+        message.channel.send(`Found ${messageIds.length} messages, going to delete them now!`);
+        await startMessage.delete().catch((e) => {});
+        await endMessage.delete().catch((e) => {});
+
+        for (let i = 0; i < messageIds.length; i += 100) {
+            const chunk = messageIds.slice(i, i + 100);
+            if (chunk.length == 1) {
+                const lastMessage = await channel.messages.fetch(chunk[0]); // The bulkDelete takes between 2 - 100 messages, not 1...
+                await lastMessage.delete();
+            } else {
+                await channel.bulkDelete(chunk);
+            }
+        }
+        message.channel.send(`Successfully deleted ${messageIds.length} messages in ${channel}`);
     },
 });
