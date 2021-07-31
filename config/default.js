@@ -35,6 +35,7 @@ module.exports = {
     },
     mutedRole: '468154703138521088',
     moderationLogsRoom: '468053291717361664',
+    moderationRoom: '368216567126687754',
     deletedLogsRoom: '615737464643911680',
     trickcordTreatRoom: '766318346424680460',
     trickcordTreatDeleteTime: ONE_MINUTE_IN_MS,
