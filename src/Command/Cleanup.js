@@ -66,7 +66,7 @@ module.exports = Command.extend({
             if (!messages) {
                 messages = resolvedMessages;
             } else {
-                messages.concat(resolvedMessages);
+                messages = messages.concat(resolvedMessages);
             }
 
             lastMessage = resolvedMessages.size == 0 ? null : resolvedMessages.last();
