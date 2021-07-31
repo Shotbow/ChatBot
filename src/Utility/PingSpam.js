@@ -32,7 +32,7 @@ module.exports = BotModule.extend({
             if (this.counts[id] >= this.config.pingspam.threshold) {
                 /* If banning is enabled in the config, ban the user instead */
                 if (this.config.pingspam.ban) {
-                    message.member.ban({ reason: "Excessive pinging of other members" }).catch(() => {
+                    message.member.ban({ days: 6, reason: "Excessive pinging of other members" }).catch(() => {
                         message.guild.channels.cache.get(config.moderationLogsRoom).send(
                             i18n.__mf("I was unable to ban @{username}#{discriminator}", {
                                 username: message.author.username,
