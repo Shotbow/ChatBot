@@ -1,14 +1,16 @@
 const Command = require("../Command");
-const RoleDeterminer = require("../Helper/RoleDeterminer");
-const writeToLog = require("../Helper/GenericLogger");
 
 const MAX_TIMEFRAME = 5 * 60 * 1000; // 5 minutes
 
 module.exports = Command.extend({
     commandName: "massban",
     advertisable: false,
+    dependencies: {
+        writeToLog: "writeToLog",
+        RoleDeterminer: "RoleDeterminer",
+    },
     processMessage: async function (message, tokens) {
-        if (!RoleDeterminer.isAdministrator(message.member)) {
+        if (!this.RoleDeterminer.isAdministrator(message.member)) {
             return;
         }
 
@@ -102,7 +104,7 @@ module.exports = Command.extend({
         await message.channel.send(
             `Banned ${userIds.length} users. See the attached log file for the total set of banned users`
         );
-        const logFile = await writeToLog(
+        const logFile = await this.writeToLog(
             "massbans",
             membersToBan.map((member) => `${member.user.tag} (${member.id})`)
         );

@@ -23,7 +23,9 @@ const dependencyGraph = {
     'i18n': i18n,
     'moment': moment,
     'config': config,
-    'muteRepository': new (require('./src/Helper/MuteRepository'))
+    'muteRepository': new (require('./src/Helper/MuteRepository')),
+    'writeToLog': require('./src/Helper/GenericLogger'),
+    'RoleDeterminer': RoleDeterminer
 };
 cache.initialize(dependencyGraph);
 
