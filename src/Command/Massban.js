@@ -84,7 +84,7 @@ module.exports = Command.extend({
         }
 
         message.channel.send(
-            `Found ${userIds.length} people that joined the server in the given timespan, going to resolve their member objects...`
+            `Found ${userIds.length} people that joined the server in the given timespan, going to ban the members...`
         );
 
         /* Ban the members */
@@ -94,7 +94,7 @@ module.exports = Command.extend({
             const member = await memberManager.fetch(userId);
             if (member) {
                 membersToBan.push(member);
-                await member.ban({ days: 7, reason: "Compromised account" }).catch((e) => {});
+                await member.ban({ days: 7, reason: "Possible compromised account (botnet)" }).catch((e) => {});
             }
         }
 
