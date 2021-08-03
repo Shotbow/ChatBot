@@ -93,10 +93,14 @@ module.exports = Command.extend({
         const memberManager = message.guild.members;
         let membersToBan = [];
         for (userId of userIds) {
-            const member = await memberManager.fetch(userId);
-            if (member) {
-                membersToBan.push(member);
-                await member.ban({ days: 7, reason: "Possible compromised account (botnet)" }).catch((e) => {});
+            try {
+                const member = await memberManager.fetch(userId);
+                if (member) {
+                    membersToBan.push(member);
+                    await member.ban({ days: 7, reason: "Possible compromised account (botnet)" });
+                }
+            } catch (error) {
+                message.channel.send(`Failed to fetch and/or ban user with ID ${userId}, continuing...`);
             }
         }
 
