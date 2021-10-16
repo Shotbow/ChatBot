@@ -1,6 +1,6 @@
 const Command = require("../Command");
 
-const MAX_TIMEFRAME = 5 * 60 * 1000; // 5 minutes
+const MAX_TIMEFRAME = 60 * 60 * 1000; // 5 minutes
 
 module.exports = Command.extend({
     commandName: "massban",
