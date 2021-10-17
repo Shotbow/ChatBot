@@ -172,6 +172,9 @@ module.exports = {
         cooldown: 60000,
         ban: true
     },
+    massban: {
+        maxTimeRange: 5 * 60 * 1000
+    },
     notificationRoles: {
         warband: '792966769475321896',
         minez: '793166203782692884',

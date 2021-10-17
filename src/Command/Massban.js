@@ -1,7 +1,5 @@
 const Command = require("../Command");
 
-const MAX_TIMEFRAME = 5 * 60 * 1000; // 5 minutes
-
 module.exports = Command.extend({
     commandName: "massban",
     advertisable: false,
@@ -47,7 +45,7 @@ module.exports = Command.extend({
 
         if (
             endMessage.createdTimestamp < startMessage.createdTimestamp ||
-            endMessage.createdTimestamp - startMessage.createdTimestamp > MAX_TIMEFRAME
+            endMessage.createdTimestamp - startMessage.createdTimestamp > this.config['massban']['maxTimeRange']
         ) {
             message.channel.send("Time between `from` and `to` exceeds maximum allowed time of 5 minutes");
             return;
