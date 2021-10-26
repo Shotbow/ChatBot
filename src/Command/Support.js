@@ -6,6 +6,7 @@ const generateRoomName = require('../Helper/SupportRoomNameGenerator');
 const parseRoomType = require('../Helper/SupportRoomTypeParser');
 const convertRoom = require('../Helper/SupportRoomConverter');
 const archiveRoom = require('../Helper/SupportRoomArchiver');
+const switchRoomLock = require('../Helper/SupportRoomLocker');
 
 const messages = {
     'help': 'You can use `!support <type> <IGN>` to create a room where you can contact the staff team for support in private, where `<IGN>` is your Minecraft username and `<type>` is one of the following:{types}',
@@ -47,7 +48,7 @@ module.exports = Command.extend({
         tokens.shift();
         if (tokens.length > 0
             && commandParameters.command === 'support'
-            && (tokens[0].toLowerCase() === 'close' || tokens[0].toLowerCase() === 'convert')) {
+            && (tokens[0].toLowerCase() === 'close' || tokens[0].toLowerCase() === 'convert') || tokens[0].toLowerCase() === 'lock') {
             const typeKey = parseRoomType(message.channel.name);
             if (!typeKey) {
                 return message.channel.send(this.i18n.__mf(messages.notASupportRoom));
@@ -55,14 +56,17 @@ module.exports = Command.extend({
 
             const roleIds = this.config.support.types[typeKey].roles.map(role => role.id);
             if (!RoleDeterminer.hasOneOfRoles(message.member, roleIds)) {
-                await message.channel.send(this.i18n.__mf(messages.noPermission));
+                return message.channel.send(this.i18n.__mf(messages.noPermission));
             }
 
             if (tokens[0].toLowerCase() === 'close') {
-                await archiveRoom(message, this.i18n, this.discordClient);
+                return archiveRoom(message, this.i18n, this.discordClient);
             }
             if (tokens[0].toLowerCase() === 'convert') {
-                await convertRoom(message, tokens, this.i18n, this.discordClient);
+                return convertRoom(message, tokens, this.i18n, this.discordClient);
+            }
+            if (tokens[0].toLowerCase() === 'lock') {
+                return switchRoomLock(message, this.i18n);
             }
         }
 

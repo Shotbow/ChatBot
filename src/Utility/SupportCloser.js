@@ -39,7 +39,7 @@ module.exports = BotModule.extend({
                     /* Check if we should send a warning notice */
                     const typeKey = parseRoomType(supportRoom.name);
                     let messageTimestamp = this.moment(lastMessage.createdTimestamp);
-                    if (this.config.support.types[typeKey].autoClose && this.config.support.types[typeKey].autoClose.warning 
+                    if (this.isAutoCloseable(typeKey, supportRoom.name) && this.config.support.types[typeKey].autoClose.warning 
                         && now.isAfter(messageTimestamp.add(this.config.support.types[typeKey].autoClose.warning, 'ms'))
                         && lastMessage.content !== messages.warning) {
                         supportRoom.send(this.i18n.__mf(messages.warning, {timeInactivity: 0, timeToClose: 0}));
@@ -49,13 +49,16 @@ module.exports = BotModule.extend({
                     /* Check if we should close the channel (moment mutates the timestamp, hence the re-init) */
                     messageTimestamp = this.moment(lastMessage.createdTimestamp);
                     if (lastMessage.content === messages.warning
-                        && this.config.support.types[typeKey].autoClose && this.config.support.types[typeKey].autoClose.closing 
+                        && this.isAutoCloseable(typeKey, supportRoom.name) && this.config.support.types[typeKey].autoClose.closing 
                         && now.isAfter(messageTimestamp.add(this.config.support.types[typeKey].autoClose.closing, 'ms'))) {
                         await archiveRoom(lastMessage, this.i18n, this.discordClient);
                     }
                 });
             }, interval);
         });
+    },
+    isAutoCloseable: function (typeKey, channelName) {
+        return this.config.support.types[typeKey].autoClose && !channelName.endsWith("-l");
     },
     retrieveSupportCategory: function () {
         /* We don't keep track of the guild ID, but we can find it by looking for the support channel in all guilds */
