@@ -114,5 +114,8 @@
 	"You have been banned from the Shotbow Discord": "You have been banned from the Shotbow Discord",
 	"I was unable to ban @{username}#{discriminator}": "I was unable to ban @{username}#{discriminator}",
 	"Ban Reason": "Ban Reason",
-	"@{username}#{discriminator} was banned after excessive pinging": "@{username}#{discriminator} was banned after excessive pinging"
+	"@{username}#{discriminator} was banned after excessive pinging": "@{username}#{discriminator} was banned after excessive pinging",
+	"Locking this room, making it not close automatically after inactivity.": "Locking this room, making it not close automatically after inactivity.",
+	"Unlocking this room, making it automatically close after inactivity.": "Unlocking this room, making it automatically close after inactivity.",
+	"Could not (un)lock channel at this time. Try again in a bit!": "Could not (un)lock channel at this time. Try again in a bit!"
 }
