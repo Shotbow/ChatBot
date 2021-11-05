@@ -44,7 +44,7 @@ module.exports = Command.extend({
             return message.channel.send(this.i18n.__mf(messages.help, {types}));
         }
 
-        /* Handle the unique cases of "close" and "convert" */
+        /* Handle the staff-related commands */
         tokens.shift();
         if (tokens.length > 0
             && commandParameters.command === 'support'
@@ -60,13 +60,16 @@ module.exports = Command.extend({
             }
 
             if (tokens[0].toLowerCase() === 'close') {
-                return archiveRoom(message, this.i18n, this.discordClient);
+                await archiveRoom(message, this.i18n, this.discordClient);
+                return;
             }
             if (tokens[0].toLowerCase() === 'convert') {
-                return convertRoom(message, tokens, this.i18n, this.discordClient);
+                await convertRoom(message, tokens, this.i18n, this.discordClient);
+                return;
             }
             if (tokens[0].toLowerCase() === 'lock') {
-                return switchRoomLock(message, this.i18n);
+                await switchRoomLock(message, this.i18n);
+                return;
             }
         }
 
@@ -207,7 +210,7 @@ module.exports = Command.extend({
         /* Return the extracted data in an object */
         return {
             command,
-            supportType,
+            supportType: supportType.toLowerCase(),
             ign
         }
     }
