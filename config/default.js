@@ -119,7 +119,8 @@ module.exports = {
         'Minecraft Server List': 'https://minecraft-server-list.com/server/419065/',
         'TopG': 'https://topg.org/Minecraft/server-608505',
         'Minecraft-MP': 'https://minecraft-mp.com/server-s260086',
-        'Minecraft Servers': 'https://minecraft-server.net/details/Shotbow/'
+        'Minecraft Servers': 'https://minecraft-server.net/details/Shotbow/',
+        'Top Minecraft Servers': 'https://topminecraftservers.org/server/997'
     },
     support: {
         category: '740654285154549901',
