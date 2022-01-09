@@ -181,5 +181,12 @@ module.exports = {
         minez: '793166203782692884',
         wir: '793166266096418837',
         slaughter: '857759646807097345',
-    }
+    },
+    clearers: [
+        {
+            channel: '899064662090481664',
+            retention: 60 * 1000,
+            message: "Welcome to the official Shotbow community Discord server!\n\nBefore you can access the channels in this server, you have to verify that you are not a bot.\n\n**In order to verify yourself, type `/verify` in this channel and complete the Captcha sent to you.**",
+        }
+    ]
 }
