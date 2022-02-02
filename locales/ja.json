@@ -20,7 +20,6 @@
 	"View the official Shotbow Staff List here: <{url}>": "こちらからShotbowのスタッフ一覧を見ることができますよ！ <{url}>",
 	"Stuck in a block or area on MineZ? Request to be moved here: <https://shotbow.net/forum/threads/stuck-in-a-block-or-area.266338/>": "MineZでブロックや特定のエリアにスタックして動けなくなってしまいましたか？ こちらのURLから救援を要請してください！ <https://shotbow.net/forum/threads/stuck-in-a-block-or-area.266338/>",
 	"You can connect to our TeamSpeak at `{url}` (but, by personal preference, Discord is better).": "私たちのTeamSpeakサーバーのアドレスはこちらです！ `{url}` …私はDiscordの方が個人的には気に入っておりますけどね！",
-	"Support Shotbow for free by voting for us on the following sites:\n": "これらのサイトからShotbowに投票し、私たちを支援してくださると嬉しいです！\n",
 	"We have a **special** XP code for people who ask for one! Try `{code}`!": "XPコードを探しておられる方のために、 **特別な** XPコードをご用意しました！ `{code}` をお試しください！",
 	"Uh oh, there seems to be an error with the Mojang API. Try again later!": "あらら、どうやらMojangのAPIにエラーが発生しているようです。しばらくしてからもう一度お試しください！",
 	"- {service} is having some issues": "- {service}に問題が発生しています。",
@@ -35,5 +34,6 @@
 	"NOTIFY_GAME_SEPARATOR": ", ",
 	"You must specify one of the available notifications to unsubscribe from: {types}": "サブスクライブを解除するには、利用可能な通知のいずれかを指定する必要があります: {types}",
 	"I was unable to remove the role from your user.": "あなたのDiscordアカウントの役職を削除することができませんでした。",
-	"Your role has been removed.": "あなたのDiscordアカウントの役職は削除されました。"
+	"Your role has been removed.": "あなたのDiscordアカウントの役職は削除されました。",
+	"Support us for free by voting for Shotbow! Learn more on our Vote Dashboard at <https://vote.shotbow.net>": "Shotbowに投票することで、無料で支援することができます！ 詳しくはこちらをご覧ください。 <https://vote.shotbow.net>"
 }

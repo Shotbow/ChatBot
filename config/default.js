@@ -112,16 +112,6 @@ module.exports = {
         'Tumblr': 'http://tumblr.shotbow.net/',
         'Youku': 'http://i.youku.com/shotbow'
     },
-    votes: {
-        'Planet Minecraft': 'http://www.planetminecraft.com/server/minez-1398788/',
-        'NameMC': 'https://namemc.com/server/shotbow.net?q=Shotbow.net',
-        'MinecraftServers.org': 'http://minecraftservers.org/server/267066',
-        'Minecraft Server List': 'https://minecraft-server-list.com/server/419065/',
-        'TopG': 'https://topg.org/Minecraft/server-608505',
-        'Minecraft-MP': 'https://minecraft-mp.com/server-s260086',
-        'Minecraft Servers': 'https://minecraft-server.net/details/Shotbow/',
-        'Top Minecraft Servers': 'https://topminecraftservers.org/server/997'
-    },
     support: {
         category: '740654285154549901',
         types: {
