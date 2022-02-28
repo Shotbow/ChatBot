@@ -5,6 +5,7 @@ module.exports = Command.extend({
     commandAliases: ['now'],
     moment: null,
     Discord: null,
+    shouldDeleteMessage: true,
     dependencies: {
         'moment': 'moment',
         'Discord': 'Discord',
