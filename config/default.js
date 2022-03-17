@@ -38,6 +38,7 @@ module.exports = {
     moderationRoom: '368216567126687754',
     deletedLogsRoom: '615737464643911680',
     trickcordTreatRoom: '766318346424680460',
+    broadcastRoom: '380086729526345739',
     trickcordTreatDeleteTime: ONE_MINUTE_IN_MS,
     games: {
         aliases: {
