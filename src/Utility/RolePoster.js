@@ -72,7 +72,7 @@ module.exports = BotModule.extend({
                 }
                 const member = await guild.members.fetch(user.id);
                 await member.roles.add(roleMessage.role);
-                await event.remove(); // Because there is no easy way to remove a single user's reaction in discord.js
+                await event.users.remove(user.id);
                 await event.message.react("📨");
             });
         });
