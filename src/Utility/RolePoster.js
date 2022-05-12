@@ -21,12 +21,12 @@ module.exports = BotModule.extend({
         this.discordClient.once("ready", async () => {
             /* Fetch all configuration */
             const guild = this.discordClient.guilds.cache.first();
-            const welcomeChannelId = this.config.welcomeRoom;
-            if (!welcomeChannelId) {
+            const notificationChannelId = this.config.notificationRoom;
+            if (!notificationChannelId) {
                 return;
             }
-            const welcomeChannel = ChannelRetriever.retrieveChannel(guild, welcomeChannelId);
-            if (!welcomeChannel) {
+            const notificationChannel = ChannelRetriever.retrieveChannel(guild, notificationChannelId);
+            if (!notificationChannel) {
                 return;
             }
             const notificationRoleConfig = this.config.notificationRoles;
@@ -43,8 +43,8 @@ module.exports = BotModule.extend({
                 return;
             }
 
-            /* Delete all previous messages posted by the bot in the welcome channel */
-            const messages = await welcomeChannel.messages.fetch({ limit: 50 });
+            /* Delete all previous messages posted by the bot in the notification channel */
+            const messages = await notificationChannel.messages.fetch({ limit: 50 });
             await Promise.all(
                 messages.map(async (message) => {
                     if (BotDeterminer.isPostedByBot(this.discordClient, message)) {
@@ -54,11 +54,11 @@ module.exports = BotModule.extend({
             );
 
             /* Post new messages for every notification role with a reaction listener */
-            await welcomeChannel.send(this.i18n.__mf(localizedMessages.notificationRoleInfo));
-            await welcomeChannel.send("** **");
+            await notificationChannel.send(this.i18n.__mf(localizedMessages.notificationRoleInfo));
+            await notificationChannel.send("** **");
             const roleMessages = [];
             for (const role of notificationRoles) {
-                const message = await welcomeChannel.send(
+                const message = await notificationChannel.send(
                     this.i18n.__mf(localizedMessages.notificationRole, { gamemode: nameMappedNotificationRoleIds[role.id] })
                 );
                 await message.react("📨");
