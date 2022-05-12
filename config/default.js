@@ -40,6 +40,7 @@ module.exports = {
     trickcordTreatRoom: '766318346424680460',
     broadcastRoom: '380086729526345739',
     welcomeRoom: '148149183226970113',
+    notificationRoom: '974372122547863672',
     trickcordTreatDeleteTime: ONE_MINUTE_IN_MS,
     games: {
         aliases: {
