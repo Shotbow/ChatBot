@@ -116,5 +116,7 @@
 	"@{username}#{discriminator} was banned after excessive pinging": "@{username}#{discriminator} was banned after excessive pinging",
 	"Locking this room, making it not close automatically after inactivity.": "Locking this room, making it not close automatically after inactivity.",
 	"Unlocking this room, making it automatically close after inactivity.": "Unlocking this room, making it automatically close after inactivity.",
-	"Could not (un)lock channel at this time. Try again in a bit!": "Could not (un)lock channel at this time. Try again in a bit!"
+	"Could not (un)lock channel at this time. Try again in a bit!": "Could not (un)lock channel at this time. Try again in a bit!",
+	"React to the messages below to enable notifications for your favorite gamemodes!\n_You can disable notifications again using `!notifyremove <gamemode>`_": "React to the messages below to enable notifications for your favorite gamemodes!\n_You can disable notifications again using `!notifyremove <gamemode>`_",
+	"React to get notifications for `{gamemode}`": "React to get notifications for `{gamemode}`"
 }
