@@ -35,5 +35,5 @@
 	"You must specify one of the available notifications to unsubscribe from: {types}": "サブスクライブを解除するには、利用可能な通知のいずれかを指定する必要があります: {types}",
 	"I was unable to remove the role from your user.": "あなたのDiscordアカウントの役職を削除することができませんでした。",
 	"Your role has been removed.": "あなたのDiscordアカウントの役職は削除されました。",
-	"Support us for free by voting for Shotbow! Learn more on our Vote Dashboard at <https://vote.shotbow.net>": "Shotbowに投票することで、無料で支援することができます！ 詳しくはこちらをご覧ください。 <https://vote.shotbow.net>"
+	"Vote for Shotbow on our Vote Dashboard: <https://vote.shotbow.net>\n\nYou will receive a 100 XP reward for each vote you cast. Votes will additionally contribute to the community counter for even more free XP!": "投票用ダッシュボードからShotbowに投票してください。<https://vote.shotbow.net> 投票するごとに100XPの報酬を受け取ることができます。 投票することで、さらにコミュニティカウンターに貢献でき、より多くの無料XPが得られます。"
 }
