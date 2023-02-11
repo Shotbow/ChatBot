@@ -16,6 +16,6 @@
     "moment-timezone": "0.5.31"
   },
   "devDependencies": {
-    "nodemon": "2.0.14"
+    "nodemon": "2.0.20"
   }
 }
