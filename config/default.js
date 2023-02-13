@@ -170,9 +170,7 @@ module.exports = {
         maxTimeRange: 5 * 60 * 1000
     },
     notificationRoles: {
-        warband: '792966769475321896',
         minez: '793166203782692884',
-        wir: '793166266096418837',
         slaughter: '857759646807097345',
         annihilation: '972561980336525362',
     },
