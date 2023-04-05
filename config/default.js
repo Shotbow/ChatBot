@@ -34,6 +34,7 @@ module.exports = {
         'Network Owner': '441611057878794240'
     },
     mutedRole: '468154703138521088',
+    verifiedRole: '899065034389479444',
     moderationLogsRoom: '468053291717361664',
     moderationRoom: '368216567126687754',
     deletedLogsRoom: '615737464643911680',
@@ -179,7 +180,7 @@ module.exports = {
         {
             channel: '899064662090481664',
             retention: 60 * 1000,
-            message: "Welcome to the official Shotbow community Discord server!\n\nBefore you can access the channels in this server, you have to verify that you are not a bot.\n\n**In order to verify yourself, type `/verify` in this channel and complete the Captcha sent to you.**",
+            message: "Welcome to the official Shotbow community Discord server!\n\nBefore you can access the channels in this server, you have to verify that you are not a bot.\n\n**In order to verify yourself, type `!verify` in this channel.**",
         }
     ]
 }
