@@ -104,7 +104,7 @@
 	"NOTIFY_GAME_SEPARATOR": ", ",
 	"I was unable to grant you the role.": "I was unable to grant you the role.",
 	"Your role has been granted.": "Your role has been granted.",
-	"Come join me on Shotbow using the address `play.shotbow.net`! We support versions 1.12.2 through 1.19.": "Come join me on Shotbow using the address `play.shotbow.net`! We support versions 1.12.2 through 1.19.",
+	"Come join me on Shotbow using the address `play.shotbow.net`! We support versions 1.12.2 through 1.20.4.": "Come join me on Shotbow using the address `play.shotbow.net`! We support versions 1.12.2 through 1.20.4.",
 	"You must specify one of the available notifications to unsubscribe from: {types}": "You must specify one of the available notifications to unsubscribe from: {types}",
 	"I was unable to remove the role from your user.": "I was unable to remove the role from your user.",
 	"Your role has been removed.": "Your role has been removed.",
